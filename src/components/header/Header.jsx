@@ -39,7 +39,7 @@ export default function Header() {
                                 ?
                                 <>
                                     <li>
-                                        <a href="/">회원정보</a>
+                                        <a href="/user">회원정보</a>
                                     </li>
                                     <li>
                                         <Link to="/" onClick={signout}>로그아웃</Link>
@@ -47,7 +47,7 @@ export default function Header() {
                                 </>
                                 :
                                 <li>
-                                    <Link to="/login">로그인</Link>
+                                    <Link to="/user/login">로그인</Link>
                                 </li>
                         }
 

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import * as Styled from './style'
 import loginpageImage from 'assets/images/loginpageImage.jpg'
 
-export default function LoginPage() {
+export default function UserPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputRef = useRef([]);
@@ -74,6 +74,30 @@ export default function LoginPage() {
                             name='password'
                             onChange={handleChange}
                             ref={(element) => (inputRef.current[1] = element)} />
+                        <label
+                            htmlFor='password'>
+                            비밀번호
+                        </label>
+                        <input
+                            type='password'
+                            id='password'
+                            name='password'
+                            onChange={handleChange}
+                            ref={(element) => (inputRef.current[1] = element)} />
+                        <label
+                            htmlFor='password'>
+                            비밀번호
+                        </label>
+                        <input
+                            type='password'
+                            id='password'
+                            name='password'
+                            onChange={handleChange}
+                            ref={(element) => (inputRef.current[1] = element)} />
+                        <button
+                            onClick={handleCheck}>
+                            로그인
+                        </button>
                         <button
                             onClick={handleCheck}>
                             로그인

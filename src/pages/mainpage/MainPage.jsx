@@ -55,6 +55,52 @@ export default function MainPage() {
                 <Styled.StyledSection2List>
                 </Styled.StyledSection2List>
             </Styled.StyledSection2>
+            
+            <section>
+                <Styled.StyledSectionHeader>
+                    <Styled.StyledSectionTitle>category</Styled.StyledSectionTitle>
+                </Styled.StyledSectionHeader>
+                <ul>
+                    <li>
+                        <a href="/">category1</a>
+                    </li>
+                    <li>
+                        <a href="/">category2</a>
+                    </li>
+                    <li>
+                        <a href="/">category3</a>
+                    </li>
+                    <li>
+                        <a href="/">category4</a>
+                    </li>
+                    <li>
+                        <a href="/">category5</a>
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <header>
+                    <h2>Our destinations</h2>
+                </header>
+                <ul>
+                    <li>
+                        <a href="/">지역1</a>
+                    </li>
+                    <li>
+                        <a href="/">지역2</a>
+                    </li>
+                    <li>
+                        <a href="/">지역3</a>
+                    </li>
+                    <li>
+                        <a href="/">지역4</a>
+                    </li>
+                    <li>
+                        <a href="/">지역5</a>
+                    </li>
+                </ul>
+                <button>see all</button>
+            </section>
             <Styled.StyledSection3>
                 <Styled.StyledSectionHeader>
                     <Styled.StyledSectionTitle>Your word, our words</Styled.StyledSectionTitle>
@@ -95,51 +141,6 @@ export default function MainPage() {
                     </li>
                 </ul>
             </Styled.StyledSection3>
-            <section>
-                <header>
-                    <h2>Our destinations</h2>
-                </header>
-                <ul>
-                    <li>
-                        <a href="/">지역1</a>
-                    </li>
-                    <li>
-                        <a href="/">지역2</a>
-                    </li>
-                    <li>
-                        <a href="/">지역3</a>
-                    </li>
-                    <li>
-                        <a href="/">지역4</a>
-                    </li>
-                    <li>
-                        <a href="/">지역5</a>
-                    </li>
-                </ul>
-                <button>see all</button>
-            </section>
-            <section>
-                <header>
-                    <h2>category</h2>
-                </header>
-                <ul>
-                    <li>
-                        <a href="/">category1</a>
-                    </li>
-                    <li>
-                        <a href="/">category2</a>
-                    </li>
-                    <li>
-                        <a href="/">category3</a>
-                    </li>
-                    <li>
-                        <a href="/">category4</a>
-                    </li>
-                    <li>
-                        <a href="/">category5</a>
-                    </li>
-                </ul>
-            </section>
         </main>
     )
 }
