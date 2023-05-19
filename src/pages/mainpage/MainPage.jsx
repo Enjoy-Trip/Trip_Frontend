@@ -4,35 +4,40 @@ import * as Styled from './style'
 import main1 from 'assets/videos/main1.mp4'
 import main2 from 'assets/videos/main2.mp4'
 
+const section2Scroll = () => {
+    let height = window.innerHeight || document.body.clientHeight;
+    window.scrollTo(0, height - 60);
+}
+
 export default function MainPage() {
     window.scrollTo(0, 0);
 
     const backgroundList = [main1, main2];
 
-    const dummy = {
-        "contentid": "1",
-        "contenttypeid": "0",
-        "title": "더미 데이터",
-        "createdtime": "20041230090000",
-        "modifiedtime": "20230321095145",
-        "tel": "",
-        "telname": "",
-        "booktour": "1",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "areacode": "0",
-        "sigungucode": "0",
-        "cat1": "A",
-        "cat2": "A",
-        "cat3": "A",
-        "addr1": "서울특별시 종로구 사직로 161",
-        "addr2": "",
-        "zipcode": "03045",
-        "mapx": "126.9769930325",
-        "mapy": "37.5788222356",
-        "mlevel": "6"
-    }
+    // const dummy = {
+    //     "contentid": "1",
+    //     "contenttypeid": "0",
+    //     "title": "더미 데이터",
+    //     "createdtime": "20041230090000",
+    //     "modifiedtime": "20230321095145",
+    //     "tel": "",
+    //     "telname": "",
+    //     "booktour": "1",
+    //     "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
+    //     "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
+    //     "cpyrhtDivCd": "Type3",
+    //     "areacode": "0",
+    //     "sigungucode": "0",
+    //     "cat1": "A",
+    //     "cat2": "A",
+    //     "cat3": "A",
+    //     "addr1": "서울특별시 종로구 사직로 161",
+    //     "addr2": "",
+    //     "zipcode": "03045",
+    //     "mapx": "126.9769930325",
+    //     "mapy": "37.5788222356",
+    //     "mlevel": "6"
+    // }
 
     return (
         <main>
@@ -44,11 +49,11 @@ export default function MainPage() {
                 <Styled.StyledSection1Video autoPlay muted loop >
                     <source src={backgroundList[Math.floor(Math.random() * backgroundList.length)]} type="video/mp4" />
                 </Styled.StyledSection1Video>
-                <Styled.StyledSection1Anchor href='#section2'>
+                <Styled.StyledSection1Button onClick={section2Scroll}>
                     <i className="fa-solid fa-chevron-down"></i>
-                </Styled.StyledSection1Anchor>
+                </Styled.StyledSection1Button>
             </section>
-            <Styled.StyledSection2 id='section2'>
+            <Styled.StyledSection2>
                 <Styled.StyledSectionHeader>
                     <Styled.StyledSectionTitle>Welcome to the best week of<span></span>your life</Styled.StyledSectionTitle>
                     <Styled.StyledSectionHeaderParagraph>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, veritatis et cupiditate impedit repellat perferendis eum sunt dicta voluptate suscipit commodi nobis quisquam inventore facilis error ducimus dolorem amet culpa.

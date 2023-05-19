@@ -58,7 +58,7 @@ export const StyledSection1Video = styled.video`
     object-fit: cover;
 `
 
-export const StyledSection1Anchor = styled.a`
+export const StyledSection1Button = styled.button`
     position: absolute;
     bottom: 55px;
     left: 50%;
