@@ -58,7 +58,7 @@ export const StyledArticleParagraph = styled.p`
     display: inline-block;
     font-size: 13px;
     color: #777;
-    margin-top: 10px;
+    margin-top: 15px;
 `
 
 export const StyledArticleAnchor = styled.a`

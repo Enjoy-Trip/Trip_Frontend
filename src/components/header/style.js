@@ -14,6 +14,7 @@ export const HeaderWrapper = styled.header`
     
     box-shadow: ${props => props.time === "morning" ? "0 -1px 2px 2px #ccc" : props.time === "afternoon" ? "0 -1px 2px 2px #ccc" : ""};
     color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : props.time === "evening" ? "white" : ""};
+    background-color: ${props => props.time === "morning" ? "white" : props.time === "afternoon" ? "white" : props.time === "evening" ? "rgb(38, 38, 38)" : ""};
 `
 
 export const DivWrapper = styled.div`

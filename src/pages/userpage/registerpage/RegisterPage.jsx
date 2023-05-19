@@ -2,22 +2,54 @@ import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { loginUser } from 'redux/slice/userSlice'
-import { Link } from 'react-router-dom'
 
 import * as Styled from './style'
-// import loginpageImage from 'assets/images/loginpageImage.jpg'
+import registerpagemorning from 'assets/images/registerpagemorning.jpg'
+import registerpageafternoon from 'assets/images/registerpageafternoon.jpg'
+import registerpageevening from 'assets/images/registerpageevening.jpg'
+
+import FormInputCol from 'components/input/formInputCol/FormInputCol'
+import FormButtonBlue from 'components/button/formButtonBlue/FormButtonBlue'
+
+const checkTime = () => {
+    const date = new Date();
+    const now = date.getHours();
+
+    if (now >= 6 && now <= 11) {
+        return {
+            time: "morning",
+            image: registerpagemorning
+        };
+    }
+
+    else if (now >= 12 && now <= 18) {
+        return {
+            time: "afternoon",
+            image: registerpageafternoon
+        };
+    }
+
+    else {
+        return {
+            time: "evening",
+            image: registerpageevening
+        };
+    }
+}
 
 export default function RegisterPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputRef = useRef([]);
+    const time = checkTime();
 
     const [inputs, setInputs] = useState({
         id: "",
         password: "",
+        passwordConfirm: "",
+        name: "",
+        nickname: ""
     });
-
-
 
     const handleChange = (e) => {
         setInputs({
@@ -44,65 +76,77 @@ export default function RegisterPage() {
     }
 
     return (
-        <Styled.StyledMain>
-            <Styled.StyledSection>
+        <Styled.StyledMain time={time.time}>
+            <Styled.StyledSection time={time.time}>
                 <Styled.StyledSectionHeader>
                     <h2>회원정보 입력 영역</h2>
                 </Styled.StyledSectionHeader>
-                <Styled.StyledArticle>
-                    <header>
-                        <h3>로그인 영역</h3>
-                    </header>
-                    <Styled.StyledForm>
-                        <label
-                            htmlFor='id'>
-                            아이디
-                        </label>
-                        <input
-                            type='text'
-                            id='id'
-                            name='id'
-                            onChange={handleChange}
-                            ref={(element) => (inputRef.current[0] = element)} />
-                        <label
-                            htmlFor='password'>
-                            비밀번호
-                        </label>
-                        <input
-                            type='password'
-                            id='password'
-                            name='password'
-                            onChange={handleChange}
-                            ref={(element) => (inputRef.current[1] = element)} />
-                        <label
-                            htmlFor='password'>
-                            비밀번호
-                        </label>
-                        <input
-                            type='password'
-                            id='password'
-                            name='password'
-                            onChange={handleChange}
-                            ref={(element) => (inputRef.current[1] = element)} />
-                        <label
-                            htmlFor='password'>
-                            비밀번호
-                        </label>
-                        <input
-                            type='password'
-                            id='password'
-                            name='password'
-                            onChange={handleChange}
-                            ref={(element) => (inputRef.current[1] = element)} />
-                        <button
-                            onClick={handleCheck}>
-                            로그인
-                        </button>
-                    </Styled.StyledForm>
-                    <p>Don‘t have an account?</p>
-                    <Link to="/register">Sign up</Link>
-                </Styled.StyledArticle>
-                {/* <Styled.StyledImage src={loginpageImage} alt="" /> */}
+                <Styled.StyledArticleWrapper>
+                    <Styled.StyledArticle time={time.time}>
+                        <header>
+                            <Styled.StyledArticleTitle>Good {time.time}!<span></span>Become part of the family!!</Styled.StyledArticleTitle>
+                        </header>
+                        <Styled.StyledForm>
+                            <FormInputCol data={{
+                                text: 'Id',
+                                type: 'text',
+                                id: 'id',
+                                name: 'id',
+                                onChangeFunc: handleChange,
+                                ref: (element) => (inputRef.current[0] = element),
+                                placeholder: 'Your Id',
+                                value: inputs.id
+                            }} />
+                            <FormInputCol data={{
+                                text: 'Password',
+                                type: 'password',
+                                id: 'password',
+                                name: 'password',
+                                onChangeFunc: handleChange,
+                                ref: (element) => (inputRef.current[1] = element),
+                                placeholder: 'Your Password',
+                                value: inputs.password
+                            }} />
+                            <FormInputCol data={{
+                                text: 'Confirm Password',
+                                type: 'password',
+                                id: 'passwordConfirm',
+                                name: 'passwordConfirm',
+                                onChangeFunc: handleChange,
+                                ref: (element) => (inputRef.current[2] = element),
+                                placeholder: 'Confirm Your Password',
+                                value: inputs.passwordConfirm
+                            }} />
+                            <FormInputCol data={{
+                                text: 'Name',
+                                type: 'text',
+                                id: 'name',
+                                name: 'name',
+                                onChangeFunc: handleChange,
+                                ref: (element) => (inputRef.current[3] = element),
+                                placeholder: 'Your Name',
+                                value: inputs.name
+                            }} />
+                            <FormInputCol data={{
+                                text: 'Nickname',
+                                type: 'text',
+                                id: 'nickname',
+                                name: 'nickname',
+                                onChangeFunc: handleChange,
+                                ref: (element) => (inputRef.current[4] = element),
+                                placeholder: 'Your Nickname',
+                                value: inputs.nickname
+                            }} />
+                            <FormButtonBlue data={{
+                                onClickFunc: handleCheck,
+                                content: "Create my account"
+                            }} />
+                        </Styled.StyledForm>
+                        <Styled.StyledArticleParagraph>Already have an account?</Styled.StyledArticleParagraph>
+                        <Styled.StyledArticleAnchor href="/user/login">Sign in</Styled.StyledArticleAnchor>
+                    </Styled.StyledArticle>
+                </Styled.StyledArticleWrapper>
+                <Styled.StyledImage src={time.image} alt="" />
             </Styled.StyledSection>
         </Styled.StyledMain>
     )

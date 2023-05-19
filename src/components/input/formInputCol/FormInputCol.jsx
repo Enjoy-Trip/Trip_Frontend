@@ -2,13 +2,13 @@ import React from 'react'
 import * as Styled from './style'
 
 export default function FormInputCol({ data: {
-    text, type, id, name, onChangeFunc, ref, placeholder
+    text, type, id, name, onChangeFunc, ref, placeholder, value
 }}) {
 
     return (
         <>
             <Styled.StyledLabel htmlFor={id}>{text}</Styled.StyledLabel>
-            <Styled.StyledInput type={type} id={id} name={name} onChange={onChangeFunc} ref={ref} placeholder={placeholder} />
+            <Styled.StyledInput type={type} id={id} name={name} onChange={onChangeFunc} ref={ref} placeholder={placeholder} value={value} />
         </>
     )
 }

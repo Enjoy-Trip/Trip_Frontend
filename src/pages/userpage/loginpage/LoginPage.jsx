@@ -91,7 +91,8 @@ export default function LoginPage() {
                                 name: 'id',
                                 onChangeFunc: handleChange,
                                 ref: (element) => (inputRef.current[0] = element),
-                                placeholder: 'Your Id'
+                                placeholder: 'Your Id',
+                                value: inputs.id
                             }} />
                             <FormInputCol data={{
                                 text: 'Password',
@@ -100,7 +101,8 @@ export default function LoginPage() {
                                 name: 'password',
                                 onChangeFunc: handleChange,
                                 ref: (element) => (inputRef.current[1] = element),
-                                placeholder: 'Your Password'
+                                placeholder: 'Your Password',
+                                value: inputs.password
                             }} />
                             <FormButtonBlue data={{
                                 onClickFunc: handleCheck,
