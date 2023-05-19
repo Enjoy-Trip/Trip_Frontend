@@ -24,10 +24,10 @@ export const DivWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 70px;
+    font-family: 'Righteous';
 `
 
 export const HeaderTitle = styled.h1`
-    font-family: 'Righteous';
     font-size: 30px;
 `
 
@@ -36,6 +36,5 @@ export const HeaderNavList = styled.ul`
     align-items: center;
     justify-content: center;
     gap: 20px;
-    font-family: 'Black Han Sans', sans-serif;
     font-size: 16px;
 `

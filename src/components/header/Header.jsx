@@ -63,15 +63,15 @@ export default function Header() {
                                 ?
                                 <>
                                     <li>
-                                        <a href="/user">회원정보</a>
+                                        <a href="/user">My info</a>
                                     </li>
                                     <li>
-                                        <Link to="/" onClick={signout}>로그아웃</Link>
+                                        <Link to="/" onClick={signout}>Sign out</Link>
                                     </li>
                                 </>
                                 :
                                 <li>
-                                    <Link to="/user/login" >로그인</Link>
+                                    <Link to="/user/login" >Sign in</Link>
                                 </li>
                         }
 
