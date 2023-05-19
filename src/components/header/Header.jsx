@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'redux/slice/userSlice';
 
-const urls = ['/user/login', '/user/register', '/user/modify']
+const urls = ['/user/login', '/user/register', '/user']
 
 const checkTime = (location) => {
     if (!urls.includes(location.pathname)) {

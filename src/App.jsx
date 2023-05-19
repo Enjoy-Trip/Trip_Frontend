@@ -24,7 +24,7 @@ function App() {
                     <Route element={<HeaderLayout />}>
                         <Route path="/" element={<MainPage />} />
                         
-                        <Route path="/user/:id" element={<UserPage />} />
+                        <Route path="/user" element={<UserPage />} />
                         <Route path="/user/login" element={<LoginPage />} />
                         <Route path="/user/register" element={<RegisterPage />} />
                         

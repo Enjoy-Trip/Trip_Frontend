@@ -9,7 +9,7 @@ import loginpageafternoon from 'assets/images/loginpageafternoon.jpg'
 import loginpageevening from 'assets/images/loginpageevening.jpg'
 
 import FormInputCol from 'components/input/formInputCol/FormInputCol'
-import FormButtonBlue from 'components/button/formButtonBlue/FormButtonBlue'
+import FormButton from 'components/button/formButton/FormButton'
 
 const checkTime = () => {
     const date = new Date();
@@ -104,9 +104,10 @@ export default function LoginPage() {
                                 placeholder: 'Your Password',
                                 value: inputs.password
                             }} />
-                            <FormButtonBlue data={{
+                            <FormButton data={{
                                 onClickFunc: handleCheck,
-                                content: "Sign in"
+                                content: "Sign in",
+                                color: "blue"
                             }} />
                         </Styled.StyledForm>
                         <Styled.StyledArticleParagraph>Don‘t have an account?</Styled.StyledArticleParagraph>

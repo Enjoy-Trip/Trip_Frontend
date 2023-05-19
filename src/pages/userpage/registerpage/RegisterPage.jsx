@@ -9,7 +9,7 @@ import registerpageafternoon from 'assets/images/registerpageafternoon.jpg'
 import registerpageevening from 'assets/images/registerpageevening.jpg'
 
 import FormInputCol from 'components/input/formInputCol/FormInputCol'
-import FormButtonBlue from 'components/button/formButtonBlue/FormButtonBlue'
+import FormButton from 'components/button/formButton/FormButton'
 
 const checkTime = () => {
     const date = new Date();
@@ -137,9 +137,10 @@ export default function RegisterPage() {
                                 placeholder: 'Your Nickname',
                                 value: inputs.nickname
                             }} />
-                            <FormButtonBlue data={{
+                            <FormButton data={{
                                 onClickFunc: handleCheck,
-                                content: "Create my account"
+                                content: "Create my account",
+                                color: "blue"
                             }} />
                         </Styled.StyledForm>
                         <Styled.StyledArticleParagraph>Already have an account?</Styled.StyledArticleParagraph>
