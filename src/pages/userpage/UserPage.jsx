@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { clearUser } from 'redux/slice/userSlice'
 
 import * as Styled from './style'
 import registerpagemorning from 'assets/images/registerpagemorning.jpg'
@@ -36,6 +38,7 @@ const checkTime = () => {
 }
 
 export default function UserPage() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputRef = useRef([]);
     const time = checkTime();
@@ -55,7 +58,7 @@ export default function UserPage() {
         });
     }
 
-    const handleCheck = (e) => {
+    const handleUpdate = (e) => {
         e.preventDefault();
 
         // 회원가입 검증 처리
@@ -64,6 +67,13 @@ export default function UserPage() {
 
         // 결과 출력까지만
 
+        navigate('/');
+    }
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        dispatch(clearUser());
         navigate('/');
     }
 
@@ -131,12 +141,12 @@ export default function UserPage() {
                                 value: inputs.nickname
                             }} />
                             <FormButton data={{
-                                onClickFunc: handleCheck,
+                                onClickFunc: handleUpdate,
                                 content: "Update my account",
                                 color: "blue"
                             }} />
                             <FormButton data={{
-                                onClickFunc: handleCheck,
+                                onClickFunc: handleDelete,
                                 content: "Delete my account",
                                 color: "red"
                             }} />

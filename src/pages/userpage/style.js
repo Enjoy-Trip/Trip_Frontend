@@ -54,6 +54,6 @@ export const StyledForm = styled.form`
     flex-direction: column;
 
     & > button + button {
-        margin-top: 10px;
+        margin-top: 15px;
     }
 `
