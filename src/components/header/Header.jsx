@@ -1,16 +1,40 @@
 import React, { useState } from 'react'
 import * as Style from './style';
-import { Link } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'redux/slice/userSlice';
 
+const urls = ['/user/login', '/user/register', '/user/modify']
+
+const checkTime = (location) => {
+    if (!urls.includes(location.pathname)) {
+        return "";
+    }
+
+    const date = new Date();
+    const now = date.getHours();
+
+    if (now >= 6 && now <= 11) {
+        return "morning";
+    }
+
+    else if (now >= 12 && now <= 18) {
+        return "afternoon";
+    }
+
+    else {
+        return "evening";
+    }    
+}
+
 export default function Header() {
     const [moved, setMoved] = useState(false);
     const user = useSelector(state => state.user);
-
+    const location = useLocation();
     const dispatch = useDispatch();
+    
 
     function signout() {
         dispatch(clearUser());
@@ -27,7 +51,7 @@ export default function Header() {
     }
 
     return (
-        <Style.HeaderWrapper moved={moved ? true : false}>
+        <Style.HeaderWrapper moved={moved ? true : false} time={checkTime(location)}>
             <Style.DivWrapper>
                 <Style.HeaderTitle>
                     <Link to="/">YOUCANCE</Link>
@@ -47,7 +71,7 @@ export default function Header() {
                                 </>
                                 :
                                 <li>
-                                    <Link to="/user/login">로그인</Link>
+                                    <Link to="/user/login" >로그인</Link>
                                 </li>
                         }
 

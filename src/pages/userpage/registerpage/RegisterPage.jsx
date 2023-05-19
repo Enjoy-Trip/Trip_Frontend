@@ -5,7 +5,7 @@ import { loginUser } from 'redux/slice/userSlice'
 import { Link } from 'react-router-dom'
 
 import * as Styled from './style'
-import loginpageImage from 'assets/images/loginpageImage.jpg'
+// import loginpageImage from 'assets/images/loginpageImage.jpg'
 
 export default function RegisterPage() {
     const dispatch = useDispatch();
@@ -102,7 +102,7 @@ export default function RegisterPage() {
                     <p>Don‘t have an account?</p>
                     <Link to="/register">Sign up</Link>
                 </Styled.StyledArticle>
-                <Styled.StyledImage src={loginpageImage} alt="" />
+                {/* <Styled.StyledImage src={loginpageImage} alt="" /> */}
             </Styled.StyledSection>
         </Styled.StyledMain>
     )
