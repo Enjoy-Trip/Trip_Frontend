@@ -16,7 +16,17 @@ function ImportRighteous() {
     document.head.appendChild(link);
 }
 
+function ImportJua() {
+    const link = document.createElement("link");
+
+    link.setAttribute("href", "https://fonts.googleapis.com/css2?family=Jua&display=swap");
+    link.setAttribute("rel", "stylesheet");
+
+    document.head.appendChild(link);
+}
+
 export default function ImportFonts() {
     ImportBlackHanSans();
     ImportRighteous();
+    ImportJua();
 }

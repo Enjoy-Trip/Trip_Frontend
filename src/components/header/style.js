@@ -5,6 +5,8 @@ export const HeaderWrapper = styled.header`
     width: 100%;
     position: fixed;
     transition: 0.2s;
+    color: white;
+    z-index: 500;
     box-shadow: ${props => props.moved ? "0 -1px 20px 5px #ccc" : ""};
     border-bottom: ${props => props.moved ? "1px solid #c4c4c4" : ""};
     background-color: ${props => props.moved ? "white" : ""};
@@ -22,7 +24,7 @@ export const DivWrapper = styled.div`
 
 export const HeaderTitle = styled.h1`
     font-family: 'Righteous';
-    font-size: 24px;
+    font-size: 30px;
 `
 
 export const HeaderNavList = styled.ul`

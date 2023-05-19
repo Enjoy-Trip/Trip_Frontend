@@ -1,25 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { reset } from "styled-reset";
-import { createGlobalStyle } from "styled-components";
 
 import HeaderLayout from "components/layout/HeaderLayout";
 import MainPage from "pages/mainpage/MainPage";
 import LoginPage from "pages/loginpage/LoginPage";
 
 import ImportFonts from "utils/ImportFonts";
-
-const GlobalStyle = createGlobalStyle`
-    ${reset}
-
-    *, *::before, *::after {
-        box-sizing: border-box;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-`
+import GlobalStyle from "styles/GlobalStyle";
 
 function App() {
     ImportFonts();
@@ -37,7 +23,6 @@ function App() {
             </BrowserRouter>
         </>
     );
-
-
 }
+
 export default App;

@@ -2,36 +2,22 @@ import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { loginUser } from 'redux/slice/userSlice'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
-import { useSelector } from "react-redux";
-
-import IROnly from 'styles/IROnly'
-
-const HomePageHeader = styled.header`
-    display: flex;
-    justify-content: center;
-`
-
-const LoginSectionHeader = styled.header`
-    ${IROnly}
-`
-
-const LoginForm = styled.form`
-    display: flex;
-    flex-direction: column;
-`
+import * as Styled from './style'
+import loginpageImage from 'assets/images/loginpageImage.jpg'
 
 export default function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const inputRef = useRef([]);
 
     const [inputs, setInputs] = useState({
         id: "",
         password: "",
     });
 
-    const inputRef = useRef([]);
+
 
     const handleChange = (e) => {
         setInputs({
@@ -44,29 +30,30 @@ export default function LoginPage() {
         e.preventDefault();
 
         // 회원가입 검증 처리
-        // inputRef 사용
+        // inputRef.current[0].value -> id input value 접근 가능
+        // inputRef.current[1].value -> password input value 접근 가능
+
+        // 결과 출력까지만
 
         dispatch(loginUser({
-            id: "test",
+            accessToken: "test",
+            refreshToken: "test"
         }));
 
-        navigate('/manage');
+        navigate('/');
     }
 
-    const user = useSelector(state => state.user);
-    console.log(user);
-
     return (
-        <>
-            <HomePageHeader>
-                <h1>TRIP</h1>
-            </HomePageHeader>
-            <main>
-                <section>
-                    <LoginSectionHeader>
-                        <h2>회원정보 입력 영역</h2>
-                    </LoginSectionHeader>
-                    <LoginForm>
+        <Styled.StyledMain>
+            <Styled.StyledSection>
+                <Styled.StyledSectionHeader>
+                    <h2>회원정보 입력 영역</h2>
+                </Styled.StyledSectionHeader>
+                <Styled.StyledArticle>
+                    <header>
+                        <h3>로그인 영역</h3>
+                    </header>
+                    <Styled.StyledForm>
                         <label
                             htmlFor='id'>
                             아이디
@@ -91,10 +78,12 @@ export default function LoginPage() {
                             onClick={handleCheck}>
                             로그인
                         </button>
-                    </LoginForm>
-                </section>
-            </main>
-            <footer></footer>
-        </>
+                    </Styled.StyledForm>
+                    <p>Don‘t have an account?</p>
+                    <Link to="/register">Sign up</Link>
+                </Styled.StyledArticle>
+                <Styled.StyledImage src={loginpageImage} alt="" />
+            </Styled.StyledSection>
+        </Styled.StyledMain>
     )
 }
