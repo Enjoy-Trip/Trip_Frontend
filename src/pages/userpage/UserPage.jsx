@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux'
 import { clearUser } from 'redux/slice/userSlice'
 
 import * as Styled from './style'
-import registerpagemorning from 'assets/images/registerpagemorning.jpg'
-import registerpageafternoon from 'assets/images/registerpageafternoon.jpg'
-import registerpageevening from 'assets/images/registerpageevening.jpg'
+import modifypagemorning from 'assets/images/modifypagemorning.jpg'
+import modifypageafternoon from 'assets/images/modifypageafternoon.jpg'
+import modifypageevening from 'assets/images/modifypageevening.jpg'
 
 import FormInputCol from 'components/input/formInputCol/FormInputCol'
 import FormButton from 'components/button/formButton/FormButton'
@@ -18,21 +18,21 @@ const checkTime = () => {
     if (now >= 6 && now <= 11) {
         return {
             time: "morning",
-            image: registerpagemorning
+            image: modifypagemorning
         };
     }
 
     else if (now >= 12 && now <= 18) {
         return {
             time: "afternoon",
-            image: registerpageafternoon
+            image: modifypageafternoon
         };
     }
 
     else {
         return {
             time: "evening",
-            image: registerpageevening
+            image: modifypageevening
         };
     }
 }
