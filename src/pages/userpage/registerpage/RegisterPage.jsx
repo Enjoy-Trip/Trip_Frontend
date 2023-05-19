@@ -72,7 +72,7 @@ export default function RegisterPage() {
             refreshToken: "test"
         }));
 
-        navigate('/');
+        navigate('/user/login');
     }
 
     return (

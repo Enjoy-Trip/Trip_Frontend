@@ -5,6 +5,8 @@ import main1 from 'assets/videos/main1.mp4'
 import main2 from 'assets/videos/main2.mp4'
 
 export default function MainPage() {
+    window.scrollTo(0, 0);
+
     const backgroundList = [main1, main2];
 
     const dummy = {
