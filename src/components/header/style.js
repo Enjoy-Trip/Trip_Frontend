@@ -12,7 +12,8 @@ export const HeaderWrapper = styled.header`
     background-color: ${props => props.moved ? "white" : ""};
     color: ${props => props.moved ? "#333" : ""};
     
-    box-shadow: ${props => props.time === "morning" ? "0 -1px 2px 2px #ccc" : props.time === "afternoon" ? "0 -1px 2px 2px #ccc" : ""};
+    box-shadow: ${props => props.time === "morning" ? "0 -1px 2px 2px #ccc" : props.time === "afternoon" ? "0 -1px 2px 2px #ccc" : props.time === "evening" ? "0 -1px 2px 2px #333" : ""};
+    border-bottom: ${props => props.time === "evening" ? "0" : ""};
     color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : props.time === "evening" ? "white" : ""};
     background-color: ${props => props.time === "morning" ? "white" : props.time === "afternoon" ? "white" : props.time === "evening" ? "rgb(38, 38, 38)" : ""};
 `

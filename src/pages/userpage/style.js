@@ -28,7 +28,7 @@ export const StyledArticleWrapper = styled.div`
     width: 50vw;
     padding-top: 8vh;
 
-    color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : "#333"};
+    color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : "white"};
 `
 
 export const StyledArticle = styled.article`

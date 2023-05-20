@@ -26,7 +26,7 @@ export const StyledImage = styled.img`
 
 export const StyledArticleWrapper = styled.div`
     width: 50vw;
-    color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : "#333"};
+    color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : "white"};
 `
 
 export const StyledArticle = styled.article`
