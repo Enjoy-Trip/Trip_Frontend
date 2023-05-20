@@ -5,6 +5,10 @@ import { Link } from 'react-router-dom'
 import MyMap from 'components/map/MyMap'
 import AttractionListCard from 'components/card/attractionlistcard/AttractionListCard'
 
+function onClickForm(event) {
+    event.preventDefault();
+}
+
 export default function AttractionPage() {
     const dummy = [{
         "contentid": "126508",
@@ -160,7 +164,7 @@ export default function AttractionPage() {
                     <Styled.SectionResultHeader>
                         <h2>결과 출력 부분</h2>
                     </Styled.SectionResultHeader>
-                    <Styled.SearchForm action="/">
+                    <Styled.SearchForm action="/" onClick={onClickForm}>
                         <Styled.SearchButton>
                             <span>찾기</span>
                             <i className="fa-solid fa-magnifying-glass"></i>

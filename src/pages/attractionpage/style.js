@@ -57,7 +57,8 @@ export const NavButton = styled.button`
 `
 
 export const PageMain = styled.main`
-    position: relative;
+    width: 100%;
+    display: flex;
 `
 
 export const PageMapSectionHeader = styled.header`
@@ -65,11 +66,11 @@ export const PageMapSectionHeader = styled.header`
 `
 
 export const SectionResult = styled.section`
-    width: 390px;
+    width: 380px;
     height: 100vh;
     /* overflow: hidden; */
     padding-top: 15px;
-    box-shadow: 5px 0 5px -2px #ccc;
+    /* box-shadow: 5px 0 5px -2px #ccc; */
 `
 
 export const SectionResultHeader = styled.header`
