@@ -59,6 +59,7 @@ export const NavButton = styled.button`
 export const PageMain = styled.main`
     width: 100%;
     display: flex;
+    position: relative;
 `
 
 export const PageMapSectionHeader = styled.header`
@@ -68,9 +69,8 @@ export const PageMapSectionHeader = styled.header`
 export const SectionResult = styled.section`
     width: 380px;
     height: 100vh;
-    /* overflow: hidden; */
     padding-top: 15px;
-    /* box-shadow: 5px 0 5px -2px #ccc; */
+    box-shadow: 5px 0 5px -2px #ccc;
 `
 
 export const SectionResultHeader = styled.header`
@@ -144,3 +144,4 @@ export const AttractionList = styled.ul`
         cursor: pointer;
     }
 `
+

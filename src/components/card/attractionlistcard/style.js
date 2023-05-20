@@ -33,6 +33,7 @@ export const AttractionArticleHeader = styled.header`
 
 export const AttractionTitle = styled.h3`
     font-size: 18px;
+    font-weight: 700;
 `
 
 export const AttractionParagraph = styled.p`
