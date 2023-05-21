@@ -146,7 +146,7 @@ export default function AttractionDetailCard({ props: { data } }) {
                     <i className="fas fa-home"></i>
                     <Styled.HomeUrlList>
                         {
-                            data.homepage.split("<br />").map(url => <li>
+                            data.homepage.split("<br />").map(url => <li key={url.substring(0, url.indexOf('<'))}>
                                 <span>{url.substring(0, url.indexOf('<')) + " : "}</span>
                                 <Link to={url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))} target='_blank' >{url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))}</Link>
                             </li>)
@@ -157,12 +157,6 @@ export default function AttractionDetailCard({ props: { data } }) {
                     <i className="fas fa-sticky-note"></i>
                     <span>{data.overview.replace(/<br>/g, " ").replace(/<br \/>/g, " ")}</span>
                 </Styled.HomeParahraph>
-
-                {/* <Styled.HomeParahraph>
-                    {
-                        data.homepage.split("<br />").map(url => <Link to={url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))}>{url.substring(0, url.indexOf('<')) + " : " + url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))}</Link>)
-                    }
-                </Styled.HomeParahraph> */}
             </Styled.HomeWrapper>
             <Styled.ReviewWrapper>
                 <Styled.ReviewForm>
