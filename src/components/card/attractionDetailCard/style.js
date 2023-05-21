@@ -196,6 +196,7 @@ export const ReviewFormInput = styled.input`
 
 export const ReviewFormButton = styled.button`
     margin-left: 20px;
+    color: #0284FE;
 `
 
 export const PictureWrapper = styled(SectionContent)`

@@ -160,7 +160,7 @@ export default function AttractionDetailCard({ props: { data } }) {
                 <Styled.ReviewForm>
                     <label htmlFor="commentInput">댓글 입력</label>
                     <Styled.ReviewFormInput type="text" id='commentInput' placeholder='댓글 작성...' />
-                    <Styled.ReviewFormButton>작성</Styled.ReviewFormButton>
+                    <Styled.ReviewFormButton>게시</Styled.ReviewFormButton>
                 </Styled.ReviewForm>
             </Styled.ReviewWrapper>
             <Styled.PictureWrapper>

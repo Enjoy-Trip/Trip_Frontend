@@ -56,81 +56,28 @@ export const NavButton = styled.button`
     }
 `
 
-export const PageMain = styled.main`
+export const StyledMain = styled.main`
     width: 100%;
-    display: flex;
-    position: relative;
 `
 
-export const PageMapSectionHeader = styled.header`
-    ${IROnly}
+export const StyledSection = styled.section`
+    width: 100%;
+
+    & > header {
+        ${IROnly}
+    }
 `
 
-export const SectionResult = styled.section`
-    width: 380px;
+export const StyledBoardList = styled.ul`
+    width: 100%;
     height: 100vh;
-    padding-top: 15px;
-    box-shadow: 5px 0 5px -2px #ccc;
-    display: flex;
-    flex-direction: column;
-`
-
-export const SectionResultHeader = styled.header`
-    ${IROnly}
-`
-
-export const SearchForm = styled.form`
-    margin: 0 25px 15px;
-    border: 2px solid #0284FE;
-    border-radius: 5px;
-    display: flex;
-
-    & > label {
-        ${IROnly}
-    }
-`
-
-export const SearchButton = styled.button`
-    color: #0284FE;
-    margin-left: 12px;
-    margin-right: 3px;
-
-    & > span {
-        ${IROnly}
-    }
-`
-
-export const SearchInput = styled.input`
-    border: none;
-    height: 42px;
-    line-height: 40px;
-    font-size: 16px;
-
-    &:focus {
-        outline: none;
-    }
-
-    &::placeholder {
-        vertical-align: top;
-    }
-`
-
-export const ConditionList = styled.ul`
-    width: 100%;
-    padding: 10px 25px 30px;
-    display: grid;
-    grid-template-columns: 90px 120px 90px;
-    gap: 15px;
-    border-bottom: 1px solid #eee;
-    position: relative;
-`
-
-export const AttractionList = styled.ul`
-    padding-top: 30px;
-    /* height: calc(100vh - 75px); */
-    flex-grow: 1;
+    padding: 20px;
     overflow-y: scroll;
-    
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    gap: 6px;
+
     &::-webkit-scrollbar {
         width: 4px;
         background-color: #eee;
@@ -151,4 +98,3 @@ export const AttractionList = styled.ul`
         height: 0;
     }
 `
-
