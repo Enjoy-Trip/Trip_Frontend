@@ -4,6 +4,7 @@ import * as Styled from './style'
 
 import BoardListCard from 'components/card/boardListCard/BoardListCard'
 import BoardDetailCard from 'components/card/boardDetailCard/BoardDetailCard'
+import BoardWriteCard from 'components/card/boardWriteCard/BoardWriteCard'
 
 export default function BoardPage() {
     const dummy = {
@@ -80,7 +81,8 @@ export default function BoardPage() {
                         <BoardListCard props={{ data: dummy }} />
                     </Styled.StyledBoardList>
                 </Styled.StyledSection>
-                <BoardDetailCard props={{ data: dummy }} />
+                {/* <BoardDetailCard props={{ data: dummy }} /> */}
+                <BoardWriteCard />
             </Styled.StyledMain>
         </Styled.PageWrapper>
     )
