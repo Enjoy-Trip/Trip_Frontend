@@ -87,8 +87,6 @@ const dummyImages = [
 
 export default function AttractionDetailCard({ props: { data } }) {
     const CategoryRef = useRef([]);
-    console.log(data.homepage.split("<br />").map(url => url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))));
-    console.log();
 
     return (
         <Styled.SectionDetail>

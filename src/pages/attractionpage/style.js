@@ -71,6 +71,8 @@ export const SectionResult = styled.section`
     height: 100vh;
     padding-top: 15px;
     box-shadow: 5px 0 5px -2px #ccc;
+    display: flex;
+    flex-direction: column;
 `
 
 export const SectionResultHeader = styled.header`
@@ -113,11 +115,22 @@ export const SearchInput = styled.input`
     }
 `
 
+export const ConditionList = styled.ul`
+    width: 100%;
+    padding: 10px 25px 30px;
+    display: grid;
+    grid-template-columns: 90px 120px 90px;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+`
+
 export const AttractionList = styled.ul`
     padding-top: 30px;
-    height: calc(100vh - 75px);
+    /* height: calc(100vh - 75px); */
+    flex-grow: 1;
     overflow-y: scroll;
-
+    
     &::-webkit-scrollbar {
         width: 4px;
         background-color: #eee;

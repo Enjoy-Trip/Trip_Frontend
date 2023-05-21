@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import MyMap from 'components/map/MyMap'
 import AttractionListCard from 'components/card/attractionListCard/AttractionListCard'
 import AttractionDetailCard from 'components/card/attractionDetailCard/AttractionDetailCard'
+import AttractionConditionDropBox from 'components/dropBox/attractionConditionDropBox/AttractionConditionDropBox'
 
 function onClickForm(event) {
     event.preventDefault();
@@ -173,6 +174,11 @@ export default function AttractionPage() {
                         <label htmlFor="searchInput">검색어 입력</label>
                         <Styled.SearchInput type="text" id="searchInput" placeholder='지역, 장소 검색' />
                     </Styled.SearchForm>
+                    <Styled.ConditionList>
+                        <AttractionConditionDropBox props={{ icon: <i className="fas fa-location-arrow"></i>, text: '지역' }} />
+                        <AttractionConditionDropBox props={{ icon: <i className="fas fa-tasks-alt"></i>, text: '세부 지역' }} />
+                        <AttractionConditionDropBox props={{ icon: <i className="fas fa-list"></i>, text: '분류' }} />
+                    </Styled.ConditionList>
                     <Styled.AttractionList>
                         {
                             dummy.map((data, index) => {
