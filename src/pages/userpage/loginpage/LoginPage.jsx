@@ -78,8 +78,8 @@ export default function LoginPage() {
                 <Styled.StyledSectionHeader>
                     <h2>회원정보 입력 영역</h2>
                 </Styled.StyledSectionHeader>
-                <Styled.StyledArticleWrapper>
-                    <Styled.StyledArticle time={time.time}>
+                <Styled.StyledArticleWrapper time={time.time}>
+                    <Styled.StyledArticle>
                         <header>
                             <Styled.StyledArticleTitle>Good {time.time}<span></span>Welcome back!!</Styled.StyledArticleTitle>
                         </header>

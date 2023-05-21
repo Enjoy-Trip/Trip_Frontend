@@ -84,8 +84,8 @@ export default function UserPage() {
                     <h2>회원정보 입력 영역</h2>
                 </Styled.StyledSectionHeader>
                 <Styled.StyledImage src={time.image} alt="" />
-                <Styled.StyledArticleWrapper>
-                    <Styled.StyledArticle time={time.time}>
+                <Styled.StyledArticleWrapper time={time.time}>
+                    <Styled.StyledArticle>
                         <header>
                             <Styled.StyledArticleTitle>Good {time.time}!<span></span>Lorem ipsum dolor sit amet.!!</Styled.StyledArticleTitle>
                         </header>
