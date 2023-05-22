@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import react, { useRef } from 'react'
 import * as Styled from './style'
 import { Link } from 'react-router-dom';
 

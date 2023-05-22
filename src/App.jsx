@@ -31,7 +31,7 @@ function App() {
                         <Route path="/board/modify/:boardNo" element={<BoardModifyPage />} /> */}
                     </Route>
 
-                    <Route path="/attraction" element={<AttractionPage />} />
+                    {/* <Route path="/attraction" element={<AttractionPage />} /> */}
 
                     <Route path="/board" element={<BoardPage />} />
                 </Routes>
