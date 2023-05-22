@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as Styled from './style'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
@@ -49,12 +49,15 @@ export default function AttractionDetailCard({ props: { data } }) {
     const CategoryRef = useRef([]);
     const WrapperRef = useRef([]);
     const InputRef = useRef();
+    const SectionRef = useRef();
     const [category, setCategory] = useState("");
     const [images, setImages] = useState([]);
     const [tab, setTab] = useState(0);
     const user = useSelector(state => state.user);
 
-    useEffect(() => {
+    console.log(data);
+
+    useLayoutEffect(() => {
         const getCategory = async () => {
             const result = await getAttractionCategoty(data.contenttypeid, data.cat1, data.cat2, data.cat3);
 
@@ -74,6 +77,10 @@ export default function AttractionDetailCard({ props: { data } }) {
         getImages();
     }, [data]);
 
+    useEffect(() => {
+        SectionRef.current.style.display = 'flex';
+    }, [data]);
+
     const onClickHandler = (e) => {
         const tabIndex = e.currentTarget.childNodes[0].innerText;
 
@@ -86,13 +93,17 @@ export default function AttractionDetailCard({ props: { data } }) {
         writeComment(data.contentid, InputRef.current.value, user, dispatch);
     }
 
+    const onCloseClick = () => {
+        SectionRef.current.style.display = 'none';
+    }
+
     return (
-        <Styled.SectionDetail>
+        <Styled.SectionDetail ref={SectionRef}>
             <Styled.HeaderImage src={data.firstimage} alt="" />
             <Styled.SectionHeader>
                 <Styled.SectionHeaderWrapper>
                     <Styled.SectionTitle>{data.title}</Styled.SectionTitle>
-                    <Styled.SectionHeaderParagraph>{category ? category : ""}</Styled.SectionHeaderParagraph>
+                    <Styled.SectionHeaderParagraph>{category ? category : " "}</Styled.SectionHeaderParagraph>
                 </Styled.SectionHeaderWrapper>
                 <Styled.SectionHeaderList>
                     <Styled.SectionHeaderListItem>
@@ -153,7 +164,7 @@ export default function AttractionDetailCard({ props: { data } }) {
                 </Styled.HomeUrlWrapper>
                 <Styled.HomeParahraph>
                     <i className="fas fa-sticky-note"></i>
-                    <span>{data.overview.replace(/<br>/g, " ").replace(/<br \/>/g, " ")}</span>
+                    <span>{data.overview ? data.overview.replace(/<br>/g, " ").replace(/<br \/>/g, " ") : <></>}</span>
                 </Styled.HomeParahraph>
             </Styled.HomeWrapper>
             <Styled.ReviewWrapper ref={(element) => (WrapperRef.current[1] = element)} selected={tab} index={1}>
@@ -175,6 +186,10 @@ export default function AttractionDetailCard({ props: { data } }) {
                     images ? images.map(image => <Link to={image.originimgurl} target='_blank' key={image.serialnum} ><img src={image.originimgurl} alt='' /></Link>) : <>이미지가 없습니다.</>
                 }
             </Styled.PictureWrapper>
+            <Styled.StyledCloseButton onClick={onCloseClick}>
+                <span>닫기</span>
+                <i className="fa-solid fa-x"></i>
+            </Styled.StyledCloseButton>
         </Styled.SectionDetail>
     )
 }

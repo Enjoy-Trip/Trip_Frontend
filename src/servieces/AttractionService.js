@@ -7,6 +7,8 @@ const areaUrl = "https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKe
 
 const AttractionUrl = "https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=" + process.env.REACT_APP_DATA_KEY + "&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=YOUCANCE&_type=json&listYN=Y&arrange=O";
 
+const AttractionSearchUrl = "https://apis.data.go.kr/B551011/KorService1/searchKeyword1?serviceKey=" + process.env.REACT_APP_DATA_KEY + "&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=YOUCANCE&_type=json&listYN=Y&arrange=A&keyword="
+
 const AttractionDetailUrl = "https://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=" + process.env.REACT_APP_DATA_KEY + "&MobileOS=ETC&MobileApp=YOUCANCE&_type=json&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&contentId="
 
 const AttractionCategoryUrl = "https://apis.data.go.kr/B551011/KorService1/categoryCode1?serviceKey=" + process.env.REACT_APP_DATA_KEY + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=YOUCANCE"
@@ -57,6 +59,22 @@ export async function getAttractionList(area, contenttype, sigungu) {
         console.log(error);
     }
 }
+
+export async function searchAttractionList(keyword) {
+    try {
+        const response = await FetchTemplate({
+            path: AttractionSearchUrl + keyword,
+            method: 'GET',
+        });
+
+        const result = await response.json();
+
+        return result.response.body.items.item;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 export async function getAttractionDetail(contentid) {
     try {

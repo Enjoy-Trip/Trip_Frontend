@@ -232,3 +232,23 @@ export const PictureWrapper = styled(SectionContent)`
         border-radius: 5px;
     }
 `
+
+export const StyledCloseButton = styled.button`
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #0284FE;
+    top: 5px;
+    right: -45px;
+
+    & > span {
+        ${IROnly}
+    }
+
+    & > i {
+        font-size: 24px;
+        color: #0284FE;
+    }
+`
