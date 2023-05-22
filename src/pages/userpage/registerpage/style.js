@@ -52,6 +52,24 @@ export const StyledForm = styled.form`
     margin-top: 60px;
     display: flex;
     flex-direction: column;
+
+    & > fieldset {
+        position: relative;
+    }
+
+    & legend {
+        ${IROnly}
+    }
+`
+
+export const StyledValidityParagraph = styled.p`
+    position: absolute;
+    font-size: 12px;
+    bottom: 13px;
+    left: 3px;
+
+    display: ${props => props.validity === "init" ? "none" : "block"};
+    color: ${props => props.validity === "SUCCESS" ? "#0284FE" : "rgba(220, 20, 60, 0.8)"};
 `
 
 export const StyledArticleParagraph = styled.p`

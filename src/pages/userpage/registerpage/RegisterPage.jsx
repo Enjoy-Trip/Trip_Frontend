@@ -1,7 +1,5 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router'
-import { useDispatch } from 'react-redux'
-import { loginUser } from 'redux/slice/userSlice'
 
 import * as Styled from './style'
 import registerpagemorning from 'assets/images/registerpagemorning.jpg'
@@ -10,6 +8,8 @@ import registerpageevening from 'assets/images/registerpageevening.jpg'
 
 import FormInputCol from 'components/input/formInputCol/FormInputCol'
 import FormButton from 'components/button/formButton/FormButton'
+
+import { CheckId, Signup } from 'servieces/UserServices'
 
 const checkTime = () => {
     const date = new Date();
@@ -38,9 +38,9 @@ const checkTime = () => {
 }
 
 export default function RegisterPage() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputRef = useRef([]);
+    const paragraphRef = useRef([]);
     const time = checkTime();
 
     const [inputs, setInputs] = useState({
@@ -51,29 +51,85 @@ export default function RegisterPage() {
         nickname: ""
     });
 
-    const handleChange = (e) => {
+    const [validities, setValidities] = useState({
+        id: "init",
+        idMessage: "",
+        password: "init",
+        passwordMessage: ""
+    });
+
+    const handleChange = async (e) => {
         setInputs({
             ...inputs,
             [e.target.name]: e.target.value,
         });
     }
 
-    const handleCheck = (e) => {
+    const handleCheck = async (e) => {
         e.preventDefault();
 
-        // 회원가입 검증 처리
-        // inputRef.current[0].value -> id input value 접근 가능
-        // inputRef.current[1].value -> password input value 접근 가능
-
-        // 결과 출력까지만
-
-        dispatch(loginUser({
-            accessToken: "test",
-            refreshToken: "test"
-        }));
+        await Signup(inputRef.current[0].value, inputRef.current[1].value, inputRef.current[3].value, inputRef.current[4].value);
 
         navigate('/user/login');
     }
+
+    const checkIdInput = useCallback(async () => {
+        let result;
+
+        if (inputRef.current[0].value.length === 0) {
+            result = {
+                state: "FAIL",
+                message: "아아디를 입력해주세요."
+            }
+        } else {
+            result = await CheckId(inputRef.current[0].value);
+        }
+
+        setValidities({
+            ...validities,
+            "id": result.state,
+            "idMessage": result.message,
+        })
+    }, [validities]);
+
+    const checkPasswordInput = useCallback(async () => {
+        let result;
+
+        if (inputRef.current[2].value.length === 0) {
+            result = {
+                state: "FAIL",
+                message: "비밀번호를 입력해주세요."
+            }
+        }
+        
+        else if (inputRef.current[1].value !== inputRef.current[2].value) {
+            result = {
+                state: "FAIL",
+                message: "비밀번호가 일치하지 않습니다."
+            }
+        }
+        
+        else {
+            result = {
+                state: "SUCCESS",
+                message: ""
+            }
+        }
+
+        setValidities({
+            ...validities,
+            "password": result.state,
+            "passwordMessage": validities.password === "init" ? "" : result.message,
+        })
+    }, [validities]);
+
+    useEffect(() => {
+        checkIdInput();
+    }, [inputs.id]);
+
+    useEffect(() => {
+        checkPasswordInput();
+    }, [inputs.passwordConfirm]);
 
     return (
         <Styled.StyledMain time={time.time}>
@@ -87,56 +143,71 @@ export default function RegisterPage() {
                             <Styled.StyledArticleTitle>Good {time.time}!<span></span>Become part of the family!!</Styled.StyledArticleTitle>
                         </header>
                         <Styled.StyledForm>
-                            <FormInputCol data={{
-                                text: 'Id',
-                                type: 'text',
-                                id: 'id',
-                                name: 'id',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[0] = element),
-                                placeholder: 'Your Id',
-                                value: inputs.id
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Password',
-                                type: 'password',
-                                id: 'password',
-                                name: 'password',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[1] = element),
-                                placeholder: 'Your Password',
-                                value: inputs.password
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Confirm Password',
-                                type: 'password',
-                                id: 'passwordConfirm',
-                                name: 'passwordConfirm',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[2] = element),
-                                placeholder: 'Confirm Your Password',
-                                value: inputs.passwordConfirm
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Name',
-                                type: 'text',
-                                id: 'name',
-                                name: 'name',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[3] = element),
-                                placeholder: 'Your Name',
-                                value: inputs.name
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Nickname',
-                                type: 'text',
-                                id: 'nickname',
-                                name: 'nickname',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[4] = element),
-                                placeholder: 'Your Nickname',
-                                value: inputs.nickname
-                            }} />
+                            <fieldset>
+                                <legend>아이디 영역</legend>
+                                <FormInputCol data={{
+                                    text: 'Id',
+                                    type: 'text',
+                                    id: 'id',
+                                    name: 'id',
+                                    onChangeFunc: handleChange,
+                                    ref: (element) => (inputRef.current[0] = element),
+                                    placeholder: 'Your Id',
+                                    value: inputs.id
+                                }} />
+                                <Styled.StyledValidityParagraph validity={validities.id} ref={(element) => (paragraphRef.current[0] = element)} >
+                                    {validities.idMessage}
+                                </Styled.StyledValidityParagraph>
+                            </fieldset>
+                            <fieldset>
+                                <legend>비밀번호 입력 영역</legend>
+                                <FormInputCol data={{
+                                    text: 'Password',
+                                    type: 'password',
+                                    id: 'password',
+                                    name: 'password',
+                                    onChangeFunc: handleChange,
+                                    ref: (element) => (inputRef.current[1] = element),
+                                    placeholder: 'Your Password',
+                                    value: inputs.password
+                                }} />
+                                <FormInputCol data={{
+                                    text: 'Confirm Password',
+                                    type: 'password',
+                                    id: 'passwordConfirm',
+                                    name: 'passwordConfirm',
+                                    onChangeFunc: handleChange,
+                                    ref: (element) => (inputRef.current[2] = element),
+                                    placeholder: 'Confirm Your Password',
+                                    value: inputs.passwordConfirm
+                                }} />
+                                <Styled.StyledValidityParagraph validity={validities.password} ref={(element) => (paragraphRef.current[1] = element)} >
+                                    {validities.passwordMessage}
+                                </Styled.StyledValidityParagraph>
+                            </fieldset>
+                            <fieldset>
+                                <legend>기타 사용자 정보 입력 영역</legend>
+                                <FormInputCol data={{
+                                    text: 'Name',
+                                    type: 'text',
+                                    id: 'name',
+                                    name: 'name',
+                                    onChangeFunc: handleChange,
+                                    ref: (element) => (inputRef.current[3] = element),
+                                    placeholder: 'Your Name',
+                                    value: inputs.name
+                                }} />
+                                <FormInputCol data={{
+                                    text: 'Nickname',
+                                    type: 'text',
+                                    id: 'nickname',
+                                    name: 'nickname',
+                                    onChangeFunc: handleChange,
+                                    ref: (element) => (inputRef.current[4] = element),
+                                    placeholder: 'Your Nickname',
+                                    value: inputs.nickname
+                                }} />
+                            </fieldset>
                             <FormButton data={{
                                 onClickFunc: handleCheck,
                                 content: "Create my account",

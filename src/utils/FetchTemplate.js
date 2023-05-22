@@ -2,8 +2,10 @@ const FetchTemplate = ({path, method, needToken = false, token, body}) => {
     const url = "http://localhost:8080";
     // const url = "http://14.46.141.58:8080";
 
-    const headers = {
-        "Content-Type": "application/json",
+    const headers = {} 
+    
+    if (method !== "GET") {
+        headers["Content-Type"] = "application/json";
     }
 
     if (needToken) {

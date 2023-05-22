@@ -45,8 +45,6 @@ export default function LoginPage() {
     const inputRef = useRef([]);
     const time = checkTime();
 
-    console.log(process.env.REACT_APP_SERVER_IP);
-
     const [inputs, setInputs] = useState({
         id: "",
         password: "",

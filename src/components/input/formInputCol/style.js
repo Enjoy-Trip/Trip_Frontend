@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledLabel = styled.label`
+    display: block;
     font-family: 'Sofia Sans', sans-serif; 
     font-size: 16px;
     margin-bottom: 10px;
