@@ -35,7 +35,6 @@ export default function Header() {
     const location = useLocation();
     const dispatch = useDispatch();
     
-
     function signout() {
         dispatch(clearUser());
     }

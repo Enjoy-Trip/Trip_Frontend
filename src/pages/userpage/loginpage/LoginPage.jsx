@@ -69,8 +69,8 @@ export default function LoginPage() {
 
         if (result) {
             dispatch(loginUser({
-                accessToken: "test",
-                refreshToken: "test"
+                accessToken: result['Access-Token'],
+                refreshToken: result['Refresh-Token']
             }));
 
             navigate('/');
