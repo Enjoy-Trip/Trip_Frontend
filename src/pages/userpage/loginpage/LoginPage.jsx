@@ -11,6 +11,8 @@ import loginpageevening from 'assets/images/loginpageevening.jpg'
 import FormInputCol from 'components/input/formInputCol/FormInputCol'
 import FormButton from 'components/button/formButton/FormButton'
 
+import { Login } from 'servieces/UserServices'
+
 const checkTime = () => {
     const date = new Date();
     const now = date.getHours();
@@ -43,6 +45,8 @@ export default function LoginPage() {
     const inputRef = useRef([]);
     const time = checkTime();
 
+    console.log(process.env.REACT_APP_SERVER_IP);
+
     const [inputs, setInputs] = useState({
         id: "",
         password: "",
@@ -55,21 +59,24 @@ export default function LoginPage() {
         });
     }
 
-    const handleCheck = (e) => {
+    const handleCheck = async (e) => {
         e.preventDefault();
 
         // 회원가입 검증 처리
         // inputRef.current[0].value -> id input value 접근 가능
         // inputRef.current[1].value -> password input value 접근 가능
+        const result = await Login(inputRef.current[0].value, inputRef.current[1].value);
+
+        console.log(result);
 
         // 결과 출력까지만
 
-        dispatch(loginUser({
-            accessToken: "test",
-            refreshToken: "test"
-        }));
+        // dispatch(loginUser({
+        //     accessToken: "test",
+        //     refreshToken: "test"
+        // }));
 
-        navigate('/');
+        // navigate('/');
     }
 
     return (
