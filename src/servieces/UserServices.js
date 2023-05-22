@@ -13,11 +13,14 @@ export async function Login(id, password) {
 
         const result = await response.json();
 
-        console.log(result);
+        if (result.state === "FAIL") {
+            alert(result.message);
+            return;
+        }
 
-        return {
-            'accessToken': result["Access-Token"],
-            'refreshToken': result["Refresh-Token"]
+        if (result.state === "SUCCESS") {
+            alert(result.message);
+            return result.data;
         }
     } catch (error) {
         console.log(error);

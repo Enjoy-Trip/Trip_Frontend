@@ -82,7 +82,7 @@ export default function BoardPage() {
                     </Styled.StyledBoardList>
                 </Styled.StyledSection>
                 {/* <BoardDetailCard props={{ data: dummy }} /> */}
-                {/* <BoardWriteCard /> */}
+                <BoardWriteCard />
             </Styled.StyledMain>
         </Styled.PageWrapper>
     )

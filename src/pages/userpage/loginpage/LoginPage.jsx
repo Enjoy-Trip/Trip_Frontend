@@ -67,16 +67,14 @@ export default function LoginPage() {
         // inputRef.current[1].value -> password input value 접근 가능
         const result = await Login(inputRef.current[0].value, inputRef.current[1].value);
 
-        console.log(result);
+        if (result) {
+            dispatch(loginUser({
+                accessToken: "test",
+                refreshToken: "test"
+            }));
 
-        // 결과 출력까지만
-
-        // dispatch(loginUser({
-        //     accessToken: "test",
-        //     refreshToken: "test"
-        // }));
-
-        // navigate('/');
+            navigate('/');
+        }
     }
 
     return (
