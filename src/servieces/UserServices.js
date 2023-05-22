@@ -1,9 +1,11 @@
 import FetchTemplate from "utils/FetchTemplate"
 
+const url = "http://localhost:8080";
+
 export async function Login(id, password) {
     try {
         const response = await FetchTemplate({
-            path: '/user/login',
+            path: url + '/user/login',
             method: 'POST',
             body: JSON.stringify({
                 'userId': id,
@@ -30,7 +32,7 @@ export async function Login(id, password) {
 export async function Signup(id, password, name, nickname) {
     try {
         const response = await FetchTemplate({
-            path: '/user',
+            path: url + '/user',
             method: 'POST',
             body: JSON.stringify({
                 'userId': id,
@@ -57,7 +59,7 @@ export async function Signup(id, password, name, nickname) {
 export async function CheckId(id) {
     try {
         const response = await FetchTemplate({
-            path: '/user/check/' + id,
+            path: url + '/user/check/' + id,
             method: 'GET'
         });
 

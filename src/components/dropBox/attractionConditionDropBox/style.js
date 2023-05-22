@@ -12,7 +12,7 @@ export const ConditionButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 15px;
+    padding: 0 10px;
 
     & > i {
         color: #0284FE;
@@ -39,9 +39,9 @@ export const ConditionNameList = styled.ul`
     border-radius: 5px;
     box-shadow: 0 1px 10px 0 rgba(0, 0, 0, .1);
     background-color: white;
-
-    display: grid;
     grid-template-columns: 1fr 1fr;
+
+    display: ${props => props.visible === 1 ? "grid" : "none"};
 `
 
 export const ConditionNameListItem = styled.li`

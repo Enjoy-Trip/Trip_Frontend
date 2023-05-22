@@ -1,92 +1,90 @@
-import react, { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Styled from './style'
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 
-const dummyImages = [
+import { getAttractionCategoty, getAttractionImages, writeComment } from 'servieces/AttractionService';
+import Comment from 'components/comment/Comment';
+
+const dummyComments = [
     {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/39/1568039_image2_1.jpg",
-        "imgname": "경복궁",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/39/1568039_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "1568039_6"
+        'attractionCommentContent': 'test content',
+        'attractionCommentTime': '2023-05-22 21:18:19',
+        'attractionCommentUser': {
+            'userId': 'test user'
+        }
     },
     {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/44/1568044_image2_1.jpg",
-        "imgname": "경복궁",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/44/1568044_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "1568044_8"
+        'attractionCommentContent': 'test content',
+        'attractionCommentTime': '2023-05-22 21:18:19',
+        'attractionCommentUser': {
+            'userId': 'test user'
+        }
     },
     {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/61/2005761_image2_1.jpg",
-        "imgname": "서울_경복궁04",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/61/2005761_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2005761_1"
+        'attractionCommentContent': 'test content',
+        'attractionCommentTime': '2023-05-22 21:18:19',
+        'attractionCommentUser': {
+            'userId': 'test user'
+        }
     },
     {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/67/2005767_image2_1.jpg",
-        "imgname": "서울_경복궁10",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/67/2005767_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2005767_4"
+        'attractionCommentContent': 'test content',
+        'attractionCommentTime': '2023-05-22 21:18:19',
+        'attractionCommentUser': {
+            'userId': 'test user'
+        }
     },
     {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/84/2612884_image2_1.jpg",
-        "imgname": "경복궁_1",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/84/2612884_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2612884_3"
-    },
-    {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/22/2678622_image2_1.jpg",
-        "imgname": "경복궁_사진갤러리",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/22/2678622_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2678622_9"
-    },
-    {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/27/2678627_image2_1.jpg",
-        "imgname": "경복궁_사진갤러리",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/27/2678627_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2678627_5"
-    },
-    {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/28/2678628_image2_1.jpg",
-        "imgname": "경복궁_사진갤러리",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/28/2678628_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2678628_7"
-    },
-    {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/32/2678632_image2_1.jpg",
-        "imgname": "경복궁_사진갤러리",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/32/2678632_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "2678632_2"
-    },
-    {
-        "contentid": "126508",
-        "originimgurl": "http://tong.visitkorea.or.kr/cms/resource/37/1568037_image2_1.jpg",
-        "imgname": "경복궁",
-        "smallimageurl": "http://tong.visitkorea.or.kr/cms/resource/37/1568037_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "serialnum": "1568037_11"
+        'attractionCommentContent': 'test content',
+        'attractionCommentTime': '2023-05-22 21:18:19',
+        'attractionCommentUser': {
+            'userId': 'test user'
+        }
     }
-];
+]
 
 export default function AttractionDetailCard({ props: { data } }) {
+    const dispatch = useDispatch();
     const CategoryRef = useRef([]);
+    const WrapperRef = useRef([]);
+    const InputRef = useRef();
+    const [category, setCategory] = useState("");
+    const [images, setImages] = useState([]);
+    const [tab, setTab] = useState(0);
+    const user = useSelector(state => state.user);
+
+    useEffect(() => {
+        const getCategory = async () => {
+            const result = await getAttractionCategoty(data.contenttypeid, data.cat1, data.cat2, data.cat3);
+
+            setCategory(result.name);
+        }
+
+        getCategory();
+    }, [data]);
+
+    useEffect(() => {
+        const getImages = async () => {
+            const result = await getAttractionImages(data.contentid);
+
+            setImages(result);
+        }
+
+        getImages();
+    }, [data]);
+
+    const onClickHandler = (e) => {
+        const tabIndex = e.currentTarget.childNodes[0].innerText;
+
+        setTab(tabIndex);
+    }
+
+    const onCommentClick = (e) => {
+        e.preventDefault();
+
+        writeComment(data.contentid, InputRef.current.value, user, dispatch);
+    }
 
     return (
         <Styled.SectionDetail>
@@ -94,7 +92,7 @@ export default function AttractionDetailCard({ props: { data } }) {
             <Styled.SectionHeader>
                 <Styled.SectionHeaderWrapper>
                     <Styled.SectionTitle>{data.title}</Styled.SectionTitle>
-                    <Styled.SectionHeaderParagraph>분류</Styled.SectionHeaderParagraph>
+                    <Styled.SectionHeaderParagraph>{category ? category : ""}</Styled.SectionHeaderParagraph>
                 </Styled.SectionHeaderWrapper>
                 <Styled.SectionHeaderList>
                     <Styled.SectionHeaderListItem>
@@ -120,22 +118,25 @@ export default function AttractionDetailCard({ props: { data } }) {
             </Styled.SectionHeader>
             <Styled.SectionCategoryList>
                 <Styled.SectionCategoryListItem>
-                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[0] = element)}>
+                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[0] = element)} selected={tab} index={0} onClick={onClickHandler}>
+                        <span>0</span>
                         <span>홈</span>
                     </Styled.SectionCategoryButton>
                 </Styled.SectionCategoryListItem>
                 <Styled.SectionCategoryListItem>
-                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[1] = element)}>
+                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[1] = element)} selected={tab} index={1} onClick={onClickHandler}>
+                        <span>1</span>
                         <span>리뷰</span>
                     </Styled.SectionCategoryButton>
                 </Styled.SectionCategoryListItem>
                 <Styled.SectionCategoryListItem>
-                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[2] = element)}>
+                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[2] = element)} selected={tab} index={2} onClick={onClickHandler}>
+                        <span>2</span>
                         <span>사진</span>
                     </Styled.SectionCategoryButton>
                 </Styled.SectionCategoryListItem>
             </Styled.SectionCategoryList>
-            <Styled.HomeWrapper>
+            <Styled.HomeWrapper ref={(element) => (WrapperRef.current[0] = element)} selected={tab} index={0} >
                 <Styled.HomeParahraph>
                     <i className="fas fa-location"></i>
                     <span>{data.addr1}{data.addr2 ? ", " + data.addr2 : ""}</span>
@@ -144,10 +145,9 @@ export default function AttractionDetailCard({ props: { data } }) {
                     <i className="fas fa-home"></i>
                     <Styled.HomeUrlList>
                         {
-                            data.homepage.split("<br />").map(url => <li key={url.substring(0, url.indexOf('<'))}>
-                                <span>{url.substring(0, url.indexOf('<')) + " : "}</span>
+                            data.homepage ? data.homepage.split("<br />").map(url => <li key={url.substring(0, url.indexOf('<'))}>
                                 <Link to={url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))} target='_blank' >{url.substring(url.indexOf('>') + 1, url.lastIndexOf('<'))}</Link>
-                            </li>)
+                            </li>) : "홈페이지가 존재하지 않습니다."
                         }
                     </Styled.HomeUrlList>
                 </Styled.HomeUrlWrapper>
@@ -156,16 +156,23 @@ export default function AttractionDetailCard({ props: { data } }) {
                     <span>{data.overview.replace(/<br>/g, " ").replace(/<br \/>/g, " ")}</span>
                 </Styled.HomeParahraph>
             </Styled.HomeWrapper>
-            <Styled.ReviewWrapper>
-                <Styled.ReviewForm>
-                    <label htmlFor="commentInput">댓글 입력</label>
-                    <Styled.ReviewFormInput type="text" id='commentInput' placeholder='댓글 작성...' />
-                    <Styled.ReviewFormButton>게시</Styled.ReviewFormButton>
-                </Styled.ReviewForm>
-            </Styled.ReviewWrapper>
-            <Styled.PictureWrapper>
+            <Styled.ReviewWrapper ref={(element) => (WrapperRef.current[1] = element)} selected={tab} index={1}>
                 {
-                    dummyImages.map(image => <Link to={image.originimgurl} target='_blank' key={image.serialnum} ><img src={image.originimgurl} alt='' /></Link>)
+                    dummyComments ? dummyComments.map((comment, index) => <Comment props={{ comment, 'type': 'attraction' }} key={index} />) : <></>
+                }
+                {
+                    user.refreshToken ?
+                        <Styled.ReviewForm>
+                            <label htmlFor="commentInput">댓글 입력</label>
+                            <Styled.ReviewFormInput type="text" id='commentInput' placeholder='댓글 작성...' ref={InputRef} />
+                            <Styled.ReviewFormButton onClick={onCommentClick}>게시</Styled.ReviewFormButton>
+                        </Styled.ReviewForm> :
+                        <></>
+                }
+            </Styled.ReviewWrapper>
+            <Styled.PictureWrapper ref={(element) => (WrapperRef.current[2] = element)} selected={tab} index={2}>
+                {
+                    images ? images.map(image => <Link to={image.originimgurl} target='_blank' key={image.serialnum} ><img src={image.originimgurl} alt='' /></Link>) : <>이미지가 없습니다.</>
                 }
             </Styled.PictureWrapper>
         </Styled.SectionDetail>

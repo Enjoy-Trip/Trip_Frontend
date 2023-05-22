@@ -35,10 +35,12 @@ export const SectionHeaderWrapper = styled.div`
 export const SectionTitle = styled.h2`
     font-size: 21px;
     font-weight: 700;
+    max-width: 70%;
 `
 
 export const SectionHeaderParagraph = styled.p`
     font-size: 16px;
+    max-width: 30%;
     color: #aaa;
 `
 
@@ -87,21 +89,29 @@ export const SectionCategoryListItem = styled.li`
 export const SectionCategoryButton = styled.button`
     width: 100%;
     height: 46px;
-    color: #777;
 
-    & > span {
+    & > span:nth-child(1) {
+        display: none;
+    }
+
+    & > span:nth-child(2) {
         display: inline-block;
         width: fit-content;
         line-height: 43px;
-        /* border-bottom: 3px solid #777; */
+
+        border-bottom: ${props => props.selected == props.index ? "3px solid #777" : ""};
+        color: ${props => props.selected == props.index ? "#black" : "#777"};
+        font-weight: ${props => props.selected == props.index ? "700" : "400"};
     }
 `
 
 export const SectionContent = styled.div`
     padding: 0 18px;
     overflow-y: scroll;
+    overflow-x: hidden;
     flex-grow: 1;
     position: relative;
+    
 
     &::-webkit-scrollbar {
         width: 4px;
@@ -125,7 +135,7 @@ export const SectionContent = styled.div`
 `
 
 export const HomeWrapper = styled(SectionContent)`
-    /* display: none; */
+    display: ${props => props.selected == props.index ? "block" : "none"};
     color: #777;
 
     & i {
@@ -148,23 +158,30 @@ export const HomeParahraph = styled.p`
 
 export const HomeUrlWrapper = styled.div`
     display: flex;
+    width: 300px;
     padding: 18px 0;
     border-bottom: 1px solid #eee;
 `
 
 export const HomeUrlList = styled.ul`
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 10px; */
 
     & a {
+        display: inline-block;
+        width: 310px;
         color: #0284FE;
         text-decoration: underline;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 `
 
 export const ReviewWrapper = styled(SectionContent)`
-    display: none;
+    padding: 20px;
+    display: ${props => props.selected == props.index ? "block" : "none"};
 `
 
 export const ReviewForm = styled.form`
@@ -175,10 +192,9 @@ export const ReviewForm = styled.form`
     justify-content: space-between;
     align-content: center;
     height: 60px;
-    padding: 10px 20px;
+    padding: 15px 5px;
     border-top: 1px solid #eee;
-
-    display: none;
+    background-color: white;
 
     & > label {
         ${IROnly}
@@ -200,14 +216,19 @@ export const ReviewFormButton = styled.button`
 `
 
 export const PictureWrapper = styled(SectionContent)`
-    display: grid;
+    display: ${props => props.selected == props.index ? "grid" : "none"};
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(auto, auto);
     gap: 5px;
+    padding: 20px;
+    flex-grow: 0;
+
+    & > a {
+        height: fit-content;
+    }
 
     & img {
         width: 100%;
         border-radius: 5px;
     }
-
-    display: none;
 `

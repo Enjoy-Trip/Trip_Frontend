@@ -119,7 +119,7 @@ export const ConditionList = styled.ul`
     width: 100%;
     padding: 10px 25px 30px;
     display: grid;
-    grid-template-columns: 90px 120px 90px;
+    grid-template-columns: 100px 100px 100px;
     gap: 15px;
     border-bottom: 1px solid #eee;
     position: relative;

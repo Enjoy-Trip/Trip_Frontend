@@ -25,16 +25,7 @@ export default function BoardDetailCard({ props: { data } }) {
                         </Styled.StyledBoardContent>
                     </Styled.StyledContentWriterWrapper>
                     <Styled.StyledCommentList>
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
-                        <Comment props={{ comment: data.boardCommentList[0] }} />
+                        <Comment props={{ comment: data.boardCommentList[0], type: 'board' }} />
                     </Styled.StyledCommentList>
                     <Styled.CommentForm>
                         <label htmlFor="commentInput">댓글 입력</label>

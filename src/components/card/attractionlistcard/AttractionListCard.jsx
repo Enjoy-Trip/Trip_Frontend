@@ -2,11 +2,12 @@ import react from 'react'
 import { Link } from 'react-router-dom'
 import * as Styled from './style'
 
-export default function AttractionListCard({ props: { data, index } }) {
+export default function AttractionListCard({ props: { data, AttractionClickHandler } }) {
     return (
         <li>
-            <Link to="/">
+            <Link to="/" onClick={AttractionClickHandler}>
                 <Styled.AttractionArticle>
+                    <p>{data.contentid}</p>
                     <Styled.AttractionArticleImageWrapper>
                         <Styled.AttractionArticleImage src={data.firstimage} alt="" />
                     </Styled.AttractionArticleImageWrapper>

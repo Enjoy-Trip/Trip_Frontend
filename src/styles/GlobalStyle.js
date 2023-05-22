@@ -50,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
         background-color: inherit;
         cursor: pointer;
     }
+
+    li {
+        list-style: none;
+    }
 `
 
 export default GlobalStyle;

@@ -1,4 +1,4 @@
-import react from 'react'
+import { useEffect, useState } from 'react'
 import * as Styled from './style'
 import { Link } from 'react-router-dom'
 
@@ -7,141 +7,122 @@ import AttractionListCard from 'components/card/attractionListCard/AttractionLis
 import AttractionDetailCard from 'components/card/attractionDetailCard/AttractionDetailCard'
 import AttractionConditionDropBox from 'components/dropBox/attractionConditionDropBox/AttractionConditionDropBox'
 
+import { getAreaList, getAreaDetailList, getAttractionList, getAttractionDetail } from 'servieces/AttractionService';
+
 function onClickForm(event) {
     event.preventDefault();
 }
 
 export default function AttractionPage() {
-    const dummy = [{
-        "contentid": "126508",
-        "contenttypeid": "12",
-        "title": "경복궁",
-        "createdtime": "20041230090000",
-        "modifiedtime": "20230321095145",
-        "tel": "",
-        "telname": "",
-        "homepage": "경복궁 \u003ca href\u003d\"http://www.royalpalace.go.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 경복궁 홈페이지로 이동\"\u003ehttp://www.royalpalace.go.kr\u003c/a\u003e\u003cbr /\u003e궁궐길라잡이 \u003ca href\u003d\"http://www.palaceguide.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 궁궐길라잡이 홈페이지로 이동\"\u003ehttp://www.palaceguide.or.kr\u003c/a\u003e\u003cbr /\u003e한국의재발견 \u003ca href\u003d\"http://www.rekor.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 한국의재발견 홈페이지로 이동\"\u003ehttp://www.rekor.or.kr\u003c/a\u003e\u003cbr /\u003e야간관람 예매\u003ca href\u003d\"https://ticket.11st.co.kr/Product/Detail?id\u003d266194\u0026prdNo\u003d4239172482\"title\u003d\"새창: 경복궁 야간관람 예매\"target\u003d\"_blank\"\u003ehttps://ticket.11st.co.kr/\u003c/a\u003e",
-        "booktour": "1",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "areacode": "1",
-        "sigungucode": "23",
-        "cat1": "A02",
-        "cat2": "A0201",
-        "cat3": "A02010100",
-        "addr1": "서울특별시 종로구 사직로 161",
-        "addr2": "",
-        "zipcode": "03045",
-        "mapx": "126.9769930325",
-        "mapy": "37.5788222356",
-        "mlevel": "6",
-        "overview": "경복궁은 1395년 태조 이성계에 의해서 새로운 조선왕조의 법궁으로 지어졌다. 경복궁은 동궐(창덕궁)이나 서궐(경희궁)에 비해 위치가 북쪽에 있어 \u0027북궐\u0027이라 불리기도 했다. 경복궁은 5대 궁궐 가운데 으뜸의 규모와 건축미를 자랑한다. 경복궁 근정전에서 즉위식을 가진 왕들을 보면 제2대 정종, 제4대 세종, 제6대 단종, 제7대 세조, 제9대 성종, 제11대 중종, 제13대 명종 등이다. 경복궁은 임진왜란 때 상당수의 건물이 불타 없어진 아픔을 갖고 있으며, 고종 때에 흥선대원군의 주도 아래 7,700여칸에 이르는 건물들을 다시 세웠다. 그러나 또 다시 명성황후 시해사건이 일어나면서 왕조의 몰락과 함께 경복궁도 왕궁으로서의 기능을 상실하고 말았다. 경복궁에는 조선시대의 대표적인 건축물인 경회루와 향원정의 연못이 원형대로 남아 있으며, 근정전의 월대와 조각상들은 당시의 조각미술을 대표한다. 현재 흥례문 밖 서편에는 국립고궁 박물관이 위치하고 있고, 경복궁 내 향원정의 동편에는 국립민속 박물관이 위치하고 있다.\u003cbr /\u003e\u003cbr /\u003e* 주요문화재 \u003cbr /\u003e1) 사적 경복궁\u003cbr\u003e2) 국보 경복궁 근정전\u003cbr\u003e3) 국보 경복궁 경회루\u003cbr\u003e4) 보물 경복궁 자경전\u003cbr\u003e5) 보물 경복궁 자경전 십장생 굴뚝\u003cbr\u003e6) 보물 경복궁 아미산굴뚝\u003cbr\u003e7) 보물 경복궁 근정문 및 행각\u003cbr\u003e8) 보물 경복궁 풍기대\u003cbr\u003e"
-    },
-    {
-        "contentid": "126509",
-        "contenttypeid": "12",
-        "title": "경복궁",
-        "createdtime": "20041230090000",
-        "modifiedtime": "20230321095145",
-        "tel": "",
-        "telname": "",
-        "homepage": "경복궁 \u003ca href\u003d\"http://www.royalpalace.go.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 경복궁 홈페이지로 이동\"\u003ehttp://www.royalpalace.go.kr\u003c/a\u003e\u003cbr /\u003e궁궐길라잡이 \u003ca href\u003d\"http://www.palaceguide.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 궁궐길라잡이 홈페이지로 이동\"\u003ehttp://www.palaceguide.or.kr\u003c/a\u003e\u003cbr /\u003e한국의재발견 \u003ca href\u003d\"http://www.rekor.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 한국의재발견 홈페이지로 이동\"\u003ehttp://www.rekor.or.kr\u003c/a\u003e\u003cbr /\u003e야간관람 예매\u003ca href\u003d\"https://ticket.11st.co.kr/Product/Detail?id\u003d266194\u0026prdNo\u003d4239172482\"title\u003d\"새창: 경복궁 야간관람 예매\"target\u003d\"_blank\"\u003ehttps://ticket.11st.co.kr/\u003c/a\u003e",
-        "booktour": "1",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "areacode": "1",
-        "sigungucode": "23",
-        "cat1": "A02",
-        "cat2": "A0201",
-        "cat3": "A02010100",
-        "addr1": "서울특별시 종로구 사직로 161",
-        "addr2": "",
-        "zipcode": "03045",
-        "mapx": "126.9769930325",
-        "mapy": "37.5788222356",
-        "mlevel": "6",
-        "overview": "경복궁은 1395년 태조 이성계에 의해서 새로운 조선왕조의 법궁으로 지어졌다. 경복궁은 동궐(창덕궁)이나 서궐(경희궁)에 비해 위치가 북쪽에 있어 \u0027북궐\u0027이라 불리기도 했다. 경복궁은 5대 궁궐 가운데 으뜸의 규모와 건축미를 자랑한다. 경복궁 근정전에서 즉위식을 가진 왕들을 보면 제2대 정종, 제4대 세종, 제6대 단종, 제7대 세조, 제9대 성종, 제11대 중종, 제13대 명종 등이다. 경복궁은 임진왜란 때 상당수의 건물이 불타 없어진 아픔을 갖고 있으며, 고종 때에 흥선대원군의 주도 아래 7,700여칸에 이르는 건물들을 다시 세웠다. 그러나 또 다시 명성황후 시해사건이 일어나면서 왕조의 몰락과 함께 경복궁도 왕궁으로서의 기능을 상실하고 말았다. 경복궁에는 조선시대의 대표적인 건축물인 경회루와 향원정의 연못이 원형대로 남아 있으며, 근정전의 월대와 조각상들은 당시의 조각미술을 대표한다. 현재 흥례문 밖 서편에는 국립고궁 박물관이 위치하고 있고, 경복궁 내 향원정의 동편에는 국립민속 박물관이 위치하고 있다.\u003cbr /\u003e\u003cbr /\u003e* 주요문화재 \u003cbr /\u003e1) 사적 경복궁\u003cbr\u003e2) 국보 경복궁 근정전\u003cbr\u003e3) 국보 경복궁 경회루\u003cbr\u003e4) 보물 경복궁 자경전\u003cbr\u003e5) 보물 경복궁 자경전 십장생 굴뚝\u003cbr\u003e6) 보물 경복궁 아미산굴뚝\u003cbr\u003e7) 보물 경복궁 근정문 및 행각\u003cbr\u003e8) 보물 경복궁 풍기대\u003cbr\u003e"
-    },
-    {
-        "contentid": "126510",
-        "contenttypeid": "12",
-        "title": "경복궁",
-        "createdtime": "20041230090000",
-        "modifiedtime": "20230321095145",
-        "tel": "",
-        "telname": "",
-        "homepage": "경복궁 \u003ca href\u003d\"http://www.royalpalace.go.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 경복궁 홈페이지로 이동\"\u003ehttp://www.royalpalace.go.kr\u003c/a\u003e\u003cbr /\u003e궁궐길라잡이 \u003ca href\u003d\"http://www.palaceguide.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 궁궐길라잡이 홈페이지로 이동\"\u003ehttp://www.palaceguide.or.kr\u003c/a\u003e\u003cbr /\u003e한국의재발견 \u003ca href\u003d\"http://www.rekor.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 한국의재발견 홈페이지로 이동\"\u003ehttp://www.rekor.or.kr\u003c/a\u003e\u003cbr /\u003e야간관람 예매\u003ca href\u003d\"https://ticket.11st.co.kr/Product/Detail?id\u003d266194\u0026prdNo\u003d4239172482\"title\u003d\"새창: 경복궁 야간관람 예매\"target\u003d\"_blank\"\u003ehttps://ticket.11st.co.kr/\u003c/a\u003e",
-        "booktour": "1",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "areacode": "1",
-        "sigungucode": "23",
-        "cat1": "A02",
-        "cat2": "A0201",
-        "cat3": "A02010100",
-        "addr1": "서울특별시 종로구 사직로 161",
-        "addr2": "",
-        "zipcode": "03045",
-        "mapx": "126.9769930325",
-        "mapy": "37.5788222356",
-        "mlevel": "6",
-        "overview": "경복궁은 1395년 태조 이성계에 의해서 새로운 조선왕조의 법궁으로 지어졌다. 경복궁은 동궐(창덕궁)이나 서궐(경희궁)에 비해 위치가 북쪽에 있어 \u0027북궐\u0027이라 불리기도 했다. 경복궁은 5대 궁궐 가운데 으뜸의 규모와 건축미를 자랑한다. 경복궁 근정전에서 즉위식을 가진 왕들을 보면 제2대 정종, 제4대 세종, 제6대 단종, 제7대 세조, 제9대 성종, 제11대 중종, 제13대 명종 등이다. 경복궁은 임진왜란 때 상당수의 건물이 불타 없어진 아픔을 갖고 있으며, 고종 때에 흥선대원군의 주도 아래 7,700여칸에 이르는 건물들을 다시 세웠다. 그러나 또 다시 명성황후 시해사건이 일어나면서 왕조의 몰락과 함께 경복궁도 왕궁으로서의 기능을 상실하고 말았다. 경복궁에는 조선시대의 대표적인 건축물인 경회루와 향원정의 연못이 원형대로 남아 있으며, 근정전의 월대와 조각상들은 당시의 조각미술을 대표한다. 현재 흥례문 밖 서편에는 국립고궁 박물관이 위치하고 있고, 경복궁 내 향원정의 동편에는 국립민속 박물관이 위치하고 있다.\u003cbr /\u003e\u003cbr /\u003e* 주요문화재 \u003cbr /\u003e1) 사적 경복궁\u003cbr\u003e2) 국보 경복궁 근정전\u003cbr\u003e3) 국보 경복궁 경회루\u003cbr\u003e4) 보물 경복궁 자경전\u003cbr\u003e5) 보물 경복궁 자경전 십장생 굴뚝\u003cbr\u003e6) 보물 경복궁 아미산굴뚝\u003cbr\u003e7) 보물 경복궁 근정문 및 행각\u003cbr\u003e8) 보물 경복궁 풍기대\u003cbr\u003e"
-    },
-    {
-        "contentid": "126511",
-        "contenttypeid": "12",
-        "title": "경복궁",
-        "createdtime": "20041230090000",
-        "modifiedtime": "20230321095145",
-        "tel": "",
-        "telname": "",
-        "homepage": "경복궁 \u003ca href\u003d\"http://www.royalpalace.go.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 경복궁 홈페이지로 이동\"\u003ehttp://www.royalpalace.go.kr\u003c/a\u003e\u003cbr /\u003e궁궐길라잡이 \u003ca href\u003d\"http://www.palaceguide.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 궁궐길라잡이 홈페이지로 이동\"\u003ehttp://www.palaceguide.or.kr\u003c/a\u003e\u003cbr /\u003e한국의재발견 \u003ca href\u003d\"http://www.rekor.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 한국의재발견 홈페이지로 이동\"\u003ehttp://www.rekor.or.kr\u003c/a\u003e\u003cbr /\u003e야간관람 예매\u003ca href\u003d\"https://ticket.11st.co.kr/Product/Detail?id\u003d266194\u0026prdNo\u003d4239172482\"title\u003d\"새창: 경복궁 야간관람 예매\"target\u003d\"_blank\"\u003ehttps://ticket.11st.co.kr/\u003c/a\u003e",
-        "booktour": "1",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "areacode": "1",
-        "sigungucode": "23",
-        "cat1": "A02",
-        "cat2": "A0201",
-        "cat3": "A02010100",
-        "addr1": "서울특별시 종로구 사직로 161",
-        "addr2": "",
-        "zipcode": "03045",
-        "mapx": "126.9769930325",
-        "mapy": "37.5788222356",
-        "mlevel": "6",
-        "overview": "경복궁은 1395년 태조 이성계에 의해서 새로운 조선왕조의 법궁으로 지어졌다. 경복궁은 동궐(창덕궁)이나 서궐(경희궁)에 비해 위치가 북쪽에 있어 \u0027북궐\u0027이라 불리기도 했다. 경복궁은 5대 궁궐 가운데 으뜸의 규모와 건축미를 자랑한다. 경복궁 근정전에서 즉위식을 가진 왕들을 보면 제2대 정종, 제4대 세종, 제6대 단종, 제7대 세조, 제9대 성종, 제11대 중종, 제13대 명종 등이다. 경복궁은 임진왜란 때 상당수의 건물이 불타 없어진 아픔을 갖고 있으며, 고종 때에 흥선대원군의 주도 아래 7,700여칸에 이르는 건물들을 다시 세웠다. 그러나 또 다시 명성황후 시해사건이 일어나면서 왕조의 몰락과 함께 경복궁도 왕궁으로서의 기능을 상실하고 말았다. 경복궁에는 조선시대의 대표적인 건축물인 경회루와 향원정의 연못이 원형대로 남아 있으며, 근정전의 월대와 조각상들은 당시의 조각미술을 대표한다. 현재 흥례문 밖 서편에는 국립고궁 박물관이 위치하고 있고, 경복궁 내 향원정의 동편에는 국립민속 박물관이 위치하고 있다.\u003cbr /\u003e\u003cbr /\u003e* 주요문화재 \u003cbr /\u003e1) 사적 경복궁\u003cbr\u003e2) 국보 경복궁 근정전\u003cbr\u003e3) 국보 경복궁 경회루\u003cbr\u003e4) 보물 경복궁 자경전\u003cbr\u003e5) 보물 경복궁 자경전 십장생 굴뚝\u003cbr\u003e6) 보물 경복궁 아미산굴뚝\u003cbr\u003e7) 보물 경복궁 근정문 및 행각\u003cbr\u003e8) 보물 경복궁 풍기대\u003cbr\u003e"
+    const [attractionList, setAttractionList] = useState([]);
+    const [conditions, setConditions] = useState({
+        "area": "",
+        "areaList": [],
+        "sigungu": "",
+        "sigunguList": [],
+        "contenttype": "",
+        "contenttypeList": []
+    });
+    const [attractionDetail, setAttractionDetail] = useState({});
+
+    useEffect(() => {
+        const attrcationList = async function() {
+            if (!conditions.area || !conditions.contenttype || !conditions.sigungu) {
+                return;
+            }
+    
+            const areaData = conditions.areaList.filter(element => element.name === conditions.area)[0];
+            const contenttypeData = conditions.contenttypeList.filter(element => element.name === conditions.contenttype)[0];
+            const areaDetailData = conditions.sigunguList.filter(element => element.name === conditions.sigungu)[0];
+    
+            const result = await getAttractionList(areaData.code, contenttypeData.code, areaDetailData.code);
+    
+            if (result.length == 0) {
+                setAttractionList([]);
+                return;
+            }
+
+            setAttractionList(result.filter(attraction => attraction.homepage === "" ? false : true).filter(attraction => attraction.overview === "" || attraction.overview === "-" ? false : true));
+        }
+
+        attrcationList();
+    }, [conditions.area, conditions.contenttype, conditions.sigungu]);
+
+    useEffect(() => {
+        const getData = async () => {
+            if (conditions.areaList.length !== 0 && conditions.contenttypeList.length !== 0) {
+                return;
+            }
+
+            const areaList = await getAreaList();
+            const contentTypeList = [
+                {
+                    'name': '관광지',
+                    'code': 12,
+                },
+                {
+                    'name': '문화시설',
+                    'code': 14,
+                },
+                {
+                    'name': '축제공연행사',
+                    'code': 15,
+                },
+                {
+                    'name': '레포츠',
+                    'code': 28,
+                },
+                {
+                    'name': '숙박',
+                    'code': 32,
+                },
+                {
+                    'name': '쇼핑',
+                    'code': 38,
+                },
+                {
+                    'name': '음식점',
+                    'code': 39,
+                }
+            ]
+
+            setConditions({
+                ...conditions,
+                "areaList": areaList,
+                "contenttypeList": contentTypeList
+            })
+        }
+
+        getData();
+    }, []);
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = conditions.areaList.filter(element => element.name === conditions.area)[0];
+
+            if (!data) {
+                return
+            }
+
+            const sigunguList = await getAreaDetailList(data.code);
+
+            setConditions({
+                ...conditions,
+                "sigunguList": sigunguList
+            })
+        }
+
+        getData();
+    }, [conditions.area]);
+
+    const AttractionClickHandler = async (e) => {
+        e.preventDefault();
+        const contentid = e.currentTarget.childNodes[0].childNodes[0].innerText;
+
+        const result = await getAttractionDetail(contentid);
+
+        setAttractionDetail(result);
     }
-        , {
-        "contentid": "126512",
-        "contenttypeid": "12",
-        "title": "경복궁",
-        "createdtime": "20041230090000",
-        "modifiedtime": "20230321095145",
-        "tel": "",
-        "telname": "",
-        "homepage": "경복궁 \u003ca href\u003d\"http://www.royalpalace.go.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 경복궁 홈페이지로 이동\"\u003ehttp://www.royalpalace.go.kr\u003c/a\u003e\u003cbr /\u003e궁궐길라잡이 \u003ca href\u003d\"http://www.palaceguide.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 궁궐길라잡이 홈페이지로 이동\"\u003ehttp://www.palaceguide.or.kr\u003c/a\u003e\u003cbr /\u003e한국의재발견 \u003ca href\u003d\"http://www.rekor.or.kr/\" target\u003d\"_blank\" title\u003d\"새창 : 한국의재발견 홈페이지로 이동\"\u003ehttp://www.rekor.or.kr\u003c/a\u003e\u003cbr /\u003e야간관람 예매\u003ca href\u003d\"https://ticket.11st.co.kr/Product/Detail?id\u003d266194\u0026prdNo\u003d4239172482\"title\u003d\"새창: 경복궁 야간관람 예매\"target\u003d\"_blank\"\u003ehttps://ticket.11st.co.kr/\u003c/a\u003e",
-        "booktour": "1",
-        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-        "cpyrhtDivCd": "Type3",
-        "areacode": "1",
-        "sigungucode": "23",
-        "cat1": "A02",
-        "cat2": "A0201",
-        "cat3": "A02010100",
-        "addr1": "서울특별시 종로구 사직로 161",
-        "addr2": "",
-        "zipcode": "03045",
-        "mapx": "126.9769930325",
-        "mapy": "37.5788222356",
-        "mlevel": "6",
-        "overview": "경복궁은 1395년 태조 이성계에 의해서 새로운 조선왕조의 법궁으로 지어졌다. 경복궁은 동궐(창덕궁)이나 서궐(경희궁)에 비해 위치가 북쪽에 있어 \u0027북궐\u0027이라 불리기도 했다. 경복궁은 5대 궁궐 가운데 으뜸의 규모와 건축미를 자랑한다. 경복궁 근정전에서 즉위식을 가진 왕들을 보면 제2대 정종, 제4대 세종, 제6대 단종, 제7대 세조, 제9대 성종, 제11대 중종, 제13대 명종 등이다. 경복궁은 임진왜란 때 상당수의 건물이 불타 없어진 아픔을 갖고 있으며, 고종 때에 흥선대원군의 주도 아래 7,700여칸에 이르는 건물들을 다시 세웠다. 그러나 또 다시 명성황후 시해사건이 일어나면서 왕조의 몰락과 함께 경복궁도 왕궁으로서의 기능을 상실하고 말았다. 경복궁에는 조선시대의 대표적인 건축물인 경회루와 향원정의 연못이 원형대로 남아 있으며, 근정전의 월대와 조각상들은 당시의 조각미술을 대표한다. 현재 흥례문 밖 서편에는 국립고궁 박물관이 위치하고 있고, 경복궁 내 향원정의 동편에는 국립민속 박물관이 위치하고 있다.\u003cbr /\u003e\u003cbr /\u003e* 주요문화재 \u003cbr /\u003e1) 사적 경복궁\u003cbr\u003e2) 국보 경복궁 근정전\u003cbr\u003e3) 국보 경복궁 경회루\u003cbr\u003e4) 보물 경복궁 자경전\u003cbr\u003e5) 보물 경복궁 자경전 십장생 굴뚝\u003cbr\u003e6) 보물 경복궁 아미산굴뚝\u003cbr\u003e7) 보물 경복궁 근정문 및 행각\u003cbr\u003e8) 보물 경복궁 풍기대\u003cbr\u003e"
-    }];
 
     return (
         <Styled.PageWrapper>
@@ -175,14 +156,32 @@ export default function AttractionPage() {
                         <Styled.SearchInput type="text" id="searchInput" placeholder='지역, 장소 검색' />
                     </Styled.SearchForm>
                     <Styled.ConditionList>
-                        <AttractionConditionDropBox props={{ icon: <i className="fas fa-location-arrow"></i>, text: '지역' }} />
-                        <AttractionConditionDropBox props={{ icon: <i className="fas fa-tasks-alt"></i>, text: '세부 지역' }} />
-                        <AttractionConditionDropBox props={{ icon: <i className="fas fa-list"></i>, text: '분류' }} />
+                        <AttractionConditionDropBox props={{ 
+                            icon: <i className="fas fa-location-arrow"></i>, 
+                            text: '지역',
+                            conditions,
+                            setConditions,
+                            type: 'area'
+                        }} />
+                        <AttractionConditionDropBox props={{
+                            icon: <i className="fas fa-tasks-alt"></i>, 
+                            text: '세부 지역',
+                            conditions,
+                            setConditions,
+                            type: 'sigungu'
+                        }} />
+                        <AttractionConditionDropBox props={{
+                            icon: <i className="fas fa-list"></i>, 
+                            text: '분류',
+                            conditions,
+                            setConditions,
+                            type: 'contenttype'
+                        }} />
                     </Styled.ConditionList>
                     <Styled.AttractionList>
                         {
-                            dummy.map((data, index) => {
-                                return <AttractionListCard key={data.contentid} props={{ data, index }} />
+                            attractionList.filter(data => data.firstimage ? true : false).map((data) => {
+                                return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />
                             })
                         }
                     </Styled.AttractionList>
@@ -194,7 +193,7 @@ export default function AttractionPage() {
                     {/* <MyMap /> */}
                 </section>
                 {
-                    <AttractionDetailCard props={{ data: dummy[0] }} />
+                    attractionDetail.contentid ? <AttractionDetailCard props={{ data: attractionDetail }} /> : <></>
                 }
             </Styled.PageMain>
         </Styled.PageWrapper>

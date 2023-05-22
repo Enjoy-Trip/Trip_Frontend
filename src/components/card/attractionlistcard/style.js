@@ -4,6 +4,10 @@ import IROnly from "styles/IROnly";
 export const AttractionArticle = styled.article`
     padding: 0 25px 30px;
     position: relative;
+
+    & > p:nth-child(1) {
+        ${IROnly}
+    }
 `
 
 export const AttractionArticleImageWrapper = styled.div`
