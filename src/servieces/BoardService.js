@@ -1,5 +1,4 @@
 import FetchTemplate from "utils/FetchTemplate"
-import { updateToken, clearUser } from "redux/slice/userSlice";
 
 import { refreshToken } from "utils/RefreshToken";
 
@@ -53,9 +52,6 @@ export async function getComments(boardNo, user) {
 }
 
 export async function writeBoard(title, content, images, user, dispatch) {
-    console.log(images[0]);
-    console.log(images[0].length);
-
     try {
         const responseWrite = await FetchTemplate({
             path: url + '/board',
@@ -87,6 +83,48 @@ export async function writeBoard(title, content, images, user, dispatch) {
                 "boardTitle": title,
                 "boardContent": content,
                 "boardImages": images
+            })
+        });
+
+        const resultWriteRefresh = await responseWriteRefresh.json();
+
+        alert(resultWriteRefresh.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function writeComment(boardNo, content, user, dispatch) {
+    try {
+        const responseWrite = await FetchTemplate({
+            path: url + '/board/comment',
+            method: 'POST',
+            needToken: true,
+            token: user.accessToken,
+            body: JSON.stringify({
+                "boardNo": boardNo,
+                "boardCommentContent": content,
+            })
+        });
+
+        const resultWrite = await responseWrite.json();
+
+        if (resultWrite.state === "SUCCESS") {
+            alert(resultWrite.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseWriteRefresh = await FetchTemplate({
+            path: url + '/board/comment',
+            method: 'POST',
+            needToken: true,
+            token: token,
+            body: JSON.stringify({
+                "boardNo": boardNo,
+                "boardCommentContent": content,
             })
         });
 
