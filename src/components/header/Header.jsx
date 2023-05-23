@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Style from './style';
 import { Link, useLocation  } from 'react-router-dom';
 import { useSelector } from "react-redux";
@@ -38,8 +38,8 @@ export default function Header() {
     function signout() {
         dispatch(clearUser());
     }
-
-    window.onload = () => {
+    
+    useEffect(() => {
         window.addEventListener('scroll', () => {
             if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
                 setMoved(true);
@@ -47,7 +47,7 @@ export default function Header() {
                 setMoved(false);
             }
         });
-    }
+    })
 
     return (
         <Style.HeaderWrapper moved={moved ? true : false} time={checkTime(location)}>
@@ -57,12 +57,18 @@ export default function Header() {
                 </Style.HeaderTitle>
                 <nav>
                     <Style.HeaderNavList>
+                        <li>
+                            <Link to="/attraction">Places</Link>
+                        </li>
+                        <li>
+                            <Link to="/attraction">Community</Link>
+                        </li>
                         {
                             user.refreshToken
                                 ?
                                 <>
                                     <li>
-                                        <a href="/user">My info</a>
+                                        <Link to="/user">My info</Link>
                                     </li>
                                     <li>
                                         <Link to="/" onClick={signout}>Sign out</Link>

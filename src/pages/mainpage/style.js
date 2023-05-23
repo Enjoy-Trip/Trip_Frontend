@@ -100,12 +100,16 @@ export const StyledSectionHeaderParagraph = styled.p`
 `
 
 export const StyledSection2 = styled.section`
+    height: 900px;
     padding-top: 45px;
     padding-bottom: 350px;
     position: relative;
-    margin-top: 35px;
-    /* background-size: 100%;
-    background-repeat: no-repeat; */
+    margin-top: 40px;
+    background: url(${props => props.img});
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    background-size: cover;
 `
 
 export const StyledSection2List = styled.ul`

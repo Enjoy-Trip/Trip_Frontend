@@ -3,6 +3,7 @@ import * as Styled from './style'
 
 import main1 from 'assets/videos/main1.mp4'
 import main2 from 'assets/videos/main2.mp4'
+import mainbackground from 'assets/images/mainbackground.webp'
 
 const section2Scroll = () => {
     let height = window.innerHeight || document.body.clientHeight;
@@ -53,7 +54,7 @@ export default function MainPage() {
                     <i className="fa-solid fa-chevron-down"></i>
                 </Styled.StyledSection1Button>
             </section>
-            <Styled.StyledSection2>
+            <Styled.StyledSection2 img={mainbackground}>
                 <Styled.StyledSectionHeader>
                     <Styled.StyledSectionTitle>Welcome to the best week of<span></span>your life</Styled.StyledSectionTitle>
                     <Styled.StyledSectionHeaderParagraph>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, veritatis et cupiditate impedit repellat perferendis eum sunt dicta voluptate suscipit commodi nobis quisquam inventore facilis error ducimus dolorem amet culpa.
