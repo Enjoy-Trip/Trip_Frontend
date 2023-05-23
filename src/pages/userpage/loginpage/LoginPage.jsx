@@ -63,7 +63,7 @@ export default function LoginPage() {
         // 회원가입 검증 처리
         // inputRef.current[0].value -> id input value 접근 가능
         // inputRef.current[1].value -> password input value 접근 가능
-        const result = await Login(inputRef.current[0].value, inputRef.current[1].value);
+        const result = await Login(inputs.id, inputs.password);
 
         if (result) {
             dispatch(loginUser({

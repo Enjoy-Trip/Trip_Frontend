@@ -99,7 +99,7 @@ const position = {
 
 export default function AttractionPage() {
     const SearchInputRef = useRef();
-    const [searchInput, setSearchInput] = useState();
+    const [searchInput, setSearchInput] = useState("");
     const [attractionList, setAttractionList] = useState([]);
     const [conditions, setConditions] = useState({
         "area": "",
@@ -137,6 +137,7 @@ export default function AttractionPage() {
         }
 
         attrcationList();
+        setSearchInput("");
     }, [conditions.area, conditions.contenttype, conditions.sigungu]);
 
     useEffect(() => {
@@ -231,7 +232,7 @@ export default function AttractionPage() {
     const handleCheck = async (e) => {
         e.preventDefault();
 
-        const keyword = SearchInputRef.current.value;
+        const keyword = searchInput;
         const result = await searchAttractionList(keyword);
 
         setAttractionList(result);
@@ -272,7 +273,7 @@ export default function AttractionPage() {
                             <i className="fa-solid fa-magnifying-glass"></i>
                         </Styled.SearchButton>
                         <label htmlFor="searchInput">검색어 입력</label>
-                        <Styled.SearchInput type="text" id="searchInput" placeholder='지역, 장소 검색' onChange={handleChange} ref={SearchInputRef} value={searchInput || ""} />
+                        <Styled.SearchInput type="text" id="searchInput" placeholder='지역, 장소 검색' onChange={handleChange} ref={SearchInputRef} value={searchInput} />
                     </Styled.SearchForm>
                     <Styled.ConditionList>
                         <AttractionConditionDropBox props={{

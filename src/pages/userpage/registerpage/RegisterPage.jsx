@@ -68,7 +68,7 @@ export default function RegisterPage() {
     const handleCheck = async (e) => {
         e.preventDefault();
 
-        await Signup(inputRef.current[0].value, inputRef.current[1].value, inputRef.current[3].value, inputRef.current[4].value);
+        await Signup(inputs.id, inputs.password, inputs.name, inputs.nickname);
 
         navigate('/user/login');
     }
