@@ -121,6 +121,23 @@ export async function getAttractionImages(contentid) {
     }
 }
 
+export async function getComments(contentid, user) {
+    try {
+        const response = await FetchTemplate({
+            path: url + '/attraction/' + contentid + '/comment',
+            method: 'GET',
+            needToken: user.accessToken ? true : false,
+            token: user.accessToken
+        });
+
+        const result = await response.json();
+
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function writeComment(contentid, content, user, dispatch) {
     try {
         const responseComment = await FetchTemplate({
@@ -157,6 +174,40 @@ export async function writeComment(contentid, content, user, dispatch) {
         const resultCommentRefresh = await responseCommentRefresh.json();
 
         alert(resultCommentRefresh.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function deleteComment(commentNo, user, dispatch) {
+    try {
+        const responseDelete = await FetchTemplate({
+            path: url + '/attraction/comment/' + commentNo,
+            method: 'DELETE',
+            needToken: true,
+            token: user.accessToken
+        });
+
+        const resultDelete = await responseDelete.json();
+
+        if (resultDelete.state === "SUCCESS") {
+            alert(resultDelete.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseDeleteRefresh = await FetchTemplate({
+            path: url + '/attraction/comment/' + commentNo,
+            method: 'DELETE',
+            needToken: true,
+            token: token
+        });
+
+        const resultDeleteRefresh = await responseDeleteRefresh.json();
+
+        alert(resultDeleteRefresh.message);
         return;
     } catch (error) {
         console.log(error);

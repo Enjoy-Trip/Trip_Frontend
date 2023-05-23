@@ -3,46 +3,10 @@ import * as Styled from './style'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
-import { getAttractionCategoty, getAttractionImages, writeComment } from 'servieces/AttractionService';
+import { getAttractionCategoty, getAttractionImages, getComments, writeComment } from 'servieces/AttractionService';
 import Comment from 'components/comment/Comment';
 
-const dummyComments = [
-    {
-        'attractionCommentContent': 'test content',
-        'attractionCommentTime': '2023-05-22 21:18:19',
-        'attractionCommentUser': {
-            'userId': 'test user'
-        }
-    },
-    {
-        'attractionCommentContent': 'test content',
-        'attractionCommentTime': '2023-05-22 21:18:19',
-        'attractionCommentUser': {
-            'userId': 'test user'
-        }
-    },
-    {
-        'attractionCommentContent': 'test content',
-        'attractionCommentTime': '2023-05-22 21:18:19',
-        'attractionCommentUser': {
-            'userId': 'test user'
-        }
-    },
-    {
-        'attractionCommentContent': 'test content',
-        'attractionCommentTime': '2023-05-22 21:18:19',
-        'attractionCommentUser': {
-            'userId': 'test user'
-        }
-    },
-    {
-        'attractionCommentContent': 'test content',
-        'attractionCommentTime': '2023-05-22 21:18:19',
-        'attractionCommentUser': {
-            'userId': 'test user'
-        }
-    }
-]
+import { deleteComment } from 'servieces/AttractionService';
 
 export default function AttractionDetailCard({ props: { data } }) {
     const dispatch = useDispatch();
@@ -50,11 +14,19 @@ export default function AttractionDetailCard({ props: { data } }) {
     const WrapperRef = useRef([]);
     const InputRef = useRef();
     const SectionRef = useRef();
+    const [commentList, setCommentList] = useState([]);
     const [input, setInput] = useState("");
     const [category, setCategory] = useState("");
     const [images, setImages] = useState([]);
     const [tab, setTab] = useState(0);
     const user = useSelector(state => state.user);
+
+    const getCommentList = async () => {
+        const result = await getComments(data.contentid, user);
+
+        setCommentList(result);
+        setInput("");
+    }
 
     useLayoutEffect(() => {
         const getCategory = async () => {
@@ -63,26 +35,20 @@ export default function AttractionDetailCard({ props: { data } }) {
             setCategory(result.name);
         }
 
-        getCategory();
-    }, [data]);
-
-    useEffect(() => {
         const getImages = async () => {
             const result = await getAttractionImages(data.contentid);
 
             setImages(result);
         }
 
-        getImages();
-    }, [data]);
-
-    useEffect(() => {
         SectionRef.current.style.display = 'flex';
+
+        getCategory();
+        getImages();
+        getCommentList();
     }, [data]);
 
     const onChangeHandler = (e) => {
-        console.log(e.target.value);
-
         setInput(e.target.value);
     }
 
@@ -92,14 +58,25 @@ export default function AttractionDetailCard({ props: { data } }) {
         setTab(tabIndex);
     }
 
-    const onCommentClick = (e) => {
+    const onCommentClick = async (e) => {
         e.preventDefault();
+        
+        await writeComment(data.contentid, input, user, dispatch);
 
-        writeComment(data.contentid, InputRef.current.value, user, dispatch);
+        setInput("");
+        getCommentList();
     }
 
     const onCloseClick = () => {
         SectionRef.current.style.display = 'none';
+    }
+
+    const deleteHandler = async (e) => {
+        const commentNo = e.currentTarget.childNodes[0].innerText;
+
+        await deleteComment(commentNo, user, dispatch);
+
+        getCommentList();
     }
 
     return (
@@ -174,7 +151,12 @@ export default function AttractionDetailCard({ props: { data } }) {
             </Styled.HomeWrapper>
             <Styled.ReviewWrapper ref={(element) => (WrapperRef.current[1] = element)} selected={tab} index={1}>
                 {
-                    dummyComments ? dummyComments.map((comment, index) => <Comment props={{ comment, 'type': 'attraction' }} key={index} />) : <></>
+                    commentList ? commentList.map((comment, index) => <Comment props={{ 
+                        comment, 
+                        type: 'attraction', 
+                        isWriter: comment.attractionCommentLoginCheck, 
+                        updateFunc: getCommentList,
+                        deleteFunc: deleteHandler }} key={index} />) : <></>
                 }
                 <Styled.ReviewForm>
                     <label htmlFor="commentInput">댓글 입력</label>

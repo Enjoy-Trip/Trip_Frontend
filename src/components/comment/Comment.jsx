@@ -1,20 +1,8 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import * as Styled from './style'
-import { useSelector, useDispatch } from 'react-redux'
 
-import { deleteComment } from 'servieces/BoardService'
 
-export default function Comment({ props: { comment, type, isWriter, updateFunc } }) {
-    const user = useSelector(state => state.user);
-    const dispatch = useDispatch();
-
-    const deleteHandler = async (e) => {
-        const commentNo = e.currentTarget.childNodes[0].innerText;
-
-        await deleteComment(commentNo, user, dispatch);
-
-        updateFunc();
-    }
+export default function Comment({ props: { comment, type, isWriter, updateFunc, deleteFunc } }) {
 
     return (
         <Styled.StyledListItem>
@@ -32,7 +20,7 @@ export default function Comment({ props: { comment, type, isWriter, updateFunc }
                         </Styled.StyledButton>
                     </li>
                     <li>
-                        <Styled.StyledButton onClick={deleteHandler}>
+                        <Styled.StyledButton onClick={deleteFunc}>
                             <span>{comment[type + 'CommentNo']}</span>
                             <span>삭제</span>
                         </Styled.StyledButton>

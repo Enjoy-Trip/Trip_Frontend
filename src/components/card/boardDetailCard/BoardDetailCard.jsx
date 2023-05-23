@@ -7,6 +7,8 @@ import Comment from 'components/comment/Comment'
 
 import { getComments, writeComment } from 'servieces/BoardService'
 
+import { deleteComment } from 'servieces/BoardService'
+
 export default function BoardDetailCard({ props: { data, detailShow } }) {
     const [commentList, setCommentList] = useState([]);
     const [input, setInput] = useState("");
@@ -43,6 +45,14 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
         getBoard();
     }
 
+    const deleteHandler = async (e) => {
+        const commentNo = e.currentTarget.childNodes[0].innerText;
+
+        await deleteComment(commentNo, user, dispatch);
+
+        getBoard();
+    }
+
     return (
         <Styled.StyledWrapper detailShow={detailShow} >
             <Styled.StyledSection onClick={e => e.stopPropagation()}>
@@ -63,7 +73,7 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
                                 </Styled.StyledBoardTitleWrapper>
                                 <Styled.StyledCommentList>
                                     {
-                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ comment:comment, type: 'board', isWriter: comment.boardCommentLoginCheck, updateFunc: getBoard }} />) : <></>
+                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ comment:comment, type: 'board', isWriter: comment.boardCommentLoginCheck, deleteFunc: deleteHandler }} />) : <></>
                                     }
                                     
                                 </Styled.StyledCommentList>
