@@ -124,4 +124,5 @@ export const CommentFormInput = styled.input`
 export const CommentFormButton = styled.button`
     margin-left: 20px;
     color: #0284FE;
+    display: ${props => props.display};
 `

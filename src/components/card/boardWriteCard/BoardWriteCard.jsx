@@ -85,8 +85,6 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
                 setUploadedImages([...uploadedImages]);
             };
 
-            console.log(image);
-
             return <ImagePreview image={image} deleteFunc={deleteFunc} key={index} />;
         });
         setPreviewImages(imageJSXs);
@@ -102,9 +100,19 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const result = await writeBoard(userInputRef.current[0].value, userInputRef.current[1].value, uploadedImages, user, dispatch);
+        if (uploadedImages.length == 0) {
+            alert("이미지를 입력해주세요!");
+            return;
+        }
 
-        console.log();
+        if (!userInputRef.current[0].value || !userInputRef.current[1].value) {
+            alert("제목과 내용을 입력해주세요!");
+            return;
+        }
+
+        await writeBoard(userInputRef.current[0].value, userInputRef.current[1].value, uploadedImages, user, dispatch);
+
+        window.location.reload();
     }
 
     return (

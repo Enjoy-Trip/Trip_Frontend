@@ -35,7 +35,27 @@ export async function getBoardDetail(boardNo) {
     }
 }
 
+export async function getComments(boardNo, user) {
+    try {
+        const response = await FetchTemplate({
+            path: url + '/board/' + boardNo + '/comment',
+            method: 'GET',
+            needToken: user.accessToken ? true : false,
+            token: user.accessToken
+        });
+
+        const result = await response.json();
+
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function writeBoard(title, content, images, user, dispatch) {
+    console.log(images[0]);
+    console.log(images[0].length);
+
     try {
         const responseWrite = await FetchTemplate({
             path: url + '/board',

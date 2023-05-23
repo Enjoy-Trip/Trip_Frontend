@@ -23,7 +23,5 @@ export async function refreshToken(dispatch, user) {
         accessToken: resultToken.data
     }));
 
-    console.log(resultToken.data);
-
     return resultToken.data;
 }
