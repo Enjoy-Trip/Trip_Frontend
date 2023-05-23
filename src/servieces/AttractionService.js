@@ -121,13 +121,15 @@ export async function getAttractionImages(contentid) {
     }
 }
 
-export async function getComments(contentid, user) {
+export async function getComments(contentid, user, dispatch) {
     try {
+        const token = await refreshToken(dispatch, user);
+
         const response = await FetchTemplate({
             path: url + '/attraction/' + contentid + '/comment',
             method: 'GET',
             needToken: user.accessToken ? true : false,
-            token: user.accessToken
+            token: token
         });
 
         const result = await response.json();

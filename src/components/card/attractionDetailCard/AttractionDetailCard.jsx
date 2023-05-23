@@ -22,7 +22,7 @@ export default function AttractionDetailCard({ props: { data } }) {
     const user = useSelector(state => state.user);
 
     const getCommentList = async () => {
-        const result = await getComments(data.contentid, user);
+        const result = await getComments(data.contentid, user, dispatch);
 
         setCommentList(result);
         setInput("");
