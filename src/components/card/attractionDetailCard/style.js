@@ -180,7 +180,7 @@ export const HomeUrlList = styled.ul`
 `
 
 export const ReviewWrapper = styled(SectionContent)`
-    padding: 20px;
+    padding: 20px 20px 50px;
     display: ${props => props.selected == props.index ? "block" : "none"};
 `
 
@@ -213,6 +213,7 @@ export const ReviewFormInput = styled.input`
 export const ReviewFormButton = styled.button`
     margin-left: 20px;
     color: #0284FE;
+    display: ${props => props.display};
 `
 
 export const PictureWrapper = styled(SectionContent)`

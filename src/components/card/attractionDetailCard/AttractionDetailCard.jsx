@@ -176,15 +176,11 @@ export default function AttractionDetailCard({ props: { data } }) {
                 {
                     dummyComments ? dummyComments.map((comment, index) => <Comment props={{ comment, 'type': 'attraction' }} key={index} />) : <></>
                 }
-                {
-                    user.refreshToken ?
-                        <Styled.ReviewForm>
-                            <label htmlFor="commentInput">댓글 입력</label>
-                            <Styled.ReviewFormInput type="text" id='commentInput' placeholder='댓글 작성...' ref={InputRef} onChange={onChangeHandler} value={input} />
-                            <Styled.ReviewFormButton onClick={onCommentClick}>게시</Styled.ReviewFormButton>
-                        </Styled.ReviewForm> :
-                        <></>
-                }
+                <Styled.ReviewForm>
+                    <label htmlFor="commentInput">댓글 입력</label>
+                    <Styled.ReviewFormInput type="text" id='commentInput' placeholder={user.refreshToken ? '댓글 작성...' : '로그인 한 후 댓글을 달 수 있습니다!'} readOnly={user.refreshToken ? false : true} ref={InputRef} onChange={onChangeHandler} value={input} />
+                    <Styled.ReviewFormButton onClick={onCommentClick} display={user.refreshToken ? "block" : "none"} >게시</Styled.ReviewFormButton>
+                </Styled.ReviewForm>
             </Styled.ReviewWrapper>
             <Styled.PictureWrapper ref={(element) => (WrapperRef.current[2] = element)} selected={tab} index={2}>
                 {
