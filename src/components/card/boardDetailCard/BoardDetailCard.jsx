@@ -5,9 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import BoardDetailCarousel from 'components/carousel/boardDetailCarousel/BoardDetailCarousel'
 import Comment from 'components/comment/Comment'
 
-import { getComments, writeComment } from 'servieces/BoardService'
-
-import { deleteComment } from 'servieces/BoardService'
+import { getComments, writeComment, updateComment, deleteComment } from 'servieces/BoardService'
 
 export default function BoardDetailCard({ props: { data, detailShow } }) {
     const [commentList, setCommentList] = useState([]);
@@ -45,8 +43,16 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
         getBoard();
     }
 
+    const updateHandler = async (e) => {
+        const commentNo = e.currentTarget.dataset.key.innerText;
+
+        await updateComment(commentNo, 'test modified', user, dispatch);
+
+        getBoard();
+    }
+
     const deleteHandler = async (e) => {
-        const commentNo = e.currentTarget.childNodes[0].innerText;
+        const commentNo = e.currentTarget.dataset.key;
 
         await deleteComment(commentNo, user, dispatch);
 
@@ -73,7 +79,12 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
                                 </Styled.StyledBoardTitleWrapper>
                                 <Styled.StyledCommentList>
                                     {
-                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ comment:comment, type: 'board', isWriter: comment.boardCommentLoginCheck, deleteFunc: deleteHandler }} />) : <></>
+                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ 
+                                            comment:comment, 
+                                            type: 'board', 
+                                            isWriter: comment.boardCommentLoginCheck,
+                                            updateFunc: updateHandler,
+                                            deleteFunc: deleteHandler }} />) : <></>
                                     }
                                     
                                 </Styled.StyledCommentList>

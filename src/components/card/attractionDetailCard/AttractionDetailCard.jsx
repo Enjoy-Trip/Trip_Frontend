@@ -72,7 +72,7 @@ export default function AttractionDetailCard({ props: { data } }) {
     }
 
     const deleteHandler = async (e) => {
-        const commentNo = e.currentTarget.childNodes[0].innerText;
+        const commentNo = e.currentTarget.dataset.key.innerText;
 
         await deleteComment(commentNo, user, dispatch);
 
