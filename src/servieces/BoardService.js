@@ -49,8 +49,6 @@ export async function writeBoard(title, content, images, user, dispatch) {
             })
         });
 
-        console.log(user.accessToken);
-
         const resultWrite = await responseWrite.json();
 
         if (resultWrite.state === "SUCCESS") {
@@ -59,8 +57,6 @@ export async function writeBoard(title, content, images, user, dispatch) {
         }
 
         const token = await refreshToken(dispatch, user);
-        
-        console.log(token);
 
         const responseWriteRefresh = await FetchTemplate({
             path: url + '/board',

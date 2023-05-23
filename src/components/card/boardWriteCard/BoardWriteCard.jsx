@@ -28,7 +28,6 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         const uploadBox = uploadBoxRef.current;
         const input = inputRef.current;
@@ -85,6 +84,8 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
                 uploadedImages.splice(uploadedImages.findIndex(isDeleteImage), 1);
                 setUploadedImages([...uploadedImages]);
             };
+
+            console.log(image);
 
             return <ImagePreview image={image} deleteFunc={deleteFunc} key={index} />;
         });
