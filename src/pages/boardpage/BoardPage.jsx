@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import * as Styled from './style'
+import { useSelector, useDispatch } from 'react-redux'
 
 import BoardListCard from 'components/card/boardListCard/BoardListCard'
 import BoardDetailCard from 'components/card/boardDetailCard/BoardDetailCard'
@@ -15,12 +16,20 @@ export default function BoardPage() {
     const [writeShow, setWriteShow] = useState(-1);
     const linksRef = useRef([]);
     const buttonRef = useRef();
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
+    const updateBoardList = async () => {
+        const result = await getBoardList();
+
+        setBoardList(result);
+    }
 
     const updateDetailShow = useCallback((e) => {
         const boardDetail = async (boardNo) => {
-            const result = await getBoardDetail(boardNo);
+            const result = await getBoardDetail(boardNo, user, dispatch);
 
-            setBoardDetail(result)
+            setBoardDetail(result);
         }
 
         e.preventDefault();
@@ -38,7 +47,13 @@ export default function BoardPage() {
     useEffect(() => {
         const links = linksRef.current;
 
-        links.forEach(link => link.addEventListener("click", updateDetailShow));
+        links.forEach(link => {
+            if (!link) {
+                return;
+            }
+
+            link.addEventListener("click", updateDetailShow)
+        });
         window.addEventListener("click", unShowDetailShow);
 
         return () => {
@@ -47,7 +62,8 @@ export default function BoardPage() {
                     return;
                 }
 
-                link.removeEventListener("click", updateDetailShow)}
+                link.removeEventListener("click", updateDetailShow)
+            }
             );
             window.removeEventListener("click", unShowDetailShow);
         };
@@ -77,13 +93,7 @@ export default function BoardPage() {
     }, [updateWriteShow, boardList]);
 
     useEffect(() => {
-        const getBoard = async () => {
-            const result = await getBoardList();
-
-            setBoardList(result);
-        }
-
-        getBoard();
+        updateBoardList();
     }, []);
 
     useEffect(() => {
@@ -130,7 +140,7 @@ export default function BoardPage() {
                         }
                     </Styled.StyledBoardList>
                 </Styled.StyledSection>
-                <BoardDetailCard props={{ data: boardDetail, detailShow }} />
+                <BoardDetailCard props={{ data: boardDetail, detailShow, updateBoardList }} />
                 <BoardWriteCard props={{ writeShow }} />
             </Styled.StyledMain>
         </Styled.PageWrapper>

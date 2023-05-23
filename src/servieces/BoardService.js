@@ -19,11 +19,15 @@ export async function getBoardList() {
     }
 }
 
-export async function getBoardDetail(boardNo) {
+export async function getBoardDetail(boardNo, user, dispatch) {
     try {
+        const token = await refreshToken(dispatch, user);
+
         const response = await FetchTemplate({
             path: url + '/board/' + boardNo,
             method: 'GET',
+            needToken: user.accessToken ? true : false,
+            token: token
         });
 
         const result = await response.json();
@@ -34,13 +38,15 @@ export async function getBoardDetail(boardNo) {
     }
 }
 
-export async function getComments(boardNo, user) {
+export async function getComments(boardNo, user, dispatch) {
     try {
+        const token = await refreshToken(dispatch, user);
+
         const response = await FetchTemplate({
             path: url + '/board/' + boardNo + '/comment',
             method: 'GET',
             needToken: user.accessToken ? true : false,
-            token: user.accessToken
+            token: token
         });
 
         const result = await response.json();
@@ -89,6 +95,40 @@ export async function writeBoard(title, content, images, user, dispatch) {
         const resultWriteRefresh = await responseWriteRefresh.json();
 
         alert(resultWriteRefresh.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function deleteBoard(boardNo, user, dispatch) {
+    try {
+        const responseDelete = await FetchTemplate({
+            path: url + '/board/' + boardNo,
+            method: 'DELETE',
+            needToken: true,
+            token: user.accessToken
+        });
+
+        const resultDelete = await responseDelete.json();
+
+        if (resultDelete.state === "SUCCESS") {
+            alert(resultDelete.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseDeleteRefresh = await FetchTemplate({
+            path: url + '/board/' + boardNo,
+            method: 'DELETE',
+            needToken: true,
+            token: token
+        });
+
+        const resultDeleteRefresh = await responseDeleteRefresh.json();
+
+        alert(resultDeleteRefresh.message);
         return;
     } catch (error) {
         console.log(error);

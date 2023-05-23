@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import BoardDetailCarousel from 'components/carousel/boardDetailCarousel/BoardDetailCarousel'
 import Comment from 'components/comment/Comment'
 
-import { getComments, writeComment, updateComment, deleteComment } from 'servieces/BoardService'
+import { deleteBoard, getComments, writeComment, updateComment, deleteComment } from 'servieces/BoardService'
 
-export default function BoardDetailCard({ props: { data, detailShow } }) {
+export default function BoardDetailCard({ props: { data, detailShow, updateBoardList } }) {
     const [commentList, setCommentList] = useState([]);
     const [input, setInput] = useState("");
     const inputRef = useRef();
@@ -15,7 +15,7 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
     const dispatch = useDispatch();
 
     const getBoard = async () => {
-        const result = await getComments(data.boardNo, user);
+        const result = await getComments(data.boardNo, user, dispatch);
 
         setCommentList(result);
         setInput("");
@@ -59,6 +59,14 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
         getBoard();
     }
 
+    const deleteBoardHandler = async (e) => {
+        const boardNo = e.currentTarget.dataset.key;
+
+        await deleteBoard(boardNo, user, dispatch);
+
+        updateBoardList();
+    }
+
     return (
         <Styled.StyledWrapper detailShow={detailShow} >
             <Styled.StyledSection onClick={e => e.stopPropagation()}>
@@ -99,8 +107,21 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
                                         value={input} />
                                     <Styled.CommentFormButton 
                                         display={user.refreshToken ? "block" : "none"}
-                                        onClick={submitHandler}>게시</Styled.CommentFormButton>
+                                        onClick={submitHandler}>게시
+                                    </Styled.CommentFormButton>
                                 </Styled.CommentForm>
+                                <Styled.StyledAdditionalButtonList display={data.boardLoginCheck ? "flex" : "none"}>
+                                    <li>
+                                        <Styled.StyledModifyButton>
+                                            수정
+                                        </Styled.StyledModifyButton>
+                                    </li>
+                                    <li>
+                                        <Styled.StyledDeleteButton data-key={data.boardNo} onClick={deleteBoardHandler}>
+                                            삭제
+                                        </Styled.StyledDeleteButton>
+                                    </li>
+                                </Styled.StyledAdditionalButtonList>
                             </Styled.StyledContentWrapper>
                         </> : <></>
                 }

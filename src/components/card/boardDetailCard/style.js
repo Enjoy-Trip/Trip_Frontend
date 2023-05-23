@@ -126,3 +126,27 @@ export const CommentFormButton = styled.button`
     color: #0284FE;
     display: ${props => props.display};
 `
+
+export const StyledAdditionalButtonList = styled.ul`
+    border-top: 1px solid #eee;
+    display: ${props => props.display};
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+`
+
+export const StyledButton = styled.button`
+    padding: 0;
+    color: white;
+    padding: 10px 40px;
+    border-radius: 8px;
+`
+
+export const StyledModifyButton = styled(StyledButton)`
+    background-color: #0284FE;
+`
+
+export const StyledDeleteButton = styled(StyledButton)`
+    background-color: rgba(220, 20, 60, 0.8);
+`
