@@ -90,11 +90,7 @@ export const SectionCategoryButton = styled.button`
     width: 100%;
     height: 46px;
 
-    & > span:nth-child(1) {
-        display: none;
-    }
-
-    & > span:nth-child(2) {
+    & > span {
         display: inline-block;
         width: fit-content;
         line-height: 43px;

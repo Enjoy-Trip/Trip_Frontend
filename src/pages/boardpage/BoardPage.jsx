@@ -26,7 +26,7 @@ export default function BoardPage() {
         e.preventDefault();
         e.stopPropagation();
 
-        boardDetail(e.currentTarget.childNodes[0].innerText);
+        boardDetail(e.currentTarget.dataset.key);
 
         setDetailShow(1);
     }, [detailShow]);

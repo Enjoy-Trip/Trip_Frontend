@@ -53,7 +53,7 @@ export default function AttractionDetailCard({ props: { data } }) {
     }
 
     const onClickHandler = (e) => {
-        const tabIndex = e.currentTarget.childNodes[0].innerText;
+        const tabIndex = e.currentTarget.dataset.key;
 
         setTab(tabIndex);
     }
@@ -72,7 +72,7 @@ export default function AttractionDetailCard({ props: { data } }) {
     }
 
     const deleteHandler = async (e) => {
-        const commentNo = e.currentTarget.dataset.key.innerText;
+        const commentNo = e.currentTarget.dataset.key;
 
         await deleteComment(commentNo, user, dispatch);
 
@@ -111,20 +111,17 @@ export default function AttractionDetailCard({ props: { data } }) {
             </Styled.SectionHeader>
             <Styled.SectionCategoryList>
                 <Styled.SectionCategoryListItem>
-                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[0] = element)} selected={tab} index={0} onClick={onClickHandler}>
-                        <span>0</span>
+                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[0] = element)} selected={tab} index={0} onClick={onClickHandler} data-key={0}>
                         <span>홈</span>
                     </Styled.SectionCategoryButton>
                 </Styled.SectionCategoryListItem>
                 <Styled.SectionCategoryListItem>
-                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[1] = element)} selected={tab} index={1} onClick={onClickHandler}>
-                        <span>1</span>
+                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[1] = element)} selected={tab} index={1} onClick={onClickHandler} data-key={1}>
                         <span>리뷰</span>
                     </Styled.SectionCategoryButton>
                 </Styled.SectionCategoryListItem>
                 <Styled.SectionCategoryListItem>
-                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[2] = element)} selected={tab} index={2} onClick={onClickHandler}>
-                        <span>2</span>
+                    <Styled.SectionCategoryButton ref={(element) => (CategoryRef.current[2] = element)} selected={tab} index={2} onClick={onClickHandler} data-key={2}>
                         <span>사진</span>
                     </Styled.SectionCategoryButton>
                 </Styled.SectionCategoryListItem>

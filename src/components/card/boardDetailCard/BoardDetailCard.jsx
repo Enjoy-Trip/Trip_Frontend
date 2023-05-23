@@ -44,7 +44,7 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
     }
 
     const updateHandler = async (e) => {
-        const commentNo = e.currentTarget.dataset.key.innerText;
+        const commentNo = e.currentTarget.dataset.key;
 
         await updateComment(commentNo, 'test modified', user, dispatch);
 

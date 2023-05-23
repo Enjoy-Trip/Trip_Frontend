@@ -214,7 +214,7 @@ export default function AttractionPage() {
 
     const AttractionClickHandler = async (e) => {
         e.preventDefault();
-        const contentid = e.currentTarget.childNodes[0].childNodes[0].innerText;
+        const contentid = e.currentTarget.dataset.key;
 
         const result = await getAttractionDetail(contentid);
 

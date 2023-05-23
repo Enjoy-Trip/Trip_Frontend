@@ -5,9 +5,8 @@ import * as Styled from './style'
 export default function AttractionListCard({ props: { data, AttractionClickHandler } }) {
     return (
         <li>
-            <Link to="/" onClick={AttractionClickHandler}>
+            <Link to="/" onClick={AttractionClickHandler} data-key={data.contentid}>
                 <Styled.AttractionArticle>
-                    <p>{data.contentid}</p>
                     <Styled.AttractionArticleImageWrapper>
                         <Styled.AttractionArticleImage src={data.firstimage} alt="" />
                     </Styled.AttractionArticleImageWrapper>

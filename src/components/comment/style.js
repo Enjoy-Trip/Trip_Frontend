@@ -37,8 +37,4 @@ export const StyledButtonList = styled.ul`
 export const StyledButton = styled.button`
     font-size: 10px;
     padding: 0;
-
-    & > span:nth-child(1) {
-        ${IROnly}
-    }
 `

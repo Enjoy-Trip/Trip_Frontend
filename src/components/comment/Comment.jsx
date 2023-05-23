@@ -3,7 +3,6 @@ import * as Styled from './style'
 
 
 export default function Comment({ props: { comment, type, isWriter, updateFunc, deleteFunc } }) {
-
     return (
         <Styled.StyledListItem>
             <Styled.StyledWrapper>
