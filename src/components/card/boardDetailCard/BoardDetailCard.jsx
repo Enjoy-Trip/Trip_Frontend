@@ -1,22 +1,19 @@
 import React from 'react'
 import * as Styled from './style'
-import BoardDetailImage from 'components/img/boardDetailImage/BoardDetailImage'
+import BoardDetailCarousel from 'components/carousel/boardDetailCarousel/BoardDetailCarousel'
 import Comment from 'components/comment/Comment'
 
 export default function BoardDetailCard({ props: { data, detailShow } }) {
     return (
         <Styled.StyledWrapper detailShow={detailShow} >
-            <Styled.StyledSection onClick={e => {e.preventDefault(); e.stopPropagation();}}>
+            <Styled.StyledSection onClick={e => e.stopPropagation()}>
                 {
                     data.boardNo ?
                         <>
                             <header>
                                 <h2>게시글 상세 영역</h2>
                             </header>
-                            <Styled.StyledImageList>
-                                <BoardDetailImage props={{ src: data.boardImages[0] }} />
-                                <BoardDetailImage props={{ src: data.boardImages[1] }} />
-                            </Styled.StyledImageList>
+                            <BoardDetailCarousel props={{ images: data.boardImages }} />
                             <Styled.StyledContentWrapper>
                                 <Styled.StyledBoardTitleWrapper>
                                     <span>{data.boardTitle}</span>

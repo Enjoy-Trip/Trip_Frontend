@@ -61,7 +61,7 @@ export default function Header() {
                             <Link to="/attraction">Places</Link>
                         </li>
                         <li>
-                            <Link to="/attraction">Community</Link>
+                            <Link to="/board">Community</Link>
                         </li>
                         {
                             user.refreshToken

@@ -51,7 +51,7 @@ export default function BoardPage() {
             );
             window.removeEventListener("click", unShowDetailShow);
         };
-    }, [updateDetailShow]);
+    }, [updateDetailShow, boardList]);
 
     const updateWriteShow = useCallback((e) => {
         e.stopPropagation();
@@ -74,7 +74,7 @@ export default function BoardPage() {
             button.removeEventListener("click", updateWriteShow);
             window.removeEventListener("click", unShowWriteShow);
         };
-    }, [updateWriteShow]);
+    }, [updateWriteShow, boardList]);
 
     useEffect(() => {
         const getBoard = async () => {

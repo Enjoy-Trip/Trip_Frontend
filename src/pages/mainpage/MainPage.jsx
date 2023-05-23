@@ -44,8 +44,13 @@ export default function MainPage() {
         <main>
             <section>
                 <Styled.StyledSection1Header>
-                    <Styled.StyledSection1Title><span>Vacance with You</span><span>YOUCANCE</span></Styled.StyledSection1Title>
-                    <p><span>너와 함께 떠나는 여행, 유캉스</span></p>
+                    <h2>
+                        <span>Vacance with You</span>
+                        <span>YOUCANCE</span>
+                    </h2>
+                    <p>
+                        <span>너와 함께 떠나는 여행, 유캉스</span>
+                    </p>
                 </Styled.StyledSection1Header>
                 <Styled.StyledSection1Video autoPlay muted loop >
                     <source src={backgroundList[Math.floor(Math.random() * backgroundList.length)]} type="video/mp4" />

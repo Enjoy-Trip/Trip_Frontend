@@ -38,6 +38,7 @@ export const StyledContentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+    background-color: white;
 `
 
 export const StyledBoardTitleWrapper = styled.div`

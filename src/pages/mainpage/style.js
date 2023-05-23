@@ -35,6 +35,7 @@ export const StyledSection1Header = styled.header`
 
     & > h2 > span:nth-child(1) {
         font-size: 28px;
+        padding-left: 8px;
     }
     
     & > h2 > span:nth-child(2) {
@@ -46,10 +47,6 @@ export const StyledSection1Header = styled.header`
         margin-top: 30px;
         padding-left: 100px;
     }
-`
-
-export const StyledSection1Title = styled.h2`
-
 `
 
 export const StyledSection1Video = styled.video`

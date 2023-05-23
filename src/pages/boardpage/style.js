@@ -74,7 +74,7 @@ export const StyledBoardList = styled.ul`
     padding: 20px;
     overflow-y: scroll;
     display: grid;
-    grid-template-columns: repeat(3, 300px);
+    grid-template-columns: repeat(auto-fit, 300px);
     justify-content: center;
     gap: 6px;
 
