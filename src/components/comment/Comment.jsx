@@ -1,14 +1,44 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import * as Styled from './style'
+import { useSelector, useDispatch } from 'react-redux'
 
-export default function Comment({ props: { comment, type } }) {
+import { deleteComment } from 'servieces/BoardService'
+
+export default function Comment({ props: { comment, type, isWriter, updateFunc } }) {
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
+    const deleteHandler = async (e) => {
+        const commentNo = e.currentTarget.childNodes[0].innerText;
+
+        await deleteComment(commentNo, user, dispatch);
+
+        updateFunc();
+    }
+
     return (
         <Styled.StyledListItem>
             <Styled.StyledWrapper>
                 <p>{comment[type + 'CommentUser'].userId}</p>
                 <span>{comment[type + 'CommentContent']}</span>
             </Styled.StyledWrapper>
-            <p>{comment[type + 'CommentTime']}</p>
+            <Styled.StyledAdditionalWrapper>
+                <p>{comment[type + 'CommentTime']}</p>
+                <Styled.StyledButtonList display={isWriter ? "flex" : "none"}>
+                    <li>
+                        <Styled.StyledButton>
+                            <span>{comment[type + 'CommentNo']}</span>
+                            <span>수정</span>
+                        </Styled.StyledButton>
+                    </li>
+                    <li>
+                        <Styled.StyledButton onClick={deleteHandler}>
+                            <span>{comment[type + 'CommentNo']}</span>
+                            <span>삭제</span>
+                        </Styled.StyledButton>
+                    </li>
+                </Styled.StyledButtonList>
+            </Styled.StyledAdditionalWrapper>
         </Styled.StyledListItem>
     )
 }

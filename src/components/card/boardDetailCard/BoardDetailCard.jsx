@@ -63,7 +63,7 @@ export default function BoardDetailCard({ props: { data, detailShow } }) {
                                 </Styled.StyledBoardTitleWrapper>
                                 <Styled.StyledCommentList>
                                     {
-                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ comment:comment, type: 'board' }} />) : <></>
+                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ comment:comment, type: 'board', isWriter: comment.boardCommentLoginCheck, updateFunc: getBoard }} />) : <></>
                                     }
                                     
                                 </Styled.StyledCommentList>

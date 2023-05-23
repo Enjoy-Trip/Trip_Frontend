@@ -136,3 +136,37 @@ export async function writeComment(boardNo, content, user, dispatch) {
         console.log(error);
     }
 }
+
+export async function deleteComment(commentNo, user, dispatch) {
+    try {
+        const responseDelete = await FetchTemplate({
+            path: url + '/board/comment/' + commentNo,
+            method: 'DELETE',
+            needToken: true,
+            token: user.accessToken
+        });
+
+        const resultDelete = await responseDelete.json();
+
+        if (resultDelete.state === "SUCCESS") {
+            alert(resultDelete.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseDeleteRefresh = await FetchTemplate({
+            path: url + '/board/comment/' + commentNo,
+            method: 'DELETE',
+            needToken: true,
+            token: token
+        });
+
+        const resultDeleteRefresh = await responseDeleteRefresh.json();
+
+        alert(resultDeleteRefresh.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
