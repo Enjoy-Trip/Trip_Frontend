@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import * as Styled from './style'
 import FormButton from 'components/button/formButton/FormButton';
+import { useSelector, useDispatch } from 'react-redux';
+import { writeBoard } from 'servieces/BoardService';
 
 function ImagePreview({ image, deleteFunc }) {
     return (
@@ -13,11 +15,19 @@ function ImagePreview({ image, deleteFunc }) {
     );
 }
 
-export default function BoardWriteCard({ max = 10 }) {
+export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
+    const [userInputs, setUserInputs] = useState({
+        title: "",
+        content: ""
+    })
     const uploadBoxRef = useRef();
     const inputRef = useRef();
+    const userInputRef = useRef([]);
+    const user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         const uploadBox = uploadBoxRef.current;
@@ -76,20 +86,29 @@ export default function BoardWriteCard({ max = 10 }) {
                 setUploadedImages([...uploadedImages]);
             };
 
-            console.log(image);
-
             return <ImagePreview image={image} deleteFunc={deleteFunc} key={index} />;
         });
         setPreviewImages(imageJSXs);
     }, [uploadedImages]);
 
-    function onSubmit(event) {
-        event.preventDefault();
+    const handleChange = (e) => {
+        setUserInputs({
+            ...userInputs,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const result = await writeBoard(userInputRef.current[0].value, userInputRef.current[1].value, uploadedImages, user, dispatch);
+
+        console.log();
     }
 
     return (
-        <Styled.StyledWrapper>
-            <Styled.StyledSection>
+        <Styled.StyledWrapper writeShow={writeShow}>
+            <Styled.StyledSection onClick={e => e.stopPropagation()}>
                 <Styled.StyledSectionHeader>
                     <h2>새 게시물 만들기</h2>
                 </Styled.StyledSectionHeader>
@@ -114,7 +133,18 @@ export default function BoardWriteCard({ max = 10 }) {
                     </Styled.StyledImageFieldset>
                     <Styled.StyledContentFieldset>
                         <legend>내용 입력 영역</legend>
-                        <Styled.StyledTextarea name="" id="" cols="30" rows="10" placeholder='문구 입력...' />
+                        <label htmlFor="title">제목 입력</label>
+                        <input 
+                            type="text" name="title" id="title" placeholder='제목 입력...' 
+                            ref={(element) => (userInputRef.current[0] = element)}
+                            onChange={handleChange} 
+                            value={userInputs.title} />
+                        <label htmlFor="content">내용 입력</label>
+                        <Styled.StyledTextarea 
+                            name="content" id="content" cols="30" rows="10" placeholder='문구 입력...'
+                            ref={(element) => (userInputRef.current[1] = element)}
+                            onChange={handleChange}
+                            value={userInputs.content} />
                         <FormButton data={{
                             onClickFunc: onSubmit,
                             content: "게시하기",

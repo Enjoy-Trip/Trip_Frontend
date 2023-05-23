@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import * as Styled from './style'
 
@@ -6,46 +6,91 @@ import BoardListCard from 'components/card/boardListCard/BoardListCard'
 import BoardDetailCard from 'components/card/boardDetailCard/BoardDetailCard'
 import BoardWriteCard from 'components/card/boardWriteCard/BoardWriteCard'
 
+import { getBoardList, getBoardDetail } from 'servieces/BoardService'
+
 export default function BoardPage() {
-    const dummy = {
-        "boardNo": 1,
-        "boardTitle": "test",
-        "boardTime": "2023-05-17 01:33:27",
-        "boardContent": "test desc",
-        "boardUser": {
-            "userNo": 1,
-            "userId": "test",
-            "userName": "test"
-        },
-        "boardImages": [
-            "https://images.unsplash.com/photo-1682686580922-2e594f8bdaa7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-            "https://images.unsplash.com/photo-1682686580922-2e594f8bdaa7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
-        ],
-        "boardCommentList": [
-            {
-                "boardCommentNo": 1,
-                "boardNo": 1,
-                "boardCommentContent": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt repudiandae at, animi consectetur iste dolorem quod temporibus! Laborum, quas deleniti aliquam accusantium, ipsa est facere provident voluptas ea voluptate sapiente?",
-                "boardCommentTime": "2023-05-21 20:29:41",
-                "boardCommentUser": {
-                    "userNo": 1,
-                    "userId": "test",
-                    "userName": "test"
+    const [boardList, setBoardList] = useState([]);
+    const [boardDetail, setBoardDetail] = useState({});
+    const [detailShow, setDetailShow] = useState(-1);
+    const [writeShow, setWriteShow] = useState(-1);
+    const linksRef = useRef([]);
+    const buttonRef = useRef();
+
+    const updateDetailShow = useCallback((e) => {
+        const boardDetail = async (boardNo) => {
+            const result = await getBoardDetail(boardNo);
+
+            setBoardDetail(result)
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        boardDetail(e.currentTarget.childNodes[0].innerText);
+
+        setDetailShow(1);
+    }, [detailShow]);
+
+    const unShowDetailShow = useCallback(() => {
+        setDetailShow(0);
+    }, [detailShow]);
+
+    useEffect(() => {
+        const links = linksRef.current;
+
+        links.forEach(link => link.addEventListener("click", updateDetailShow));
+        window.addEventListener("click", unShowDetailShow);
+
+        return () => {
+            links.forEach(link => {
+                if (!link) {
+                    return;
                 }
-            },
-            {
-                "boardCommentNo": 2,
-                "boardNo": 1,
-                "boardCommentContent": "test2",
-                "boardCommentTime": "2023-05-21 20:29:41",
-                "boardCommentUser": {
-                    "userNo": 1,
-                    "userId": "test",
-                    "userName": "test"
-                }
-            }
-        ]
-    }
+
+                link.removeEventListener("click", updateDetailShow)}
+            );
+            window.removeEventListener("click", unShowDetailShow);
+        };
+    }, [updateDetailShow]);
+
+    const updateWriteShow = useCallback((e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        setWriteShow(1);
+    }, [writeShow]);
+
+    const unShowWriteShow = useCallback(() => {
+        setWriteShow(0);
+    }, [writeShow]);
+
+    useEffect(() => {
+        const button = buttonRef.current;
+
+        button.addEventListener("click", updateWriteShow);
+        window.addEventListener("click", unShowWriteShow);
+
+        return () => {
+            button.removeEventListener("click", updateWriteShow);
+            window.removeEventListener("click", unShowWriteShow);
+        };
+    }, [updateWriteShow]);
+
+    useEffect(() => {
+        const getBoard = async () => {
+            const result = await getBoardList();
+
+            setBoardList(result);
+        }
+
+        getBoard();
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setDetailShow(0);
+        }, 100);
+    }, [boardList]);
 
     return (
         <Styled.PageWrapper>
@@ -60,7 +105,7 @@ export default function BoardPage() {
                     <i className="far fa-clipboard"></i>
                     <span>게시판</span>
                 </Styled.NavButton>
-                <Styled.NavButton>
+                <Styled.NavButton ref={buttonRef}>
                     <i className="fas fa-pen"></i>
                     <span>글쓰기</span>
                 </Styled.NavButton>
@@ -71,18 +116,22 @@ export default function BoardPage() {
                         <h2>게시글 리스트 영역</h2>
                     </header>
                     <Styled.StyledBoardList>
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
-                        <BoardListCard props={{ data: dummy }} />
+                        {
+                            boardList ?
+                                boardList.map((data, index) => <BoardListCard
+                                    key={data.boardNo}
+                                    props={{
+                                        data,
+                                        linksRef,
+                                        index
+                                    }}
+                                />
+                                ) : <></>
+                        }
                     </Styled.StyledBoardList>
                 </Styled.StyledSection>
-                {/* <BoardDetailCard props={{ data: dummy }} /> */}
-                <BoardWriteCard />
+                <BoardDetailCard props={{ data: boardDetail, detailShow }} />
+                <BoardWriteCard props={{ writeShow }} />
             </Styled.StyledMain>
         </Styled.PageWrapper>
     )

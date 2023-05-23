@@ -3,9 +3,11 @@ import styled from "styled-components";
 export const StyledListItem = styled.li`
     width: 100%;
     margin-bottom: 20px;
+    font-size: 12px;
+    line-height: 15px;
 
     & > p {
-        font-size: 12px;
+        font-size: 10px;
         color: #aaa;
     }
 `

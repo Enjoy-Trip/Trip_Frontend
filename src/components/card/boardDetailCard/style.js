@@ -8,6 +8,7 @@ export const StyledWrapper = styled.div`
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.4);
+    display: ${props => props.detailShow == 1 ? "block" : "none"};
 `
 
 export const StyledSection = styled.section`
@@ -39,39 +40,39 @@ export const StyledContentWrapper = styled.div`
     position: relative;
 `
 
-export const StyledContentWriterWrapper = styled.div`
-    width: 100%;
-    padding: 25px 30px;
-    border: 1px solid #eee;
-    box-shadow: 0 -1px 10px 0 #eee;
-`
-
 export const StyledBoardTitleWrapper = styled.div`
     width: 100%;
-    margin-bottom: 30px;
+    padding: 30px 25px 20px;
+    border: 1px solid #eee;
+    /* box-shadow: 0 -1px 10px 0 #eee; */
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
 
     & > span:nth-child(1) {
-        font-size: 24px;
+        font-size: 16px;
         font-weight: 700;
         flex-grow: 1;
+        text-align: center;
     }
 
     & > span:nth-child(2) {
         color: #aaa;
+        font-size: 10px;
+        text-align: right;
+        margin: 10px 0 20px;
     }
-`
 
-export const StyledBoardContent = styled.p`
-    color: #555;
+    & > p {
+        color: #555;
+        font-size: 13px;
+    }
 `
 
 export const StyledCommentList = styled.ul`
     width: 100%;
     flex-grow: 1;
     overflow-y: scroll;
-    padding: 20px 30px 0 30px;
+    padding: 20px 20px 0 20px;
 
     &::-webkit-scrollbar {
         width: 4px;

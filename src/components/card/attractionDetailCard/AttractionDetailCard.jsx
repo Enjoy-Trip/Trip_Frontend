@@ -50,12 +50,11 @@ export default function AttractionDetailCard({ props: { data } }) {
     const WrapperRef = useRef([]);
     const InputRef = useRef();
     const SectionRef = useRef();
+    const [input, setInput] = useState("");
     const [category, setCategory] = useState("");
     const [images, setImages] = useState([]);
     const [tab, setTab] = useState(0);
     const user = useSelector(state => state.user);
-
-    console.log(data);
 
     useLayoutEffect(() => {
         const getCategory = async () => {
@@ -80,6 +79,12 @@ export default function AttractionDetailCard({ props: { data } }) {
     useEffect(() => {
         SectionRef.current.style.display = 'flex';
     }, [data]);
+
+    const onChangeHandler = (e) => {
+        console.log(e.target.value);
+
+        setInput(e.target.value);
+    }
 
     const onClickHandler = (e) => {
         const tabIndex = e.currentTarget.childNodes[0].innerText;
@@ -175,7 +180,7 @@ export default function AttractionDetailCard({ props: { data } }) {
                     user.refreshToken ?
                         <Styled.ReviewForm>
                             <label htmlFor="commentInput">댓글 입력</label>
-                            <Styled.ReviewFormInput type="text" id='commentInput' placeholder='댓글 작성...' ref={InputRef} />
+                            <Styled.ReviewFormInput type="text" id='commentInput' placeholder='댓글 작성...' ref={InputRef} onChange={onChangeHandler} value={input} />
                             <Styled.ReviewFormButton onClick={onCommentClick}>게시</Styled.ReviewFormButton>
                         </Styled.ReviewForm> :
                         <></>

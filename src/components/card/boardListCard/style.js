@@ -3,6 +3,10 @@ import IROnly from "styles/IROnly";
 
 export const StyledListItem = styled.li`
     width: 100%;
+
+    & > a > p {
+        display: none;
+    }
 `
 
 export const StyledArticle = styled.article`
@@ -18,6 +22,7 @@ export const StyledArticle = styled.article`
 
     & > img {
         width: 100%;
+        /* height: 300px; */
         aspect-ratio: 1 / 1;
         object-fit: cover;
     }

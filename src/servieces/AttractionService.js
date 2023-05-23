@@ -1,5 +1,5 @@
 import FetchTemplate from "utils/FetchTemplate"
-import { updateToken, clearUser } from "redux/slice/userSlice";
+import { refreshToken } from "utils/RefreshToken";
 
 const url = "http://localhost:8080";
 
@@ -126,7 +126,7 @@ export async function writeComment(contentid, content, user, dispatch) {
         const responseComment = await FetchTemplate({
             path: url + '/attraction/comment',
             method: 'POST',
-            // needToken: true,
+            needToken: true,
             token: user.accessToken,
             body: JSON.stringify({
                 "contentid": contentid,
@@ -136,39 +136,18 @@ export async function writeComment(contentid, content, user, dispatch) {
 
         const resultComment = await responseComment.json();
 
-        console.log(resultComment);
-
         if (resultComment.state === "SUCCESS") {
             alert(resultComment.message);
             return;
         }
 
-        const responseToken = await FetchTemplate({
-            path: url + '/user/refresh',
-            method: 'POST',
-            body: JSON.stringify({
-                "refreshToken": user.refreshToken
-            })
-        });
-
-        const resultToken = await responseToken.json();
-
-        if (resultToken.state === "FAIL") {
-            dispatch(clearUser);
-            alert(resultToken.message);
-        }
-
-        console.log(resultToken);
-
-        dispatch(updateToken({
-            accessToken: resultToken.data
-        }));
+        const token = await refreshToken(dispatch, user);
 
         const responseCommentRefresh = await FetchTemplate({
             path: url + '/attraction/comment',
             method: 'POST',
             needToken: true,
-            token: resultToken.data,
+            token: token,
             body: JSON.stringify({
                 "contentid": contentid,
                 "attractionCommentContent": content
@@ -176,8 +155,6 @@ export async function writeComment(contentid, content, user, dispatch) {
         });
 
         const resultCommentRefresh = await responseCommentRefresh.json();
-
-        console.log(resultCommentRefresh);
 
         alert(resultCommentRefresh.message);
         return;

@@ -8,6 +8,7 @@ export const StyledWrapper = styled.div`
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.4);
+    display: ${props => props.writeShow == 1 ? 'block' : "none"};
 `
 
 export const StyledSection = styled.section`
@@ -191,6 +192,26 @@ export const StyledContentFieldset = styled.fieldset`
 
     & > textarea:focus {
         outline: none;
+    } 
+
+    & label {
+        ${IROnly}
+    }
+
+    & > input {
+        height: 30px;
+        border: none;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 15px;
+    }
+
+    & > input:focus {
+        outline: none;
+    }
+
+    & > button {
+        margin-top: 15px;
     }
 `
 
@@ -199,6 +220,7 @@ export const StyledTextarea = styled.textarea`
     border: none;
     resize: none;
     flex-grow: 1;
+    border-bottom: 1px solid #eee;
 
     &::-webkit-scrollbar {
         width: 4px;
