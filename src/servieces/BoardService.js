@@ -82,6 +82,50 @@ export async function writeBoard(title, content, images, user, dispatch) {
     }
 }
 
+export async function updateBoard(boardNo, title, content, images, user, dispatch) {
+    try {
+        const responseUpdate = await FetchTemplate({
+            path: url + '/board/' + boardNo,
+            method: 'PUT',
+            needToken: true,
+            token: user.accessToken,
+            body: JSON.stringify({
+                "boardTitle": title,
+                "boardContent": content,
+                "boardImages": images
+            })
+        });
+
+        const resultUpdate = await responseUpdate.json();
+
+        if (resultUpdate.state === "SUCCESS") {
+            alert(resultUpdate.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseUpdateRefresh = await FetchTemplate({
+            path: url + '/board/' + boardNo,
+            method: 'PUT',
+            needToken: true,
+            token: token,
+            body: JSON.stringify({
+                "boardTitle": title,
+                "boardContent": content,
+                "boardImages": images
+            })
+        });
+
+        const resultUpdateRefresh = await responseUpdateRefresh.json();
+
+        alert(resultUpdateRefresh.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function deleteBoard(boardNo, user, dispatch) {
     try {
         const responseDelete = await FetchTemplate({

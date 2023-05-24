@@ -20,8 +20,6 @@ const myStyles = [
 ];
 
 function MyMap({ props: { list, setAttractionDetail, getAttractionDetail, center, setCenter, zoom } }) {
-    console.log(list);
-
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_KEY

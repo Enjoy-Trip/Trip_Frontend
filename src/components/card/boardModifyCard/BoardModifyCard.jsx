@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import * as Styled from './style'
 import FormButton from 'components/button/formButton/FormButton';
 import { useSelector, useDispatch } from 'react-redux';
-import { writeBoard } from 'servieces/BoardService';
+import { updateBoard } from 'servieces/BoardService';
 
 function ImagePreview({ image, deleteFunc }) {
     return (
@@ -15,7 +15,7 @@ function ImagePreview({ image, deleteFunc }) {
     );
 }
 
-export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
+export default function BoardModifyCard ({ max = 10, props: { updateShow, setUpdateShow, data } }) {
     const [uploadedImages, setUploadedImages] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
     const [userInputs, setUserInputs] = useState({
@@ -27,6 +27,31 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
     const userInputRef = useRef([]);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!data.boardTitle) {
+            return;
+        }
+
+        setUserInputs({
+            title: data.boardTitle,
+            content: data.boardContent
+        });
+
+        const imageJSXs = data.boardImages.map((image, index) => {
+            const isDeleteImage = (element) => {
+                return element === image;
+            };
+
+            const deleteFunc = () => {
+                uploadedImages.splice(uploadedImages.findIndex(isDeleteImage), 1);
+                setUploadedImages([...uploadedImages]);
+            };
+
+            return <ImagePreview image={image} deleteFunc={deleteFunc} key={index} />;
+        });
+        setPreviewImages(imageJSXs);
+    }, [data]);
 
     useEffect(() => {
         const uploadBox = uploadBoxRef.current;
@@ -110,22 +135,25 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
             return;
         }
 
-        await writeBoard(userInputs.title, userInputs.content, uploadedImages, user, dispatch);
+        await updateBoard(data.boardNo, userInputs.title, userInputs.content, uploadedImages, user, dispatch);
 
         window.location.reload();
     }
 
     return (
-        <Styled.StyledWrapper writeShow={writeShow}>
+        <Styled.StyledWrapper updateShow={updateShow} onClick={e => {
+            e.stopPropagation();
+            setUpdateShow(0);
+        }}>
             <Styled.StyledSection onClick={e => e.stopPropagation()}>
                 <Styled.StyledSectionHeader>
-                    <h2>새 게시물 만들기</h2>
+                    <h2>게시물 수정</h2>
                 </Styled.StyledSectionHeader>
                 <Styled.StyledFrom>
                     <Styled.StyledImageFieldset>
                         <legend>이미지 입력 영역</legend>
                         <Styled.StyledImageUploadBox >
-                            <Styled.StyledImageUploadLabel htmlFor="imgInput" ref={uploadBoxRef}>
+                            <Styled.StyledImageUploadLabel htmlFor="imgUpdate" ref={uploadBoxRef}>
                                 <Styled.StyledImageUploadTextBox>
                                     <p>드래그 또는 클릭하여 업로드</p>
                                     <span>권장사항: oooMB 이하 고화질</span>
@@ -134,7 +162,7 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
                                     <i className="fas fa-arrow-circle-up"></i>
                                 </div>
                             </Styled.StyledImageUploadLabel>
-                            <input type="file" multiple accept="image/*" id="imgInput" ref={inputRef} />
+                            <input type="file" multiple accept="image/*" id="imgUpdate" ref={inputRef} />
                             <Styled.StyledPreviewWrapper>
                                 <Styled.StyledPreviewContainer>{previewImages}</Styled.StyledPreviewContainer>
                             </Styled.StyledPreviewWrapper>
@@ -142,21 +170,21 @@ export default function BoardWriteCard({ max = 10, props: { writeShow } }) {
                     </Styled.StyledImageFieldset>
                     <Styled.StyledContentFieldset>
                         <legend>내용 입력 영역</legend>
-                        <label htmlFor="title">제목 입력</label>
+                        <label htmlFor="titleUpdate">제목 입력</label>
                         <input 
-                            type="text" name="title" id="title" placeholder='제목 입력...' 
+                            type="text" name="title" id="titleUpdate" placeholder='제목 입력...' 
                             ref={(element) => (userInputRef.current[0] = element)}
                             onChange={handleChange} 
                             value={userInputs.title} />
-                        <label htmlFor="content">내용 입력</label>
+                        <label htmlFor="contentUpdate">내용 입력</label>
                         <Styled.StyledTextarea 
-                            name="content" id="content" cols="30" rows="10" placeholder='문구 입력...'
+                            name="content" id="contentUpdate" cols="30" rows="10" placeholder='문구 입력...'
                             ref={(element) => (userInputRef.current[1] = element)}
                             onChange={handleChange}
                             value={userInputs.content} />
                         <FormButton data={{
                             onClickFunc: onSubmit,
-                            content: "게시하기",
+                            content: "수정하기",
                             color: "blue"
                         }} />
                     </Styled.StyledContentFieldset>

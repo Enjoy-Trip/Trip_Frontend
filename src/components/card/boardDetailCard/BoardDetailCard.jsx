@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as Styled from './style'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -7,15 +7,49 @@ import Comment from 'components/comment/Comment'
 
 import { deleteBoard, getComments, writeComment, updateComment, deleteComment } from 'servieces/BoardService'
 
-function defaultFunc() {}
+import BoardModifyCard from '../boardModifyCard/BoardModifyCard'
+
+function defaultFunc() { }
 
 export default function BoardDetailCard({ props: { data, detailShow, updateBoardList } }) {
     const [commentList, setCommentList] = useState([]);
     const [input, setInput] = useState("");
     const [commentContent, setCommentContent] = useState({ func: defaultFunc });
+    const [updateShow, setUpdateShow] = useState(-1);
     const inputRef = useRef();
+    const buttonRef = useRef();
+    const containerRef = useRef();
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
+
+    const updateUpdateShow = useCallback((e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        setUpdateShow(1);
+    }, [updateShow]);
+
+    const unShowUpdatehow = useCallback(() => {
+        setUpdateShow(0);
+    }, [updateShow]);
+
+    useEffect(() => {
+        const button = buttonRef.current;
+
+        if (!button) {
+            return;
+        }
+
+        button.addEventListener("click", updateUpdateShow);
+
+        return () => {
+            if (!button) {
+                return;
+            }
+
+            button.removeEventListener("click", updateUpdateShow);
+        };
+    }, [updateUpdateShow, commentList]);
 
     const getBoard = async () => {
         const result = await getComments(data.boardNo, user, dispatch);
@@ -23,7 +57,7 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
         setCommentList(result);
         setInput("");
     }
-    
+
     useEffect(() => {
         getBoard();
     }, [data]);
@@ -39,9 +73,9 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
             alert("내용을 입력해주세요!");
             return;
         }
-        
+
         await writeComment(data.boardNo, input, user, dispatch);
-        
+
         setInput("");
         getBoard();
     }
@@ -72,7 +106,7 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
     }
 
     return (
-        <Styled.StyledWrapper detailShow={detailShow} >
+        <Styled.StyledWrapper detailShow={detailShow} ref={containerRef} >
             <Styled.StyledSection onClick={e => e.stopPropagation()}>
                 {
                     data.boardNo ?
@@ -91,33 +125,34 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
                                 </Styled.StyledBoardTitleWrapper>
                                 <Styled.StyledCommentList>
                                     {
-                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{ 
-                                            comment:comment, 
-                                            type: 'board', 
+                                        commentList ? commentList.map(comment => <Comment key={comment.boardCommentNo + comment.boardNo} props={{
+                                            comment: comment,
+                                            type: 'board',
                                             isWriter: comment.boardCommentLoginCheck,
                                             updateFunc: updateHandler,
                                             deleteFunc: deleteHandler,
-                                            setCommentFunc: setCommentContent }} />) : <></>
+                                            setCommentFunc: setCommentContent
+                                        }} />) : <></>
                                     }
-                                    
+
                                 </Styled.StyledCommentList>
                                 <Styled.CommentForm>
                                     <label htmlFor="commentInput">댓글 입력</label>
-                                    <Styled.CommentFormInput 
-                                        type="text" id='commentInput' 
-                                        placeholder={user.refreshToken ? '댓글 작성...' : "로그인 후 댓글을 달 수 있습니다!"} 
+                                    <Styled.CommentFormInput
+                                        type="text" id='commentInput'
+                                        placeholder={user.refreshToken ? '댓글 작성...' : "로그인 후 댓글을 달 수 있습니다!"}
                                         readOnly={user.refreshToken ? false : true}
                                         ref={inputRef}
                                         onChange={inputHandler}
                                         value={input} />
-                                    <Styled.CommentFormButton 
+                                    <Styled.CommentFormButton
                                         display={user.refreshToken ? "block" : "none"}
                                         onClick={submitHandler}>게시
                                     </Styled.CommentFormButton>
                                 </Styled.CommentForm>
                                 <Styled.StyledAdditionalButtonList display={data.boardLoginCheck ? "flex" : "none"}>
                                     <li>
-                                        <Styled.StyledModifyButton>
+                                        <Styled.StyledModifyButton ref={buttonRef}>
                                             수정
                                         </Styled.StyledModifyButton>
                                     </li>
@@ -131,6 +166,7 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
                         </> : <></>
                 }
             </Styled.StyledSection>
+            <BoardModifyCard props={{ updateShow, setUpdateShow, data }} />
         </Styled.StyledWrapper>
     )
 }
