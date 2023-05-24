@@ -22,15 +22,12 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
+
     const updateUpdateShow = useCallback((e) => {
         e.stopPropagation();
         e.preventDefault();
 
         setUpdateShow(1);
-    }, [updateShow]);
-
-    const unShowUpdatehow = useCallback(() => {
-        setUpdateShow(0);
     }, [updateShow]);
 
     useEffect(() => {

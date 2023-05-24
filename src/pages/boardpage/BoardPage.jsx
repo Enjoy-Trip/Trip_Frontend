@@ -83,10 +83,18 @@ export default function BoardPage() {
     useEffect(() => {
         const button = buttonRef.current;
 
+        if (!button) {
+            return;
+        }
+
         button.addEventListener("click", updateWriteShow);
         window.addEventListener("click", unShowWriteShow);
 
         return () => {
+            if (!button) {
+                return;
+            }
+
             button.removeEventListener("click", updateWriteShow);
             window.removeEventListener("click", unShowWriteShow);
         };
@@ -115,10 +123,12 @@ export default function BoardPage() {
                     <i className="far fa-clipboard"></i>
                     <span>게시판</span>
                 </Styled.NavButton>
-                <Styled.NavButton ref={buttonRef}>
-                    <i className="fas fa-pen"></i>
-                    <span>글쓰기</span>
-                </Styled.NavButton>
+                {
+                    user.refreshToken ? <Styled.NavButton ref={buttonRef}>
+                        <i className="fas fa-pen"></i>
+                        <span>글쓰기</span>
+                    </Styled.NavButton> : <></>
+                }
             </Styled.PageHeader>
             <Styled.StyledMain>
                 <Styled.StyledSection>
