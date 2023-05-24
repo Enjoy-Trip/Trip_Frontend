@@ -289,10 +289,6 @@ export default function AttractionPage() {
         setSearchInput("");
     }
 
-    console.log(!!searchInput && (!!conditions.area || !!conditions.sigungu || !!conditions.contenttype));
-    console.log(attractionList);
-    console.log(attractionFilterList);
-
     return (
         <Styled.PageWrapper>
             <Styled.PageHeader>

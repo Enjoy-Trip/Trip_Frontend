@@ -62,8 +62,20 @@ export const StyledBoardTitleWrapper = styled.div`
         text-align: right;
         margin: 10px 0 20px;
     }
+`
+
+export const StyledTitleContentWrapper = styled.div`
+    line-height: 18px;
+
+    & > span {
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 12px;
+        font-weight: 700;
+    }
 
     & > p {
+        display: inline;
         color: #555;
         font-size: 13px;
     }

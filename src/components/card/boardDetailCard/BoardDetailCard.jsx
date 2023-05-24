@@ -119,9 +119,10 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
                                 <Styled.StyledBoardTitleWrapper>
                                     <span>{data.boardTitle}</span>
                                     <span>{data.boardTime}</span>
-                                    <p>
-                                        {data.boardContent}
-                                    </p>
+                                    <Styled.StyledTitleContentWrapper>
+                                        <span>{data.boardUser.userId}</span>
+                                        <p>{data.boardContent}</p>
+                                    </Styled.StyledTitleContentWrapper>
                                 </Styled.StyledBoardTitleWrapper>
                                 <Styled.StyledCommentList>
                                     {
