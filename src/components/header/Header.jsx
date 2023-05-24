@@ -126,8 +126,6 @@ export default function Header() {
         });
     }, [nowUser]);
 
-    console.log(user);
-
     return (
         <>
             <Style.HeaderWrapper moved={moved ? true : false} time={checkTime(location)}>

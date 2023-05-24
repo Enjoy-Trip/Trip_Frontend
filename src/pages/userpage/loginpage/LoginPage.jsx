@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from 'redux/slice/userSlice'
 
 import * as Styled from './style'
@@ -11,7 +11,7 @@ import loginpageevening from 'assets/images/loginpageevening.jpg'
 import FormInputCol from 'components/input/formInputCol/FormInputCol'
 import FormButton from 'components/button/formButton/FormButton'
 
-import { Login } from 'servieces/UserServices'
+import { Login, findPassword } from 'servieces/UserServices'
 
 const checkTime = () => {
     const date = new Date();
@@ -40,6 +40,7 @@ const checkTime = () => {
 }
 
 export default function LoginPage() {
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputRef = useRef([]);
@@ -55,6 +56,7 @@ export default function LoginPage() {
     const [finds, setFinds] = useState({
         id: "",
         name: "",
+        email: ""
     });
 
     const handleChange = (e) => {
@@ -89,16 +91,22 @@ export default function LoginPage() {
     const handleFindsCheck = async (e) => {
         e.preventDefault();
 
-        // const result = await Login(inputs.id, inputs.password);
+        if (!finds.id) {
+            alert('아이디를 입력해주세요!');
+            return;
+        }
 
-        // if (result) {
-        //     dispatch(loginUser({
-        //         accessToken: result['Access-Token'],
-        //         refreshToken: result['Refresh-Token']
-        //     }));
+        if (!finds.name) {
+            alert('이름을 입력해주세요!');
+            return;
+        }
 
-        //     navigate('/');
-        // }
+        if (!finds.email) {
+            alert('이메일을 입력해주세요!');
+            return;
+        }
+
+        await findPassword(finds.id, finds.name, finds.email, user, dispatch);
     }
 
     const toggle = (e) => {
@@ -108,7 +116,8 @@ export default function LoginPage() {
         setWriteShow(!writeShow);
         setFinds({
             id: "",
-            name: ""
+            name: "",
+            email: ""
         })
     }
 
@@ -189,6 +198,16 @@ export default function LoginPage() {
                                 ref: (element) => (findRef.current[1] = element),
                                 placeholder: 'Your Name',
                                 value: finds.name
+                            }} />
+                            <FormInputCol data={{
+                                text: 'email',
+                                type: 'text',
+                                id: 'email',
+                                name: 'email',
+                                onChangeFunc: handleFindsChange,
+                                ref: (element) => (findRef.current[2] = element),
+                                placeholder: 'Your Email',
+                                value: finds.email
                             }} />
                             <FormButton data={{
                                 onClickFunc: handleFindsCheck,
