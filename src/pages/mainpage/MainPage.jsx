@@ -1,14 +1,53 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as Styled from './style'
 
 import main1 from 'assets/videos/main1.mp4'
 import main2 from 'assets/videos/main2.mp4'
 import mainbackground from 'assets/images/mainbackground.webp'
+import { Link } from 'react-router-dom'
 
 const section2Scroll = () => {
     let height = window.innerHeight || document.body.clientHeight;
     window.scrollTo(0, height - 60);
 }
+
+const recommentList = [
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    },
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    },
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    },
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    },
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    },
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    },
+    {
+        "addr1": "서울특별시 강남구 테헤란로 521",
+        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/45/2705645_image2_1.jpg",
+        "title": "그랜드 인터컨티넨탈 서울 파르나스",
+    }
+]
 
 export default function MainPage() {
     useEffect(() => {
@@ -16,7 +55,36 @@ export default function MainPage() {
     }, []);
 
     const backgroundList = [main1, main2];
-    const [firstIndex, setFirstIndex] = useState(0);
+
+    const [section2Index, setSection2Index] = useState(Math.floor(recommentList.length / 2));
+    const secttion2ContainerRef = useRef();
+    const secttion2PrevButtonRef = useRef();
+    const secttion2NextButtonRef = useRef();
+
+    const section2LeftClick = useCallback((e) => {
+        e.stopPropagation();
+
+        setSection2Index(section2Index - 1);
+    }, [section2Index]);
+
+    const section2RightClick = useCallback((e) => {
+        e.stopPropagation();
+
+        setSection2Index(section2Index + 1);
+    }, [section2Index]);
+
+    useEffect(() => {
+        const prevButton = secttion2PrevButtonRef.current;
+        const nextButton = secttion2NextButtonRef.current;
+
+        prevButton.addEventListener("click", section2LeftClick);
+        nextButton.addEventListener("click", section2RightClick);
+
+        return () => {
+            prevButton.removeEventListener("click", section2LeftClick);
+            nextButton.removeEventListener("click", section2RightClick);
+        }
+    }, [section2LeftClick, section2RightClick]);
 
     return (
         <main>
@@ -43,13 +111,34 @@ export default function MainPage() {
                     <Styled.StyledSectionHeaderParagraph>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, veritatis et cupiditate impedit repellat perferendis eum sunt dicta voluptate suscipit commodi nobis quisquam inventore facilis error ducimus dolorem amet culpa.
                         Quaerat nam laborum quo, beatae dolorum fuga quam magnam illo. Quae, neque blanditiis! Molestiae qui dolores exercitationem et. Vero iure consectetur optio at obcaecati iste in architecto itaque soluta dolorem.</Styled.StyledSectionHeaderParagraph>
                 </Styled.StyledSectionHeader>
-                <Styled.StyledSection2List>
+                <Styled.StyledSection2List ref={secttion2ContainerRef} margin={(-370 * section2Index) + "px"}>
+                    {
+                        recommentList.map((data, index) => 
+                        <li key={index + data.title}>
+                            <Link to="/attraction" state={{ attractionTitle: data.title }}>
+                                <Styled.Section2ListArticle backgroundimg={data.firstimage}>
+                                    <header>
+                                        <h3>{data.title}</h3>
+                                    </header>
+                                    <p>{data.addr1}</p>
+                                </Styled.Section2ListArticle>
+                            </Link>
+                        </li>)
+                    }
                 </Styled.StyledSection2List>
+                <Styled.Section2LeftButton ref={secttion2PrevButtonRef} show={section2Index != 0 ? "block" : "none"}>
+                    <span>왼쪽으로 이동</span>
+                    <i className="fas fa-chevron-left"></i>
+                </Styled.Section2LeftButton>
+                <Styled.Section2RightButton ref={secttion2NextButtonRef} show={section2Index != recommentList.length - 1 ? "block" : "none"}>
+                    <span>오른쪽으로 이동</span>
+                    <i className="fas fa-chevron-right"></i>
+                </Styled.Section2RightButton>
             </Styled.StyledSection2>
-            
-            <section>
+
+            <Styled.StyledSection3>
                 <Styled.StyledSectionHeader>
-                    <Styled.StyledSectionTitle>category</Styled.StyledSectionTitle>
+                    <Styled.StyledSectionTitle>Our Destinations</Styled.StyledSectionTitle>
                 </Styled.StyledSectionHeader>
                 <ul>
                     <li>
@@ -68,7 +157,7 @@ export default function MainPage() {
                         <a href="/">category5</a>
                     </li>
                 </ul>
-            </section>
+            </Styled.StyledSection3>
             <section>
                 <header>
                     <h2>Our destinations</h2>

@@ -8,11 +8,11 @@ export default function BoardDetailCarousel({ props: { images } }) {
     const prevButtonRef = useRef();
     const nextButtonRef = useRef();
 
-    const handlerLeftClick = (e) => {
+    const handlerLeftClick = useCallback((e) => {
         e.stopPropagation();
 
         setIndex(index - 1);
-    }
+    }, [index]);
 
     const handlerRightClick = useCallback((e) => {
         e.stopPropagation();

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import * as Styled from './style'
-import { Link } from 'react-router-dom'
+import { Link, useLocation  } from 'react-router-dom'
 
 import MyMap from 'components/map/MyMap'
 import AttractionListCard from 'components/card/attractionListCard/AttractionListCard'
@@ -116,6 +116,31 @@ export default function AttractionPage() {
         lng: 126.9918
     })
     const [zoom, setZoom] = useState(10);
+	const location = useLocation();
+    
+    useEffect(() => {
+        const checkState = async () => {
+            if (!location.state) {
+                return;
+            }
+    
+            setSearchInput(location.state.attractionTitle);
+
+            const result = await searchAttractionList(location.state.attractionTitle);
+    
+            setAttractionList(result);
+            setAttractionFilterList([]);
+            setConditions({
+                ...conditions,
+                "area": "",
+                "sigungu": "",
+                "contenttype": "",
+            });
+            setAttractionDetail({});
+        }
+        
+        checkState();
+    }, [])
 
     useEffect(() => {
         const notExistSearchResult = async () => {

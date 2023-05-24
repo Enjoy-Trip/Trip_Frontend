@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import IROnly from "styles/IROnly";
 
 const buttonDownAnimation = keyframes`
     0% {
@@ -110,16 +111,98 @@ export const StyledSection2 = styled.section`
 `
 
 export const StyledSection2List = styled.ul`
-    background-color: aqua;
     position: absolute;
-    left: 50vw;
+    left: calc(50vw - 150px);
     right: 0;
-    top: 330px;
-    width: 1000px;
-    height: 500px;
+    top: 360px;
+    height: 450px;
+    display: flex;
+    gap: 50px;
+    transition: all 0.3s;
+    margin-left: ${props => props.margin};
+`
+
+export const Section2ListArticle = styled.article`
+    width: 320px;
+    height: 450px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    background: url(${props => props.backgroundimg});
+
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+
+    &:hover {
+        box-shadow: inset 0 -220px 200px 5px rgba(0,0,0,1);
+    }
+
+    &:hover > header {
+        display: block;
+    }
+
+    &:hover > p {
+        display: block;
+    }
+
+    & > header {
+        color: white;
+        display: none;
+        width: 250px;
+        font-size: 18px;
+        margin-top: auto;
+        margin-bottom: 20px;
+    }
+
+    & > header > h3 {
+        font-weight: 700;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    & > p {
+        color: white;
+        display: none;
+        width: 250px;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-bottom: 10px;
+    }
+`
+
+export const CarouselButton = styled.button`
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 28px;
+    color: #777;
+    background-color: #eee;
+    border: 1px solid #777;
+
+    & > span {
+        ${IROnly}
+    }
+`
+
+export const Section2LeftButton = styled(CarouselButton)`
+    bottom: 300px;
+    left: 250px;
+    display: ${props => props.show};
+`
+
+export const Section2RightButton = styled(CarouselButton)`
+    bottom: 300px;
+    right: 250px;
+    display: ${props => props.show};
 `
 
 
 export const StyledSection3 = styled.section`
-
+    padding-top: 80px;
 `
