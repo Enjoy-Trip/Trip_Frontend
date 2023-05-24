@@ -76,17 +76,31 @@ export const ArticleWrapper = styled.div`
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.4);
-    display: ${props => props.writeShow == 1 ? 'block' : "none"};
+    z-index: 1000;
 `
 export const FindArticle = styled.article`
-    width: 50vw;
-    height: 70vh;
+    width: 400px;
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     position: absolute;
-    top: 15vh;
-    left: 25vw;
     border-radius: 5px;
     background-color: white;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    font-size: 14px;
+
+    & > header {
+        ${IROnly}
+    }
+`
+
+export const StyledArticleForm = styled.form`
+    display: flex;
+    flex-direction: column;
+
+    & > input {
+        margin-bottom: 20px;
+    }
 `

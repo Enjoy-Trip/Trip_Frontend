@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { loginUser } from 'redux/slice/userSlice'
@@ -43,49 +43,18 @@ export default function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const inputRef = useRef([]);
+    const findRef = useRef([]);
     const time = checkTime();
-    const [writeShow, setWriteShow] = useState(-1);
-    const buttonRef = useRef();
-
-    const updateWriteShow = useCallback((e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        console.log('hi');
-
-        setWriteShow(1 - writeShow);
-    }, []);
-
-    console.log(writeShow);
-
-    // const unShowWriteShow = useCallback(() => {
-    //     setWriteShow(0);
-    // }, [writeShow]);
-
-    // useEffect(() => {
-    //     const button = buttonRef.current;
-
-    //     console.log(button);
-
-    //     button.addEventListener("click", updateWriteShow);
-    //     window.addEventListener("click", unShowWriteShow);
-
-    //     return () => {
-    //         button.removeEventListener("click", updateWriteShow);
-    //         window.removeEventListener("click", unShowWriteShow);
-    //     };
-    // }, [updateWriteShow, writeShow]);
-
-    // console.log(buttonRef);
-    // console.log(writeShow);
-
-    // useEffect(() => {
-    //     setWriteShow(-2);
-    // }, []);
+    const [writeShow, setWriteShow] = useState(false);
 
     const [inputs, setInputs] = useState({
         id: "",
         password: "",
+    });
+
+    const [finds, setFinds] = useState({
+        id: "",
+        name: "",
     });
 
     const handleChange = (e) => {
@@ -98,9 +67,6 @@ export default function LoginPage() {
     const handleCheck = async (e) => {
         e.preventDefault();
 
-        // 회원가입 검증 처리
-        // inputRef.current[0].value -> id input value 접근 가능
-        // inputRef.current[1].value -> password input value 접근 가능
         const result = await Login(inputs.id, inputs.password);
 
         if (result) {
@@ -112,6 +78,40 @@ export default function LoginPage() {
             navigate('/');
         }
     }
+
+    const handleFindsChange = (e) => {
+        setFinds({
+            ...finds,
+            [e.target.name]: e.target.value,
+        });
+    }
+
+    const handleFindsCheck = async (e) => {
+        e.preventDefault();
+
+        // const result = await Login(inputs.id, inputs.password);
+
+        // if (result) {
+        //     dispatch(loginUser({
+        //         accessToken: result['Access-Token'],
+        //         refreshToken: result['Refresh-Token']
+        //     }));
+
+        //     navigate('/');
+        // }
+    }
+
+    const toggle = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setWriteShow(!writeShow);
+    }
+
+    useEffect(() => {
+        window.addEventListener('click', () => {
+            setWriteShow(false);
+        })
+    }, [])
 
     return (
         <Styled.StyledMain time={time.time}>
@@ -154,79 +154,46 @@ export default function LoginPage() {
                         <Styled.StyledArticleParagraph>Don‘t have an account?</Styled.StyledArticleParagraph>
                         <Styled.StyledArticleAnchor href="/user/register">Sign up</Styled.StyledArticleAnchor>
                         <Styled.StyledArticleParagraph>or</Styled.StyledArticleParagraph>
-                        <Styled.StyledArticleAnchor href="/user/register" onClick={updateWriteShow}>Forgot Password?</Styled.StyledArticleAnchor>
+                        <Styled.StyledArticleAnchor href="/user/findpassword" onClick={toggle}>Forgot Password?</Styled.StyledArticleAnchor>
                     </Styled.StyledArticle>
                 </Styled.StyledArticleWrapper>
                 <Styled.StyledImage src={time.image} alt="" />
-                <Styled.ArticleWrapper props={{ writeShow }} >
-                    <Styled.FindArticle time={time.time}>
-                        <header>
-                            <h3>회원 정보 입력 영역</h3>
-                        </header>
-                        {/* <Styled.StyledForm>
+                {
+                    writeShow ? <Styled.ArticleWrapper props={{ writeShow }} >
+                        <Styled.FindArticle time={time.time} onClick={e => e.stopPropagation()}>
+                            <header>
+                                <h3>회원 정보 입력 영역</h3>
+                            </header>
+                            <Styled.StyledArticleForm>
                             <FormInputCol data={{
                                 text: 'Id',
                                 type: 'text',
                                 id: 'id',
                                 name: 'id',
-                                ref: (element) => (inputRef.current[0] = element),
+                                onChangeFunc: handleFindsChange,
+                                ref: (element) => (findRef.current[0] = element),
                                 placeholder: 'Your Id',
-                                value: inputs.id,
-                                readOnly: true
+                                value: finds.id
                             }} />
                             <FormInputCol data={{
-                                text: 'Password',
-                                type: 'password',
-                                id: 'password',
-                                name: 'password',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[1] = element),
-                                placeholder: 'New Password',
-                                value: inputs.password
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Confirm Password',
-                                type: 'password',
-                                id: 'passwordConfirm',
-                                name: 'passwordConfirm',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[2] = element),
-                                placeholder: 'Confirm New Password',
-                                value: inputs.passwordConfirm
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Name',
+                                text: 'name',
                                 type: 'text',
                                 id: 'name',
                                 name: 'name',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[3] = element),
-                                placeholder: 'New Name',
-                                value: inputs.name
-                            }} />
-                            <FormInputCol data={{
-                                text: 'Nickname',
-                                type: 'text',
-                                id: 'nickname',
-                                name: 'nickname',
-                                onChangeFunc: handleChange,
-                                ref: (element) => (inputRef.current[4] = element),
-                                placeholder: 'New Nickname',
-                                value: inputs.nickname
+                                onChangeFunc: handleFindsChange,
+                                ref: (element) => (findRef.current[1] = element),
+                                placeholder: 'Your Name',
+                                value: finds.name
                             }} />
                             <FormButton data={{
-                                onClickFunc: handleUpdate,
+                                onClickFunc: handleFindsCheck,
                                 content: "Update my account",
                                 color: "blue"
                             }} />
-                            <FormButton data={{
-                                onClickFunc: handleDelete,
-                                content: "Delete my account",
-                                color: "red"
-                            }} />
-                        </Styled.StyledForm> */}
-                    </Styled.FindArticle>
-                </Styled.ArticleWrapper>
+                        </Styled.StyledArticleForm>
+                        </Styled.FindArticle>
+                    </Styled.ArticleWrapper> : <></>
+                }
             </Styled.StyledSection>
         </Styled.StyledMain>
     )
