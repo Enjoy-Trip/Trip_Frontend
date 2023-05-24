@@ -137,6 +137,7 @@ export default function RegisterPage() {
                 <Styled.StyledSectionHeader>
                     <h2>회원정보 입력 영역</h2>
                 </Styled.StyledSectionHeader>
+                <Styled.StyledImage src={time.image} alt="" />
                 <Styled.StyledArticleWrapper time={time.time}>
                     <Styled.StyledArticle>
                         <header>
@@ -218,7 +219,6 @@ export default function RegisterPage() {
                         <Styled.StyledArticleAnchor href="/user/login">Sign in</Styled.StyledArticleAnchor>
                     </Styled.StyledArticle>
                 </Styled.StyledArticleWrapper>
-                <Styled.StyledImage src={time.image} alt="" />
             </Styled.StyledSection>
         </Styled.StyledMain>
     )
