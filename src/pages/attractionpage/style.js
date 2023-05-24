@@ -90,14 +90,17 @@ export const SearchForm = styled.form`
     }
 `
 
-export const SearchButton = styled.button`
+export const FormButton = styled.button`
     color: #0284FE;
-    margin-left: 12px;
-    margin-right: 3px;
 
     & > span {
         ${IROnly}
     }
+`
+
+export const SearchButton = styled(FormButton)`
+    margin-left: 12px;
+    margin-right: 3px;
 `
 
 export const SearchInput = styled.input`
@@ -105,6 +108,7 @@ export const SearchInput = styled.input`
     height: 42px;
     line-height: 40px;
     font-size: 16px;
+    flex-grow: 1;
 
     &:focus {
         outline: none;
@@ -113,6 +117,11 @@ export const SearchInput = styled.input`
     &::placeholder {
         vertical-align: top;
     }
+`
+
+export const DeleteButton = styled(FormButton)`
+    margin-left: 3px;
+    margin-right: 12px;
 `
 
 export const ConditionList = styled.ul`

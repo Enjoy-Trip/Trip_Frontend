@@ -101,6 +101,7 @@ export default function AttractionPage() {
     const SearchInputRef = useRef();
     const [searchInput, setSearchInput] = useState("");
     const [attractionList, setAttractionList] = useState([]);
+    const [attractionFilterList, setAttractionFilterList] = useState([]);
     const [conditions, setConditions] = useState({
         "area": "",
         "areaList": [],
@@ -117,7 +118,7 @@ export default function AttractionPage() {
     const [zoom, setZoom] = useState(10);
 
     useEffect(() => {
-        const attrcationList = async function () {
+        const notExistSearchResult = async () => {
             if (!conditions.area || !conditions.contenttype || !conditions.sigungu) {
                 return;
             }
@@ -134,12 +135,46 @@ export default function AttractionPage() {
             }
 
             setAttractionList(result.filter(attraction => attraction.homepage === "" ? false : true).filter(attraction => attraction.overview === "" || attraction.overview === "-" ? false : true));
+        }
+
+        const existSearchResult = () => {
+            const areaData = conditions.areaList.filter(element => element.name === conditions.area)[0];
+            const contenttypeData = conditions.contenttypeList.filter(element => element.name === conditions.contenttype)[0];
+            const areaDetailData = conditions.sigunguList.filter(element => element.name === conditions.sigungu)[0];
+
+            let list = attractionList.map(attraction => attraction);
+
+            console.log(areaData, contenttypeData, areaDetailData);
+
+            if (areaData) {
+                list = list.filter(attraction => attraction.areacode == areaData.code);
+            }
+
+            if (areaDetailData) {
+                list = list.filter(attraction => attraction.sigungucode == areaDetailData.code);
+            }
+
+            if (contenttypeData) {
+                list = list.filter(attraction => attraction.contenttypeid == contenttypeData.code);
+            }
+
+            setAttractionFilterList(list);
+        }
+
+        const attrcationList = async () => {
+            if (searchInput) {
+                existSearchResult();
+            } else {
+                await notExistSearchResult();
+            }
+
             setAttractionDetail({});
         }
 
         attrcationList();
-        setSearchInput("");
     }, [conditions.area, conditions.contenttype, conditions.sigungu]);
+
+    console.log(attractionFilterList);
 
     useEffect(() => {
         const getData = async () => {
@@ -206,7 +241,8 @@ export default function AttractionPage() {
             setZoom(position[data.name].zoom);
             setConditions({
                 ...conditions,
-                "sigunguList": sigunguList
+                "sigunguList": sigunguList,
+                "sigungu": ""
             });
         }
 
@@ -237,6 +273,7 @@ export default function AttractionPage() {
         const result = await searchAttractionList(keyword);
 
         setAttractionList(result);
+        setAttractionFilterList([]);
         setConditions({
             ...conditions,
             "area": "",
@@ -244,6 +281,14 @@ export default function AttractionPage() {
             "contenttype": "",
         });
         setAttractionDetail({});
+    }
+
+    const onDeleteHandler = async (e) => {
+        e.preventDefault();
+
+        setAttractionList([]);
+        setAttractionFilterList([]);
+        setSearchInput("");
     }
 
     return (
@@ -276,6 +321,10 @@ export default function AttractionPage() {
                         </Styled.SearchButton>
                         <label htmlFor="searchInput">검색어 입력</label>
                         <Styled.SearchInput type="text" id="searchInput" placeholder='지역, 장소 검색' onChange={handleChange} ref={SearchInputRef} value={searchInput} />
+                        <Styled.DeleteButton onClick={onDeleteHandler}>
+                            <span>결과 삭제</span>
+                            <i className="fa-solid fa-x"></i>
+                        </Styled.DeleteButton>
                     </Styled.SearchForm>
                     <Styled.ConditionList>
                         <AttractionConditionDropBox props={{
@@ -302,9 +351,17 @@ export default function AttractionPage() {
                     </Styled.ConditionList>
                     <Styled.AttractionList>
                         {
-                            attractionList ? attractionList.filter(data => data.firstimage ? true : false).map((data) => {
-                                return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />
-                            }) : <></>
+                            searchInput && (conditions.area || conditions.sigungu || conditions.contenttype) !== 0 
+                                ? 
+                                attractionFilterList.filter(data => data.firstimage ? true : false).map((data) => {
+                                    return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />
+                                }) 
+                                :  
+                                attractionList 
+                                    ?
+                                    attractionList.filter(data => data.firstimage ? true : false).map((data) => { return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />}) 
+                                    : 
+                                    <></>
                         }
                     </Styled.AttractionList>
                 </Styled.SectionResult>
@@ -312,7 +369,7 @@ export default function AttractionPage() {
                     <Styled.PageMapSectionHeader>
                         <h2>지도 영역</h2>
                     </Styled.PageMapSectionHeader>
-                    <MyMap props={{ list: attractionList, setAttractionDetail, getAttractionDetail,center, setCenter, zoom }} />
+                    <MyMap props={{ list: searchInput && (conditions.area || conditions.sigungu || conditions.contenttype) ? attractionFilterList : attractionList, setAttractionDetail, getAttractionDetail,center, setCenter, zoom }} />
                 </section>
                 {
                     attractionDetail.contentid ? <AttractionDetailCard props={{ data: attractionDetail }} /> : <></>
