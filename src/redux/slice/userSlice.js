@@ -21,6 +21,8 @@ export const userSlice = createSlice({
         clearUser: (state) => {
             state.accessToken = "";
             state.refreshToken = "";
+
+            console.log('hi');
             
             return state;
         },

@@ -112,10 +112,11 @@ export const StyledSection2 = styled.section`
 export const StyledSection2List = styled.ul`
     background-color: aqua;
     position: absolute;
-    height: 30px;
-    left: 0;
+    left: 50vw;
     right: 0;
     top: 330px;
+    width: 1000px;
+    height: 500px;
 `
 
 

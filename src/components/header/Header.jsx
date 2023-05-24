@@ -8,7 +8,7 @@ import { clearUser } from 'redux/slice/userSlice';
 
 import FormButton from 'components/button/formButton/FormButton';
 import FormInputCol from 'components/input/formInputCol/FormInputCol';
-import { myInfo, updateUser } from 'servieces/UserServices';
+import { myInfo, updateUser, deleteUser } from 'servieces/UserServices';
 
 const urls = ['/user/login', '/user/register', '/user/info']
 
@@ -86,16 +86,10 @@ export default function Header() {
     const handleDeleteCheck = async (e) => {
         e.preventDefault();
 
-        // const result = await Login(inputs.id, inputs.password);
+        await deleteUser(user, dispatch);
 
-        // if (result) {
-        //     dispatch(loginUser({
-        //         accessToken: result['Access-Token'],
-        //         refreshToken: result['Refresh-Token']
-        //     }));
-
-        //     navigate('/');
-        // }
+        dispatch(clearUser());
+        setCheck(false);
     }
 
     const toggle = (e) => {
@@ -120,6 +114,10 @@ export default function Header() {
     }, []);
 
     useEffect(() => {
+        if (!nowUser) {
+            return;
+        }
+
         setInputs({
             ...inputs,
             "id": nowUser.userId,
@@ -127,6 +125,8 @@ export default function Header() {
             "nickname": nowUser.userNickname
         });
     }, [nowUser]);
+
+    console.log(user);
 
     return (
         <>

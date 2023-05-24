@@ -16,9 +16,7 @@ export default function MainPage() {
     }, []);
 
     const backgroundList = [main1, main2];
-    const [isChecked, setChecked] = useState(false);
-
-    // const 
+    const [firstIndex, setFirstIndex] = useState(0);
 
     return (
         <main>

@@ -140,3 +140,31 @@ export async function updateUser(id, password, name, nickname, user, dispatch) {
         console.log(error);
     }
 }
+
+export async function deleteUser(user, dispatch) {
+    try {
+        let token = "";
+
+        if (user.accessToken) {
+            token = await refreshToken(dispatch, user);
+        }
+
+        console.log(token);
+
+        const response = await FetchTemplate({
+            path: url + '/user',
+            method: 'DELETE',
+            needToken: true,
+            token: token
+        });
+
+        const result = await response.json();
+
+        console.log(result);
+
+        alert(result.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
