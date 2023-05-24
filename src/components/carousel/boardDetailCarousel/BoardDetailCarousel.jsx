@@ -33,6 +33,10 @@ export default function BoardDetailCarousel({ props: { images } }) {
         }
     }, [handlerLeftClick, handlerRightClick]);
 
+    useEffect(() => {
+        setIndex(0);
+    }, [images]);
+
     return (
         <Styled.StyledCarouselWrapper>
             <Styled.StyledImageList ref={containerRef} margin={(-42 * index) + "vw"}>
