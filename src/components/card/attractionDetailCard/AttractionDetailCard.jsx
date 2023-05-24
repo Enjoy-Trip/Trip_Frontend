@@ -3,10 +3,10 @@ import * as Styled from './style'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
-import { getAttractionCategoty, getAttractionImages, getComments, writeComment } from 'servieces/AttractionService';
+import { getAttractionCategoty, getAttractionImages, getComments, writeComment, updateComment, deleteComment } from 'servieces/AttractionService';
 import Comment from 'components/comment/Comment';
 
-import { deleteComment } from 'servieces/AttractionService';
+function defaultFunc() {}
 
 export default function AttractionDetailCard({ props: { data } }) {
     const dispatch = useDispatch();
@@ -19,6 +19,7 @@ export default function AttractionDetailCard({ props: { data } }) {
     const [category, setCategory] = useState("");
     const [images, setImages] = useState([]);
     const [tab, setTab] = useState(0);
+    const [commentContent, setCommentContent] = useState({ func: defaultFunc });
     const user = useSelector(state => state.user);
 
     const getCommentList = async () => {
@@ -69,6 +70,15 @@ export default function AttractionDetailCard({ props: { data } }) {
 
     const onCloseClick = () => {
         SectionRef.current.style.display = 'none';
+    }
+
+    const updateHandler = async (e) => {
+        const commentNo = e.currentTarget.dataset.key;
+        const content = commentContent.func();
+
+        await updateComment(commentNo, content, user, dispatch);
+
+        getCommentList();
     }
 
     const deleteHandler = async (e) => {
@@ -152,8 +162,10 @@ export default function AttractionDetailCard({ props: { data } }) {
                         comment, 
                         type: 'attraction', 
                         isWriter: comment.attractionCommentLoginCheck, 
-                        updateFunc: getCommentList,
-                        deleteFunc: deleteHandler }} key={index} />) : <></>
+                        updateFunc: updateHandler,
+                        deleteFunc: deleteHandler,
+                        setCommentFunc: setCommentContent
+                    }} key={index} />) : <></>
                 }
                 <Styled.ReviewForm>
                     <label htmlFor="commentInput">댓글 입력</label>

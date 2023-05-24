@@ -182,6 +182,46 @@ export async function writeComment(contentid, content, user, dispatch) {
     }
 }
 
+export async function updateComment(commentNo, content, user, dispatch) {
+    try {
+        const responseUpdate = await FetchTemplate({
+            path: url + '/attraction/comment/' + commentNo,
+            method: 'PUT',
+            needToken: true,
+            token: user.accessToken,
+            body: JSON.stringify({
+                "attractionCommentContent": content,
+            })
+        });
+
+        const resultUpdate = await responseUpdate.json();
+
+        if (resultUpdate.state === "SUCCESS") {
+            alert(resultUpdate.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseUpdateRefresh = await FetchTemplate({
+            path: url + '/attraction/comment/' + commentNo,
+            method: 'PUT',
+            needToken: true,
+            token: token,
+            body: JSON.stringify({
+                "attractionCommentContent": content,
+            })
+        });
+
+        const resultUpdateRefresh = await responseUpdateRefresh.json();
+
+        alert(resultUpdateRefresh.message);
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export async function deleteComment(commentNo, user, dispatch) {
     try {
         const responseDelete = await FetchTemplate({
