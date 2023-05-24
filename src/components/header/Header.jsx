@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { clearUser } from 'redux/slice/userSlice';
 
-const urls = ['/user/login', '/user/register', '/user']
+const urls = ['/user/login', '/user/register', '/user/info']
 
 const checkTime = (location) => {
     if (!urls.includes(location.pathname)) {
@@ -68,7 +68,7 @@ export default function Header() {
                                 ?
                                 <>
                                     <li>
-                                        <Link to="/user">My info</Link>
+                                        <Link to="/user/info">My info</Link>
                                     </li>
                                     <li>
                                         <Link to="/" onClick={signout}>Sign out</Link>

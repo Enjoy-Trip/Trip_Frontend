@@ -123,7 +123,11 @@ export async function getAttractionImages(contentid) {
 
 export async function getComments(contentid, user, dispatch) {
     try {
-        const token = await refreshToken(dispatch, user);
+        let token = "";
+
+        if (user.accessToken) {
+            token = await refreshToken(dispatch, user);
+        }
 
         const response = await FetchTemplate({
             path: url + '/attraction/' + contentid + '/comment',

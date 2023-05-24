@@ -66,4 +66,27 @@ export const StyledArticleAnchor = styled.a`
     font-size: 13px;
     color: #0284FE;
     margin-left: 5px;
+    margin-right: 5px;
+`
+
+export const ArticleWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: ${props => props.writeShow == 1 ? 'block' : "none"};
+`
+export const FindArticle = styled.article`
+    width: 50vw;
+    height: 70vh;
+    position: absolute;
+    top: 15vh;
+    left: 25vw;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 `

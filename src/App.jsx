@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HeaderLayout from "components/layout/HeaderLayout";
 import MainPage from "pages/mainpage/MainPage";
-import UserPage from "pages/userpage/UserPage";
+import UserInfoPage from "pages/userpage/userinfopage/UserInfoPage";
 import LoginPage from "pages/userpage/loginpage/LoginPage";
 import RegisterPage from "pages/userpage/registerpage/RegisterPage";
 import BoardPage from "pages/boardpage/BoardPage";
@@ -22,7 +22,7 @@ function App() {
                     <Route element={<HeaderLayout />}>
                         <Route path="/" element={<MainPage />} />
                         
-                        <Route path="/user" element={<UserPage />} />
+                        <Route path="/user/info" element={<UserInfoPage />} />
                         <Route path="/user/login" element={<LoginPage />} />
                         <Route path="/user/register" element={<RegisterPage />} />
                         

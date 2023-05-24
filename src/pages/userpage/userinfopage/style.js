@@ -10,34 +10,18 @@ export const StyledSection = styled.section`
     background-color: white;
     width: 100%;
     display: flex;
+    position: relative;
 
     background-color: ${props => props.time === "morning" ? "white" : props.time === "afternoon" ? "white" : "rgb(38, 38, 38);"};
 `
 
 export const StyledSectionHeader = styled.header`
     ${IROnly}
+    position: absolute;
+    color: white;
 `
 
-export const StyledImage = styled.img`
-    width: 50vw;
-    height: 950px;
-    object-fit: cover;
-`
-
-export const StyledArticleWrapper = styled.div`
-    width: 50vw;
-    padding-top: 8vh;
-
-    color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : "white"};
-`
-
-export const StyledArticle = styled.article`
-    width: 512px;
-    padding: 20px;
-    margin: auto;
-`
-
-export const StyledArticleTitle = styled.h3`
+export const StyledArticleTitle = styled.h2`
     font-family: 'Luckiest Guy', cursive;
     font-size: 32px;
     letter-spacing: 2px;
@@ -45,6 +29,26 @@ export const StyledArticleTitle = styled.h3`
     & > span {
         display: block;
         padding: 5px;
+    }
+`
+
+export const StyledImage = styled.img`
+    width: 50vw;
+    height: calc(100vh - 70px);
+    object-fit: cover;
+`
+
+export const StyledArticle = styled.article`
+    width: 50vw;
+    height: calc(100vh - 70px);
+    padding: 20px;
+    margin: auto;
+    overflow-y: scroll;
+
+    color: ${props => props.time === "morning" ? "#333" : props.time === "afternoon" ? "#333" : "white"};
+
+    & > header {
+        ${IROnly}
     }
 `
 

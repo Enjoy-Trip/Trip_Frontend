@@ -21,7 +21,11 @@ export async function getBoardList() {
 
 export async function getBoardDetail(boardNo, user, dispatch) {
     try {
-        const token = await refreshToken(dispatch, user);
+        let token = "";
+
+        if (user.accessToken) {
+            token = await refreshToken(dispatch, user);
+        }
 
         const response = await FetchTemplate({
             path: url + '/board/' + boardNo,
@@ -162,7 +166,11 @@ export async function deleteBoard(boardNo, user, dispatch) {
 
 export async function getComments(boardNo, user, dispatch) {
     try {
-        const token = await refreshToken(dispatch, user);
+        let token = "";
+
+        if (user.accessToken) {
+            token = await refreshToken(dispatch, user);
+        }
 
         const response = await FetchTemplate({
             path: url + '/board/' + boardNo + '/comment',
