@@ -174,8 +174,6 @@ export default function AttractionPage() {
         attrcationList();
     }, [conditions.area, conditions.contenttype, conditions.sigungu]);
 
-    console.log(attractionFilterList);
-
     useEffect(() => {
         const getData = async () => {
             if (conditions.areaList.length !== 0 && conditions.contenttypeList.length !== 0) {
