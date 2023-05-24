@@ -134,6 +134,7 @@ export default function AttractionPage() {
             }
 
             setAttractionList(result.filter(attraction => attraction.homepage === "" ? false : true).filter(attraction => attraction.overview === "" || attraction.overview === "-" ? false : true));
+            setAttractionDetail({});
         }
 
         attrcationList();
@@ -241,7 +242,8 @@ export default function AttractionPage() {
             "area": "",
             "sigungu": "",
             "contenttype": "",
-        })
+        });
+        setAttractionDetail({});
     }
 
     return (
