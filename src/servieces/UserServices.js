@@ -1,4 +1,5 @@
 import FetchTemplate from "utils/FetchTemplate"
+import { refreshToken } from "utils/RefreshToken";
 
 const url = "http://localhost:8080";
 
@@ -66,6 +67,75 @@ export async function CheckId(id) {
         const result = await response.json();
 
         return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function myInfo(user, dispatch) {
+    try {
+        let token = "";
+
+        if (user.accessToken) {
+            token = await refreshToken(dispatch, user);
+        }
+
+        const response = await FetchTemplate({
+            path: url + '/user',
+            method: 'GET',
+            needToken: true,
+            token: token
+        });
+
+        const result = await response.json();
+
+        return result.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function updateUser(id, password, name, nickname, user, dispatch) {
+    try {
+        const response = await FetchTemplate({
+            path: url + '/user',
+            method: 'PUT',
+            needToken: true,
+            token: user.accessToken,
+            body: JSON.stringify({
+                "userId": id,
+                "userPassword": password,
+                "userName": name,
+                "userNickname": nickname
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.state === "SUCCESS") {
+            alert(result.message);
+            return;
+        }
+
+        const token = await refreshToken(dispatch, user);
+
+        const responseRefresh = await FetchTemplate({
+            path: url + '/user',
+            method: 'PUT',
+            needToken: true,
+            token: token,
+            body: JSON.stringify({
+                "userId": id,
+                "userPassword": password,
+                "userName": name,
+                "userNickname": nickname
+            })
+        });
+
+        const resultRefresh = await responseRefresh.json();
+
+        alert(resultRefresh.message);
+        return;
     } catch (error) {
         console.log(error);
     }

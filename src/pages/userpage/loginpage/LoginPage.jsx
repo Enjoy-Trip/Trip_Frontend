@@ -116,7 +116,7 @@ export default function LoginPage() {
         window.addEventListener('click', () => {
             setWriteShow(false);
         })
-    }, [])
+    }, []);
 
     return (
         <Styled.StyledMain time={time.time}>
@@ -192,7 +192,7 @@ export default function LoginPage() {
                             }} />
                             <FormButton data={{
                                 onClickFunc: handleFindsCheck,
-                                content: "Fid",
+                                content: "Find Password",
                                 color: "blue"
                             }} />
                         </Styled.StyledArticleForm>

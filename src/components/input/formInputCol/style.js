@@ -15,8 +15,11 @@ export const StyledInput = styled.input`
     border: 1px solid #ccc;
     border-radius: 8px;
 
+    background-color: ${props => props.readOnly ? "#eee" : ""};
+
     &:focus {
         outline: 1px solid rgb(2, 133, 252);
+        outline: ${props => props.readOnly ? "none" : ""};
     }
 
     &::placeholder {

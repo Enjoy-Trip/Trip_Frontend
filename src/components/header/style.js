@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Wrapper from 'styles/Wrapper'
+import IROnly from "styles/IROnly"
 
 export const HeaderWrapper = styled.header`
     width: 100%;
@@ -38,4 +39,44 @@ export const HeaderNavList = styled.ul`
     justify-content: center;
     gap: 20px;
     font-size: 16px;
+`
+
+export const ArticleWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+`
+export const FindArticle = styled.article`
+    width: 400px;
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+
+    & > header {
+        ${IROnly}
+    }
+`
+
+export const StyledArticleForm = styled.form`
+    display: flex;
+    flex-direction: column;
+
+    & > input {
+        margin-bottom: 20px;
+    }
+
+    & > button + button  {
+        margin-top: 10px;
+    }
 `
