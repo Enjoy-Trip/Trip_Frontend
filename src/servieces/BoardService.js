@@ -38,25 +38,6 @@ export async function getBoardDetail(boardNo, user, dispatch) {
     }
 }
 
-export async function getComments(boardNo, user, dispatch) {
-    try {
-        const token = await refreshToken(dispatch, user);
-
-        const response = await FetchTemplate({
-            path: url + '/board/' + boardNo + '/comment',
-            method: 'GET',
-            needToken: user.accessToken ? true : false,
-            token: token
-        });
-
-        const result = await response.json();
-
-        return result.data;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 export async function writeBoard(title, content, images, user, dispatch) {
     try {
         const responseWrite = await FetchTemplate({
@@ -130,6 +111,25 @@ export async function deleteBoard(boardNo, user, dispatch) {
 
         alert(resultDeleteRefresh.message);
         return;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function getComments(boardNo, user, dispatch) {
+    try {
+        const token = await refreshToken(dispatch, user);
+
+        const response = await FetchTemplate({
+            path: url + '/board/' + boardNo + '/comment',
+            method: 'GET',
+            needToken: user.accessToken ? true : false,
+            token: token
+        });
+
+        const result = await response.json();
+
+        return result.data;
     } catch (error) {
         console.log(error);
     }

@@ -7,9 +7,12 @@ import Comment from 'components/comment/Comment'
 
 import { deleteBoard, getComments, writeComment, updateComment, deleteComment } from 'servieces/BoardService'
 
+function defaultFunc() {}
+
 export default function BoardDetailCard({ props: { data, detailShow, updateBoardList } }) {
     const [commentList, setCommentList] = useState([]);
     const [input, setInput] = useState("");
+    const [commentContent, setCommentContent] = useState({ func: defaultFunc });
     const inputRef = useRef();
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -45,8 +48,9 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
 
     const updateHandler = async (e) => {
         const commentNo = e.currentTarget.dataset.key;
+        const content = commentContent.func();
 
-        await updateComment(commentNo, 'test modified', user, dispatch);
+        await updateComment(commentNo, content, user, dispatch);
 
         getBoard();
     }
@@ -92,7 +96,8 @@ export default function BoardDetailCard({ props: { data, detailShow, updateBoard
                                             type: 'board', 
                                             isWriter: comment.boardCommentLoginCheck,
                                             updateFunc: updateHandler,
-                                            deleteFunc: deleteHandler }} />) : <></>
+                                            deleteFunc: deleteHandler,
+                                            setCommentFunc: setCommentContent }} />) : <></>
                                     }
                                     
                                 </Styled.StyledCommentList>
