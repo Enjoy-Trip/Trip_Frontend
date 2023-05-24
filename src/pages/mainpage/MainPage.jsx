@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Styled from './style'
 
 import main1 from 'assets/videos/main1.mp4'
@@ -11,34 +11,14 @@ const section2Scroll = () => {
 }
 
 export default function MainPage() {
-    window.scrollTo(0, 0);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const backgroundList = [main1, main2];
+    const [isChecked, setChecked] = useState(false);
 
-    // const dummy = {
-    //     "contentid": "1",
-    //     "contenttypeid": "0",
-    //     "title": "더미 데이터",
-    //     "createdtime": "20041230090000",
-    //     "modifiedtime": "20230321095145",
-    //     "tel": "",
-    //     "telname": "",
-    //     "booktour": "1",
-    //     "firstimage": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image2_1.jpg",
-    //     "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/23/2678623_image3_1.jpg",
-    //     "cpyrhtDivCd": "Type3",
-    //     "areacode": "0",
-    //     "sigungucode": "0",
-    //     "cat1": "A",
-    //     "cat2": "A",
-    //     "cat3": "A",
-    //     "addr1": "서울특별시 종로구 사직로 161",
-    //     "addr2": "",
-    //     "zipcode": "03045",
-    //     "mapx": "126.9769930325",
-    //     "mapy": "37.5788222356",
-    //     "mlevel": "6"
-    // }
+    // const 
 
     return (
         <main>

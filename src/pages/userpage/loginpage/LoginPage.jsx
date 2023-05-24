@@ -104,7 +104,12 @@ export default function LoginPage() {
     const toggle = (e) => {
         e.preventDefault();
         e.stopPropagation();
+
         setWriteShow(!writeShow);
+        setFinds({
+            id: "",
+            name: ""
+        })
     }
 
     useEffect(() => {
@@ -187,7 +192,7 @@ export default function LoginPage() {
                             }} />
                             <FormButton data={{
                                 onClickFunc: handleFindsCheck,
-                                content: "Update my account",
+                                content: "Fid",
                                 color: "blue"
                             }} />
                         </Styled.StyledArticleForm>

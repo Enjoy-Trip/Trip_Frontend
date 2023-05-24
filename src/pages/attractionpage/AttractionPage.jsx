@@ -289,6 +289,10 @@ export default function AttractionPage() {
         setSearchInput("");
     }
 
+    console.log(!!searchInput && (!!conditions.area || !!conditions.sigungu || !!conditions.contenttype));
+    console.log(attractionList);
+    console.log(attractionFilterList);
+
     return (
         <Styled.PageWrapper>
             <Styled.PageHeader>
@@ -349,7 +353,7 @@ export default function AttractionPage() {
                     </Styled.ConditionList>
                     <Styled.AttractionList>
                         {
-                            searchInput && (conditions.area || conditions.sigungu || conditions.contenttype) !== 0 
+                            !!searchInput && (!!conditions.area || !!conditions.sigungu || !!conditions.contenttype)
                                 ? 
                                 attractionFilterList.filter(data => data.firstimage ? true : false).map((data) => {
                                     return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />
@@ -367,7 +371,7 @@ export default function AttractionPage() {
                     <Styled.PageMapSectionHeader>
                         <h2>지도 영역</h2>
                     </Styled.PageMapSectionHeader>
-                    <MyMap props={{ list: searchInput && (conditions.area || conditions.sigungu || conditions.contenttype) ? attractionFilterList : attractionList, setAttractionDetail, getAttractionDetail,center, setCenter, zoom }} />
+                    <MyMap props={{ list: !!searchInput && (!!conditions.area || !!conditions.sigungu || !!conditions.contenttype) ? attractionFilterList : attractionList, setAttractionDetail, getAttractionDetail,center, setCenter, zoom }} />
                 </section>
                 {
                     attractionDetail.contentid ? <AttractionDetailCard props={{ data: attractionDetail }} /> : <></>
