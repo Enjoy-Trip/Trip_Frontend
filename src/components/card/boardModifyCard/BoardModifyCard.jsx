@@ -28,6 +28,9 @@ export default function BoardModifyCard ({ max = 10, props: { updateShow, setUpd
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
+    console.log(data);
+    console.log(uploadedImages);
+
     useEffect(() => {
         if (!data.boardTitle) {
             return;
@@ -50,7 +53,9 @@ export default function BoardModifyCard ({ max = 10, props: { updateShow, setUpd
 
             return <ImagePreview image={image} deleteFunc={deleteFunc} key={index} />;
         });
+
         setPreviewImages(imageJSXs);
+        setUploadedImages([...data.boardImages]);
     }, [data]);
 
     useEffect(() => {

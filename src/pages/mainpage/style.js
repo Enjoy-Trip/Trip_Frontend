@@ -57,7 +57,7 @@ export const StyledSection1Header = styled.header`
 
 export const StyledSection1Video = styled.video`
     width: 100%;
-    height: 100vh;
+    height: 102vh;
     object-fit: cover;
 `
 

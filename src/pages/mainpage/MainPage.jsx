@@ -197,8 +197,7 @@ export default function MainPage() {
             <Styled.StyledSection2 img={mainbackground}>
                 <Styled.StyledSectionHeader>
                     <Styled.StyledSectionTitle>Welcome to the best week of<span></span>your life</Styled.StyledSectionTitle>
-                    <Styled.StyledSectionHeaderParagraph>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, veritatis et cupiditate impedit repellat perferendis eum sunt dicta voluptate suscipit commodi nobis quisquam inventore facilis error ducimus dolorem amet culpa.
-                        Quaerat nam laborum quo, beatae dolorum fuga quam magnam illo. Quae, neque blanditiis! Molestiae qui dolores exercitationem et. Vero iure consectetur optio at obcaecati iste in architecto itaque soluta dolorem.</Styled.StyledSectionHeaderParagraph>
+                    <Styled.StyledSectionHeaderParagraph>Youcance는 한국의 다양한 관광지, 먹거리, 축제, 행사 등을 소개하는 지역 관광 활성화를 위한 홈페이지입니다. 여행 계획을 위한 스케줄과 여행 경로 추가 기능이 제공되고 이를 통해 사용자들은 자신의 여행 계획을 작성하고 이를 이용해 쉽게 여행을 즐길 수 있습니다. 뿐만 아니라, 홈페이지에는 자유롭게 토론이 가능한 게시판도 구현되어 있습니다. 여기에서 사용자들은 여행에 관련된 질문이나 정보를 공유할 수 있으며, 다른 사용자들과의 소통을 통해 더욱 다양한 관광 경험을 나눌 수 있습니다. 저희 홈페이지를 통해 여행자들은 다양한 관광지와 먹거리, 축제, 행사 등을 즐기며 새로운 경험을 만들어갈 수 있습니다.</Styled.StyledSectionHeaderParagraph>
                 </Styled.StyledSectionHeader>
                 <Styled.StyledSection2List ref={secttion2ContainerRef} margin={(-350 * section2Index) + "px"}>
                     {
