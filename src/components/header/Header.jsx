@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Style from './style';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";

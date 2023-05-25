@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import * as Styled from './style'
 
 
@@ -45,7 +45,7 @@ export default function AttractionConditionDropBox({ props: {
             </Styled.ConditionButton>
             <Styled.ConditionNameList ref={listRef} visible={visible}>
                 {
-                    conditions[type + 'List'].length !== 0 ?
+                    !!conditions && conditions[type + 'List'].length !== 0 ?
                         conditions[type + 'List'].map(data => {
                             return (
                                 <Styled.ConditionNameListItem key={data.code}>

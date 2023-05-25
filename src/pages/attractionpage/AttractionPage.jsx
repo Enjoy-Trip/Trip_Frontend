@@ -205,7 +205,12 @@ export default function AttractionPage() {
                 return;
             }
 
-            const areaList = await getAreaList();
+            let areaList = await getAreaList();
+
+            if (!areaList) {
+                areaList = [];
+            }
+
             const contentTypeList = [
                 {
                     'name': '관광지',

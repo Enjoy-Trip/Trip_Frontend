@@ -1,4 +1,3 @@
-import React from 'react'
 import * as Styled from './style'
 
 export default function BoardDetailImage({ props: { src } }) {
