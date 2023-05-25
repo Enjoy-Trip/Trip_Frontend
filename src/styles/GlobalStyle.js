@@ -7,6 +7,11 @@ const GlobalStyle = createGlobalStyle`
     *, *::before, *::after {
         box-sizing: border-box;
     }
+    
+    body {
+        
+        font-family: 'Nanum Gothic Coding', monospace;
+    }
 
     html {
         scroll-behavior: smooth;

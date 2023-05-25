@@ -62,7 +62,7 @@ export default function Header() {
                 setMoved(false);
             }
         });
-    });
+    }, []);
 
     const handleModifyChange = (e) => {
         setInputs({

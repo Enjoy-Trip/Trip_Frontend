@@ -34,10 +34,20 @@ function ImportSofiaSans() {
     document.head.appendChild(link);
 }
 
+function ImportNanumGothic() {
+    const link = document.createElement("link");
+
+    link.setAttribute("href", "https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap");
+    link.setAttribute("rel", "stylesheet");
+
+    document.head.appendChild(link);
+}
+
 export default function ImportFonts() {
     ImportRighteous();
     ImportJua();
     ImportLuckiestGuy();
     ImportSofiaSans();
+    ImportNanumGothic();
 }
 

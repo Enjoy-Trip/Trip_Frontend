@@ -104,7 +104,7 @@ export default function RegisterPage() {
         if (inputRef.current[0].value.length === 0) {
             result = {
                 state: "FAIL",
-                message: "아아디를 입력해주세요."
+                message: "아이디를 입력해주세요."
             }
         } else {
             result = await CheckId(inputRef.current[0].value);
