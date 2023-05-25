@@ -10,6 +10,7 @@ export const Footer = styled.footer`
     align-items: center;
     justify-content: center;
     position: absolute;
+    font-family: Righteous;
 
     & > h2 {
         ${IROnly}

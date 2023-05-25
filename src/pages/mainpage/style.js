@@ -303,6 +303,7 @@ export const Section3MoreButton = styled(Link)`
     bottom: 55px;
     left: 50%;
     transform: translateX(-50%);
+    font-family: Righteous;
 `
 
 export const StyledSection4 = styled.section`
