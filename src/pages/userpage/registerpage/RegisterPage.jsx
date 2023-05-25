@@ -78,6 +78,11 @@ export default function RegisterPage() {
             return;
         }
 
+        if (inputs.password !== inputs.passwordConfirm) {
+            alert('비밀번호가 일치하지 않습니다!');
+            return;
+        }
+
         if (!inputs.name) {
             alert('이름을 입력해주세요!');
             return;
