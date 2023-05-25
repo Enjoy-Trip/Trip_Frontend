@@ -85,4 +85,4 @@ function MyMap({ props: { list, setAttractionDetail, getAttractionDetail, center
     ) : <></>
 }
 
-export default memo(MyMap)
+export default memo(MyMap);

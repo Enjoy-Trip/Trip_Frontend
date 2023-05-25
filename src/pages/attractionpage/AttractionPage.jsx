@@ -3,7 +3,7 @@ import * as Styled from './style'
 import { Link, useLocation  } from 'react-router-dom'
 
 import MyMap from 'components/map/MyMap'
-import AttractionListCard from 'components/card/attractionListCard/AttractionListCard'
+import AttractionListCard from '../../components/card/attractionListCard/AttracionListCard'
 import AttractionDetailCard from 'components/card/attractionDetailCard/AttractionDetailCard'
 import AttractionConditionDropBox from 'components/dropBox/attractionConditionDropBox/AttractionConditionDropBox'
 
