@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import HeaderLayout from "components/layout/HeaderLayout";
+import FooterLayout from "components/layout/FooterLayout";
 import MainPage from "pages/mainpage/MainPage";
 // import UserInfoPage from "pages/userpage/userinfopage/UserInfoPage";
 import LoginPage from "pages/userpage/loginpage/LoginPage";
@@ -20,9 +21,10 @@ function App() {
             <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <Routes>
                     <Route element={<HeaderLayout />}>
-                        <Route path="/" element={<MainPage />} />
-                        
-                        {/* <Route path="/user/info" element={<UserInfoPage />} /> */}
+                        <Route element={<FooterLayout />}>
+                            <Route path="/" element={<MainPage />} />
+                        </Route>
+
                         <Route path="/user/login" element={<LoginPage />} />
                         <Route path="/user/register" element={<RegisterPage />} />
                     </Route>

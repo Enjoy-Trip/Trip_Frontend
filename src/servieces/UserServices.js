@@ -39,7 +39,7 @@ export async function Signup(id, password, name, nickname) {
                 'userId': id,
                 'userPassword': password,
                 'userName': name,
-                'userNickName': nickname
+                'userNickname': nickname
             })
         });
 
