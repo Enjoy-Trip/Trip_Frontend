@@ -219,6 +219,9 @@ export const StyledSection3 = styled.section`
     padding-top: 110px;
     height: 800px;
     position: relative;
+    background: url(https://cdn.theyachtweek.com/assets/destinations/caribbean/deco4.svg) top left no-repeat;
+    /* background-position-x: 50%; */
+    background-position-y: 50%;
 `
 
 export const StyledSection3List = styled.ul`
@@ -300,4 +303,22 @@ export const Section3MoreButton = styled(Link)`
     bottom: 55px;
     left: 50%;
     transform: translateX(-50%);
+`
+
+export const StyledSection4 = styled.section`
+    padding-top: 60px;
+    padding-bottom: 60px;
+    position: relative;
+    z-index: 0;
+`
+
+export const IframeWrapper = styled.div`
+    width: 100%;
+    overflow: hidden;
+
+    & > iframe {
+        margin-top: -530px;
+        width: 100%;
+        height: 1100px;
+    }
 `

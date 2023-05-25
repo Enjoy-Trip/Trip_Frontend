@@ -3,7 +3,12 @@ import * as Styled from './style'
 
 import main1 from 'assets/videos/main1.mp4'
 import main2 from 'assets/videos/main2.mp4'
-import carouselVideo from 'assets/videos/mainpagecarousel.mp4'
+import CarouselSeoul from 'assets/videos/carouselseoul.mp4'
+import CarouselJeju from 'assets/videos/carouseljeju.mp4'
+import CarouselJeolla from 'assets/videos/carouseljeolla.mp4'
+import CarouselKangwon from 'assets/videos/carouselkangwon.mp4'
+import CarouselChungcheong from 'assets/videos/carouselchungcheong.mp4'
+import CarouselGyeongsang from 'assets/videos/carouselgyeongsang.mp4'
 import mainbackground from 'assets/images/mainbackground.webp'
 import { Link } from 'react-router-dom'
 
@@ -68,19 +73,27 @@ const recommentList = [
 const recommendAreaList = [
     {
         "title": "서울",
-        "video": carouselVideo
+        "video": CarouselSeoul
     },
     {
-        "title": "서울",
-        "video": carouselVideo
+        "title": "제주",
+        "video": CarouselJeju
     },
     {
-        "title": "서울",
-        "video": carouselVideo
+        "title": "전라남도",
+        "video": CarouselJeolla
     },
     {
-        "title": "서울",
-        "video": carouselVideo
+        "title": "강원도",
+        "video": CarouselKangwon
+    },
+    {
+        "title": "충청도",
+        "video": CarouselChungcheong
+    },
+    {
+        "title": "경상도",
+        "video": CarouselGyeongsang
     }
 ]
 
@@ -151,6 +164,16 @@ export default function MainPage() {
         }
     }, [section3LeftClick, section3RightClick]);
 
+    useEffect(() => {
+        window.onload = () => {
+            const frame = document.querySelector('#chartFrame');
+
+            if (!frame) {
+                return;
+            }
+        }
+    }, [])
+
     return (
         <main>
             <section>
@@ -179,18 +202,18 @@ export default function MainPage() {
                 </Styled.StyledSectionHeader>
                 <Styled.StyledSection2List ref={secttion2ContainerRef} margin={(-350 * section2Index) + "px"}>
                     {
-                        recommentList.map((data, index) => 
-                        <li key={index + data.title}>
-                            <Link to="/attraction" state={{ attractionTitle: data.title.split(' ')[0] }}>
-                                <Styled.IROnlySpan>여행지 검색</Styled.IROnlySpan>
-                                <Styled.Section2ListArticle backgroundimg={data.firstimage}>
-                                    <header>
-                                        <h3>{data.title}</h3>
-                                    </header>
-                                    <p>{data.addr1}</p>
-                                </Styled.Section2ListArticle>
-                            </Link>
-                        </li>)
+                        recommentList.map((data, index) =>
+                            <li key={index + data.title}>
+                                <Link to="/attraction" state={{ attractionTitle: data.title.split(' ')[0] }}>
+                                    <Styled.IROnlySpan>여행지 검색</Styled.IROnlySpan>
+                                    <Styled.Section2ListArticle backgroundimg={data.firstimage}>
+                                        <header>
+                                            <h3>{data.title}</h3>
+                                        </header>
+                                        <p>{data.addr1}</p>
+                                    </Styled.Section2ListArticle>
+                                </Link>
+                            </li>)
                     }
                 </Styled.StyledSection2List>
                 <Styled.Section2LeftButton ref={secttion2PrevButtonRef} show={section2Index != 0 ? "block" : "none"}>
@@ -209,22 +232,23 @@ export default function MainPage() {
                 </Styled.StyledSectionHeader>
                 <Styled.StyledSection3List ref={secttion3ContainerRef} margin={(-380 * section3Index) + "px"}>
                     {
-                        recommendAreaList.map((data, index) => 
-                        <li key={index + data.title}>
-                            <Link to="/attraction" state={{ attractionTitle: data.title }} onMouseEnter={e => e.currentTarget.childNodes[1].childNodes[1].style.transform = "translateY(0px)"} onMouseLeave={e => e.currentTarget.childNodes[1].childNodes[1].style.transform = "translateY(80px)"}>
-                                <Styled.IROnlySpan>지역 검색</Styled.IROnlySpan>
-                                <Styled.Section3ListArticle>
-                                    <Styled.Section3ArticleHeader>
-                                        <span>대한민국</span>
-                                        <h3>{data.title}</h3>
-                                        <button>Explore Destination</button>
-                                    </Styled.Section3ArticleHeader>
-                                    <Styled.Section3Video muted loop onMouseEnter={e => e.currentTarget.play()} onMouseLeave={e => e.currentTarget.pause()}>
-                                        <source src={data.video}/>
-                                    </Styled.Section3Video>
-                                </Styled.Section3ListArticle>
-                            </Link>
-                        </li>)
+                        recommendAreaList.map((data, index) => {
+                            return (<li key={index + data.title}>
+                                <Link to="/attraction" state={{ attractionTitle: data.title }} onMouseEnter={e => e.currentTarget.childNodes[1].childNodes[0].style.transform = "translateY(0px)"} onMouseLeave={e => e.currentTarget.childNodes[1].childNodes[0].style.transform = "translateY(80px)"}>
+                                    <Styled.IROnlySpan>지역 검색</Styled.IROnlySpan>
+                                    <Styled.Section3ListArticle>
+                                        <Styled.Section3ArticleHeader>
+                                            <span>대한민국</span>
+                                            <h3>{data.title}</h3>
+                                            <button>Explore Destination</button>
+                                        </Styled.Section3ArticleHeader>
+                                        <Styled.Section3Video muted loop onMouseEnter={e => e.currentTarget.play()} onMouseLeave={e => e.currentTarget.pause()}>
+                                            <source src={data.video} />
+                                        </Styled.Section3Video>
+                                    </Styled.Section3ListArticle>
+                                </Link>
+                            </li>)
+                        })
                     }
                 </Styled.StyledSection3List>
                 <Styled.Section3LeftButton ref={secttion3PrevButtonRef} show={section3Index != 0 ? "block" : "none"}>
@@ -239,6 +263,14 @@ export default function MainPage() {
                     Browse all destinations
                 </Styled.Section3MoreButton>
             </Styled.StyledSection3>
+            <Styled.StyledSection4>
+                <Styled.StyledSectionHeader>
+                    <Styled.StyledSectionTitle>About attractions</Styled.StyledSectionTitle>
+                </Styled.StyledSectionHeader>
+                <Styled.IframeWrapper>
+                    <iframe src="https://api.visitkorea.or.kr/#/hubTourMap" scrolling='no'></iframe>
+                </Styled.IframeWrapper>
+            </Styled.StyledSection4>
         </main>
     )
 }
