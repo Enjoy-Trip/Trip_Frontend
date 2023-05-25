@@ -128,14 +128,8 @@ export default function AttractionPage() {
 
             const result = await searchAttractionList(location.state.attractionTitle);
     
-            setAttractionList(result);
+            setAttractionList(result.filter(e => !!e.firstimage ? true : false));
             setAttractionFilterList([]);
-            setConditions({
-                ...conditions,
-                "area": "",
-                "sigungu": "",
-                "contenttype": "",
-            });
             setAttractionDetail({});
         }
         
@@ -168,8 +162,6 @@ export default function AttractionPage() {
             const areaDetailData = conditions.sigunguList.filter(element => element.name === conditions.sigungu)[0];
 
             let list = attractionList.map(attraction => attraction);
-
-            console.log(areaData, contenttypeData, areaDetailData);
 
             if (areaData) {
                 list = list.filter(attraction => attraction.areacode == areaData.code);
@@ -287,6 +279,7 @@ export default function AttractionPage() {
             lat: Number(result.mapy),
             lng: Number(result.mapx)
         })
+        setZoom(16);
         setAttractionDetail(result);
     }
 
@@ -300,7 +293,11 @@ export default function AttractionPage() {
         const keyword = searchInput;
         const result = await searchAttractionList(keyword);
 
-        setAttractionList(result);
+        let test = result.filter(data => data.firstimage ? true : false)
+
+        console.log(test);
+
+        setAttractionList(result.filter(data => data.firstimage ? true : false));
         setAttractionFilterList([]);
         setConditions({
             ...conditions,
@@ -387,7 +384,8 @@ export default function AttractionPage() {
                                 :  
                                 attractionList 
                                     ?
-                                    attractionList.filter(data => data.firstimage ? true : false).map((data) => { return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />}) 
+                                    attractionList.filter(data => data.firstimage ? true : false).map((data) => {
+                                        return <AttractionListCard key={data.contentid} props={{ data, AttractionClickHandler }} />}) 
                                     : 
                                     <></>
                         }
@@ -397,7 +395,7 @@ export default function AttractionPage() {
                     <Styled.PageMapSectionHeader>
                         <h2>지도 영역</h2>
                     </Styled.PageMapSectionHeader>
-                    <MyMap props={{ list: !!searchInput && (!!conditions.area || !!conditions.sigungu || !!conditions.contenttype) ? attractionFilterList : attractionList, setAttractionDetail, getAttractionDetail,center, setCenter, zoom }} />
+                    <MyMap props={{ list: !!searchInput && (!!conditions.area || !!conditions.sigungu || !!conditions.contenttype) ? attractionFilterList : attractionList, setAttractionDetail, getAttractionDetail,center, setCenter, zoom, updateZoom: setZoom }} />
                 </section>
                 {
                     attractionDetail.contentid ? <AttractionDetailCard props={{ data: attractionDetail }} /> : <></>

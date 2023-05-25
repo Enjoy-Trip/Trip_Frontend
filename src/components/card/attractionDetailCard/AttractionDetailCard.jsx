@@ -153,7 +153,7 @@ export default function AttractionDetailCard({ props: { data } }) {
                 </Styled.HomeUrlWrapper>
                 <Styled.HomeParahraph>
                     <i className="fas fa-sticky-note"></i>
-                    <span>{data.overview ? data.overview.replace(/<br>/g, " ").replace(/<br \/>/g, " ") : <></>}</span>
+                    <span>{data.overview ? data.overview.replace(/<br>/g, " ").replace(/<br \/>/g, " ") : "설명이 존재하지 않습니다."}</span>
                 </Styled.HomeParahraph>
             </Styled.HomeWrapper>
             <Styled.ReviewWrapper ref={(element) => (WrapperRef.current[1] = element)} selected={tab} index={1}>

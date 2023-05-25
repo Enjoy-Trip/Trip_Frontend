@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback, memo, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-maps/api';
 
 const containerStyle = {
@@ -19,7 +19,7 @@ const myStyles = [
     },
 ];
 
-function MyMap({ props: { list, setAttractionDetail, getAttractionDetail, center, setCenter, zoom } }) {
+function MyMap({ props: { list, setAttractionDetail, getAttractionDetail, center, setCenter, zoom, updateZoom } }) {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_KEY
@@ -39,11 +39,38 @@ function MyMap({ props: { list, setAttractionDetail, getAttractionDetail, center
     const onLoad = useCallback(function callback(map) {
         map.setZoom(zoom);
         setMap(map);
-    }, [list])
+    }, [list]);
 
     const onUnmount = useCallback(function callback(map) {
-        setMap(null)
-    }, [list])
+        setMap(null);
+    }, [list]);
+
+    useEffect(() => {
+        if (!map) {
+            return;
+        }
+
+        map.setZoom(zoom);
+    }, [zoom]);
+
+    console.log(list);
+
+    useEffect(() => {
+        const updatedata = async () => {
+            if (!list || list.length === 0) {
+                return;
+            }
+    
+            setAttractionDetail(await getAttractionDetail(list[0].contentid));
+            setCenter({
+                'lat': Number(list[0].mapy), 
+                'lng': Number(list[0].mapx)
+            });
+            updateZoom(15);
+        }
+
+        updatedata();
+    }, [list]);
 
     return isLoaded ? (
         <GoogleMap
@@ -57,29 +84,34 @@ function MyMap({ props: { list, setAttractionDetail, getAttractionDetail, center
             }}
         >
             {
-                list ? list.map(data =>
-                    <MarkerF
-                        key={data.contentid}
-                        position={{
-                            lat: Number(data.mapy),
-                            lng: Number(data.mapx)
-                        }}
-                        onClick={async () => {
-                            const rst = await getAttractionDetail(data.contentid);
+                list && list.length !== 0 ? list.map(data => {
+                    return (
+                        <MarkerF
+                            key={data.contentid}
+                            position={{
+                                lat: Number(data.mapy),
+                                lng: Number(data.mapx)
+                            }}
+                            onClick={async () => {
+                                const rst = await getAttractionDetail(data.contentid);
 
-                            setCenter({ lat: Number(data.mapy), lng: Number(data.mapx) });
-                            setAttractionDetail(rst);
-                        }}
-                        onMouseOver={() => handleActiveMarker(data.contentid)}
-                        onMouseOut={() => setActiveMarker(null)}
-                    >
-                        {activeMarker === data.contentid ? (
-                            <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                                <div>{data.title}</div>
-                            </InfoWindowF>
-                        ) : null}
-                    </MarkerF>
-                ) : <></>
+                                setCenter({ lat: Number(data.mapy), lng: Number(data.mapx) });
+                                updateZoom(16);
+                                setAttractionDetail(rst);
+                            }}
+                            onMouseOver={() => handleActiveMarker(data.contentid)}
+                            onMouseOut={() => setActiveMarker(null)}>
+                            {
+                                activeMarker === data.contentid || (center.lat === Number(data.mapy) && center.lng === Number(data.mapx))
+                                    ?
+                                    (<InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                                        <div>{data.title}</div>
+                                    </InfoWindowF>)
+                                    : null
+                            }
+                        </MarkerF>
+                    )
+                }) : <></>
             }
         </GoogleMap>
     ) : <></>

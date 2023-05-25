@@ -51,7 +51,7 @@ const recommentList = [
     {
         "addr1": "전라북도 전주시 완산구 기린대로 99",
         "firstimage": "https://www.jeollailbo.com/news/photo/202302/684390_85868_2631.jpg",
-        "title": "전주 한옥 마을",
+        "title": "전주한옥마을",
     },
     {
         "addr1": "제주특별자치도 제주시 한림읍 협재리 2497-1번지",
