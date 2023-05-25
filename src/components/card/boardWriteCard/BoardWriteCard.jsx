@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import * as Styled from './style'
 import FormButton from 'components/button/formButton/FormButton';
 import { useSelector, useDispatch } from 'react-redux';
