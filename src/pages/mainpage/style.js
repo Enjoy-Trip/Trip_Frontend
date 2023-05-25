@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import IROnly from "styles/IROnly";
 
@@ -18,6 +19,10 @@ const buttonDownAnimation = keyframes`
         opacity: 0;
         transform: translateY(25px) translateX(-50%);
     }
+`
+
+export const IROnlySpan = styled.span`
+    ${IROnly}
 `
 
 export const StyledSection1Header = styled.header`
@@ -63,7 +68,11 @@ export const StyledSection1Button = styled.button`
     transform: translate(-50%);
     color: white;
     font-size: 18px;
-    animation: ${buttonDownAnimation} 1.7s 1s infinite linear;    
+    animation: ${buttonDownAnimation} 1.7s 1s infinite linear;
+
+    & > span {
+        ${IROnly}
+    }
 `
 
 export const StyledSectionHeader = styled.header`
@@ -112,12 +121,12 @@ export const StyledSection2 = styled.section`
 
 export const StyledSection2List = styled.ul`
     position: absolute;
-    left: calc(50vw - 150px);
+    left: calc(50vw - 160px);
     right: 0;
     top: 360px;
     height: 450px;
     display: flex;
-    gap: 50px;
+    gap: 30px;
     transition: all 0.3s;
     margin-left: ${props => props.margin};
 `
@@ -129,10 +138,15 @@ export const Section2ListArticle = styled.article`
     overflow: hidden;
 
     background: url(${props => props.backgroundimg});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 50%;
 
     display: flex;
     flex-direction: column;
     padding: 20px;
+    transition: all 0.1s;
 
 
     &:hover {
@@ -182,8 +196,7 @@ export const CarouselButton = styled.button`
     border-radius: 50%;
     font-size: 28px;
     color: #777;
-    background-color: #eee;
-    border: 1px solid #777;
+    background-color: rgba(233, 233, 233, 0.7);
 
     & > span {
         ${IROnly}
@@ -192,17 +205,99 @@ export const CarouselButton = styled.button`
 
 export const Section2LeftButton = styled(CarouselButton)`
     bottom: 300px;
-    left: 250px;
+    left: 150px;
     display: ${props => props.show};
 `
 
 export const Section2RightButton = styled(CarouselButton)`
     bottom: 300px;
-    right: 250px;
+    right: 150px;
     display: ${props => props.show};
 `
 
-
 export const StyledSection3 = styled.section`
-    padding-top: 80px;
+    padding-top: 110px;
+    height: 800px;
+    position: relative;
+`
+
+export const StyledSection3List = styled.ul`
+    position: absolute;
+    left: calc(50vw - 175px);
+    right: 0;
+    top: 200px;
+    height: 450px;
+    display: flex;
+    gap: 30px;
+    transition: all 0.3s;
+    margin-left: ${props => props.margin};
+`
+
+export const Section3ListArticle = styled.article`
+    width: 350px;
+    height: 450px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+`
+
+export const Section3ArticleHeader = styled.header`
+    position: absolute;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 2px;
+    bottom: 30px;
+    left: 30px;
+    transform: translateY(80px);
+    transition: all 0.2s;
+
+    & > span {
+        font-size: 12px;
+    }
+
+    & > h3 {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    & > button {
+        background-color: #0284FE;
+        color: white;
+        font-size: 16px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        margin-top: 50px;
+    }
+`
+
+export const Section3Video = styled.video`
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+`
+
+export const Section3LeftButton = styled(CarouselButton)`
+    bottom: 350px;
+    left: 150px;
+    display: ${props => props.show};
+`
+
+export const Section3RightButton = styled(CarouselButton)`
+    bottom: 350px;
+    right: 150px;
+    display: ${props => props.show};
+`
+
+export const Section3MoreButton = styled(Link)`
+    background-color: #0284FE;
+    color: white;
+    font-size: 16px;
+    padding: 15px 20px;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 55px;
+    left: 50%;
+    transform: translateX(-50%);
 `
