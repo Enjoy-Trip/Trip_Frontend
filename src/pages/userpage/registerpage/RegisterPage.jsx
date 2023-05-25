@@ -68,6 +68,26 @@ export default function RegisterPage() {
     const handleCheck = async (e) => {
         e.preventDefault();
 
+        if (!inputs.id) {
+            alert('아이디를 입력해주세요!');
+            return;
+        }
+
+        if (!inputs.password) {
+            alert('비밀번호를 입력해주세요!');
+            return;
+        }
+
+        if (!inputs.name) {
+            alert('이름을 입력해주세요!');
+            return;
+        }
+
+        if (!inputs.nickname) {
+            alert('별명을 입력해주세요!');
+            return;
+        }
+
         await Signup(inputs.id, inputs.password, inputs.name, inputs.nickname);
 
         navigate('/user/login');

@@ -69,6 +69,16 @@ export default function LoginPage() {
     const handleCheck = async (e) => {
         e.preventDefault();
 
+        if (!inputs.id) {
+            alert('아이디를 입력해주세요!');
+            return;
+        }
+
+        if (!inputs.name) {
+            alert('이름을 입력해주세요!');
+            return;
+        }
+
         const result = await Login(inputs.id, inputs.password);
 
         if (result) {

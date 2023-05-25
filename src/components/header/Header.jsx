@@ -51,6 +51,7 @@ export default function Header() {
 
     function signout() {
         dispatch(clearUser());
+        alert("로그아웃 되었습니다.");
     }
 
     useEffect(() => {
